@@ -62,8 +62,19 @@ target_link_libraries(
 # -----------------------------------------------------------------------------
 install(TARGETS ASNeG-Demo DESTINATION /usr/lib/OpcUaStack)
 
-install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/OpcUaServer.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo) 
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/OpcUaServer.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSetTest.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSetTestLib.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSetTestLibClientServer.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Camera.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Function.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/ApplicationDemoModel.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/animation00.gif DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/animation01.gif DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/animation02.gif DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/animation03.gif DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/animation04.gif DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/linux/log/README DESTINATION /var/log/OpcUaStack/ASNeG-Demo)
 install(DIRECTORY DESTINATION /var/log/OpcUaStack/ASNeG-Demo)
 
