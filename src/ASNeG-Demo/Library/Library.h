@@ -15,15 +15,15 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
-#ifndef __ASNeG-Demo_Library_h__
-#define __ASNeG-Demo_Library_h__
+#ifndef __ASNeGDemo_Library_h__
+#define __ASNeGDemo_Library_h__
 
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
 
-namespace ASNeG-Demo
+namespace ASNeGDemo
 {
 
 	class Library

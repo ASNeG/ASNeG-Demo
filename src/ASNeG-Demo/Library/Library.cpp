@@ -22,7 +22,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include <iostream>
 
-namespace ASNeG-Demo
+namespace ASNeGDemo
 {
 
 	Library::Library(void)
@@ -53,6 +53,6 @@ namespace ASNeG-Demo
 }
 
 extern "C" DLLEXPORT void  init(ApplicationIf** applicationIf) {
-    *applicationIf = new ASNeG-Demo::Library();
+    *applicationIf = new ASNeGDemo::Library();
 }
 
