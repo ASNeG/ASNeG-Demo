@@ -18,20 +18,28 @@
 #ifndef __ASNeGDemo_Library_h__
 #define __ASNeGDemo_Library_h__
 
+#include "OpcUaStackCore/Base/IOService.h"
+#include "OpcUaStackCore/Utility/IOThread.h"
+#include "OpcUaStackCore/Application/ApplicationReadContext.h"
+#include "OpcUaStackCore/Application/ApplicationWriteContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
+#include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
+#include "ASNeG-Demo/Library/CameraAnimation.h"
+#include "ASNeG-Demo/Library/Function.h"
+#include "ASNeG-Demo/Library/TestFolderLib.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
 
-namespace ASNeGDemo
+namespace OpcUaServerApplicationDemo
 {
 
-	class Library
+	class DemoLibrary
 	: public ApplicationIf
 	{
 	  public:
-		Library(void);
-		virtual ~Library(void);
+		DemoLibrary(void);
+		virtual ~DemoLibrary(void);
 
 		//- ApplicationIf -----------------------------------------------------
 		virtual bool startup(void);
@@ -39,6 +47,11 @@ namespace ASNeGDemo
 		//- ApplicationIf -----------------------------------------------------
 
 	  private:
+		CameraAnimation cameraAnimation_;
+		TestFolderLib testFolderLib_;
+		Function function_;
+
+		IOThread ioThread_;
 	};
 
 }

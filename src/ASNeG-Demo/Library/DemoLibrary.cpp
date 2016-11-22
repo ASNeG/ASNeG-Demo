@@ -17,42 +17,56 @@
 
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
-#include "ASNeG-Demo/Library/Library.h"
+#include "ASNeG-Demo/Library/DemoLibrary.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include <iostream>
 
-namespace ASNeGDemo
+namespace OpcUaServerApplicationDemo
 {
 
-	Library::Library(void)
+	DemoLibrary::DemoLibrary(void)
 	: ApplicationIf()
+	, cameraAnimation_()
+	, testFolderLib_()
+	, function_()
 	{
-		Log(Debug, "Library::Library");
+		Log(Debug, "DemoLibrary::DemoLibrary");
 	}
 
-	Library::~Library(void)
+	DemoLibrary::~DemoLibrary(void)
 	{
-		Log(Debug, "Library::~Library");
+		Log(Debug, "DemoLibrary::~DemoLibrary");
 	}
 
 	bool
-	Library::startup(void)
+	DemoLibrary::startup(void)
 	{
-		Log(Debug, "Library::startup");
+		Log(Debug, "DemoLibrary::startup");
+
+		ioThread_.startup();
+		testFolderLib_.startup(ioThread_, service(), applicationInfo());
+		cameraAnimation_.startup(ioThread_, service(), applicationInfo());
+		function_.startup(ioThread_, service(), applicationInfo());
 		return true;
 	}
 
 	bool
-	Library::shutdown(void)
+	DemoLibrary::shutdown(void)
 	{
-		Log(Debug, "Library::shutdown");
+		Log(Debug, "DemoLibrary::shutdown");
+
+		function_.shutdown();
+		cameraAnimation_.shutdown();
+		testFolderLib_.shutdown();
+		ioThread_.shutdown();
+
 		return true;
 	}
 
 }
 
 extern "C" DLLEXPORT void  init(ApplicationIf** applicationIf) {
-    *applicationIf = new ASNeGDemo::Library();
+    *applicationIf = new OpcUaServerApplicationDemo::DemoLibrary();
 }
 
