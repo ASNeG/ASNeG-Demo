@@ -60,7 +60,7 @@ target_link_libraries(
 # 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
-install(TARGETS ASNeG-Demo DESTINATION /usr/lib/OpcUaStack)
+install(TARGETS ASNeG-Demo DESTINATION /usr/lib)
 
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/OpcUaServer.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
