@@ -123,3 +123,15 @@ target_link_libraries(
     ${Boost_LIBRARIES}
 )
 
+add_executable(
+    SyncWriteToServer_ComplexDataType1
+    SyncWriteToServer_ComplexDataType1.cpp
+)
+
+target_link_libraries(
+    SyncWriteToServer_ComplexDataType1
+    ${OPCUASTACK_LIBRARY_CORE}
+    ${OPCUASTACK_LIBRARY_CLIENT}
+    ${Boost_LIBRARIES}
+)
+
