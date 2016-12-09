@@ -124,6 +124,18 @@ target_link_libraries(
 )
 
 add_executable(
+    SyncReadFromServer_ComplexDataType_ByteString
+    SyncReadFromServer_ComplexDataType_ByteString.cpp
+)
+
+target_link_libraries(
+    SyncReadFromServer_ComplexDataType_ByteString
+    ${OPCUASTACK_LIBRARY_CORE}
+    ${OPCUASTACK_LIBRARY_CLIENT}
+    ${Boost_LIBRARIES}
+)
+
+add_executable(
     SyncWriteToServer_ComplexDataType_ByteString
     SyncWriteToServer_ComplexDataType_ByteString.cpp
 )
