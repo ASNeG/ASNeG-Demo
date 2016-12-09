@@ -95,6 +95,7 @@
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSetTestLibClientServer.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Camera.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Function.xml</NodeSetFile>
+    <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Complex.xml</NodeSetFile>
   </InformationModel>
 
 </OpcUaServer>
