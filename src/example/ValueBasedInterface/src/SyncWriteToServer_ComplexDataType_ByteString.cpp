@@ -98,10 +98,16 @@ class ExampleClient
 		OpcUaDateTime sourceTimestamp, serverTimestamp;
 
 		//
-		// write node 218 to namespace 1 (type Double)
+		// write complex data type
 		//
-		nodeId.set((OpcUaInt32)218, 1);
-		dataValue.variant()->set((OpcUaDouble)3.14);
+		nodeId.set(std::string("ComplexVariable"), 6);
+		OpcUaByteString::SPtr byteString = constructSPtr<OpcUaByteString>();
+		byteString->value(std::string("Dies ist ein ByteString"));
+		OpcUaExtensionObject::SPtr complexValue = constructSPtr<OpcUaExtensionObject>();
+		complexValue->typeId(OpcUaNodeId(3002,1));
+		complexValue->byteString(byteString);
+
+		dataValue.variant()->variant(complexValue);
 		dataValue.statusCode((OpcUaStatusCode)Success);
 		dataValue.sourceTimestamp(sourceTimestamp);
 		dataValue.serverTimestamp(serverTimestamp);
@@ -109,41 +115,6 @@ class ExampleClient
 		statusCode = client.syncWrite(nodeId, dataValue);
 		if (statusCode != Success) {
 			std::cout << std::endl << "**** write to opc ua server error (Double) ****" << std::endl;
-			return false;
-		}
-		out(dataValue);
-
-		//
-		// write node 204 to namespace 1 (type Int16)
-		//
-		nodeId.set((OpcUaInt32)204, 1);
-		dataValue.variant()->set((OpcUaInt16)66);
-		dataValue.statusCode((OpcUaStatusCode)Success);
-		dataValue.sourceTimestamp(sourceTimestamp);
-		dataValue.serverTimestamp(serverTimestamp);
-
-		statusCode = client.syncWrite(nodeId, dataValue);
-		if (statusCode != Success) {
-			std::cout << std::endl << "**** write to opc ua server error (Int16) ****" << std::endl;
-			return false;
-		}
-		out(dataValue);
-
-
-		//
-		// write node 222 to namespace 1 (type String)
-		//
-		nodeId.set((OpcUaInt32)222, 1);
-		OpcUaString::SPtr strValue = constructSPtr<OpcUaString>();
-		strValue->value("Text1");
-		dataValue.variant()->variant(strValue);
-		dataValue.statusCode((OpcUaStatusCode)Success);
-		dataValue.sourceTimestamp(sourceTimestamp);
-		dataValue.serverTimestamp(serverTimestamp);
-
-		statusCode = client.syncWrite(nodeId, dataValue);
-		if (statusCode != Success) {
-			std::cout << std::endl << "**** write to opc ua server error (String) ****" << std::endl;
 			return false;
 		}
 		out(dataValue);
