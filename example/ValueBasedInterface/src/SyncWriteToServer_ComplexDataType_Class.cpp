@@ -119,6 +119,10 @@ class ExampleClient
 		complexValue->variable2_ = 2.2;
 		complexValue->variable3_.value("Dies ist ein String");
 
+		std::cout << "START...";
+		complexValue->out(std::cout);
+		std::cout << std::endl;
+
 		dataValue.variant()->variant(extObject);
 		dataValue.statusCode((OpcUaStatusCode)Success);
 		dataValue.sourceTimestamp(sourceTimestamp);

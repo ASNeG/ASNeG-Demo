@@ -46,8 +46,8 @@ class MyComplexType
 
 	void copyTo(MyComplexType& myComplexType)
 	{
-		variable1_ = myComplexType.variable1_;
-		variable2_ = myComplexType.variable2_;
+		myComplexType.variable1_ = variable1_;
+		myComplexType.variable2_ = variable2_;
 		variable3_.copyTo(myComplexType.variable3_);
 	}
 	bool operator==(const MyComplexType& myComplexType) const
