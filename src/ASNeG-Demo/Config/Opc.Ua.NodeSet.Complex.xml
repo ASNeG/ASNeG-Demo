@@ -16,11 +16,6 @@
     <Alias Alias="Organizes">i=35</Alias>
     <Alias Alias="String">i=12</Alias>
   </Aliases>
-  <Extensions>
-    <Extension>
-      <ModelInfo Tool="VSoftModeler" Hash="kLUTc0wRgntYsfCr+gseEg==" Version="1.0.0"/>
-    </Extension>
-  </Extensions>
   <UAObject NodeId="ns=1;i=17421" BrowseName="ModellingRules" ParentNodeId="ns=1;i=4827">
     <DisplayName>ModellingRules</DisplayName>
     <Description>A folder for the modelling rules supported by the server.</Description>
@@ -621,13 +616,7 @@
                 <Body>
                   <MyComplex>
                     <Variable1>11.23</Variable1>
-                    <Variable2>
-                      <Double>0</Double>
-                      <Double>1</Double>
-                      <Double>0</Double>
-                      <Double>2</Double>
-                      <Double>0</Double>
-                    </Variable2>
+                    <Variable2>22.34</Variable2>
                     <Variable3>YWJjZA==</Variable3>
                   </MyComplex>
                 </Body>
@@ -643,7 +632,7 @@
     </References>
     <Definition Name="1:MyComplex">
         <Field Name="Variable1" DataType="Double" />
-        <Field Name="Variable2" DataType="Double" ValueRank="1" />
+        <Field Name="Variable2" DataType="Double" />
         <Field Name="Variable3" DataType="ByteString" />
     </Definition>
   </UADataType>
