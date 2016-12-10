@@ -82,7 +82,7 @@
   <Applications>
     <Application>
       <Name>ASNeG-Demo</name>  
-      <Library>OpcUaServerApplicationDemo</Library>
+      <Library>ASNeG-Demo</Library>
       <Config>@CONF_DIR@/ApplicationDemoModel.xml</Config>
     </Application>
   </Applications>
