@@ -19,7 +19,6 @@
 #define REAL_SESSION_NAME "urn:127.0.0.1:ASNeG.de:ASNeG-Client"
 
 #include "OpcUaStackClient/ValueBasedInterface/VBIClient.h"
-#include "MyComplexType.h"
 
 using namespace OpcUaStackClient;
 
@@ -79,19 +78,32 @@ class ExampleClient
 		return true;
 	}
 
-	// -----------------------------------------------------------------------
-	// -----------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	//
-	// register complex type
+	// Decoder DataValue
 	//
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
-	void registerComplexTypes(void)
+	void decodeDataValue(
+		OpcUaExtensionObject::SPtr& complexValue, 	// in
+		OpcUaDouble& variable1,						// out
+		OpcUaDouble& variable2,						// out
+		OpcUaByteString& variable3					// out
+	)
 	{
-		OpcUaExtensionObject eo;
-		eo.registerFactoryElement<MyComplexType>(3002, 1);
-	}
+		char *buffer;
+		int32_t bufferLen;
+		std::stringstream ss;
+		OpcUaByteString::SPtr byteString = complexValue->byteString();
+		byteString->value(&buffer, &bufferLen);
+		std::string str(buffer, bufferLen);
+		ss << str;
 
+		OpcUaNumber::opcUaBinaryDecode(ss, variable1);
+		OpcUaNumber::opcUaBinaryDecode(ss, variable2);
+		variable3.opcUaBinaryDecode(ss);
+	}
 
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
@@ -123,10 +135,22 @@ class ExampleClient
 			std::cout << std::endl << "**** data value build in type error ****" << std::endl;
 			return false;
 		}
+		OpcUaExtensionObject::SPtr complexVariable;
+		complexVariable = dataValue.variant()->variantSPtr<OpcUaExtensionObject>();
 
-		OpcUaExtensionObject::SPtr extObject = dataValue.variant()->variantSPtr<OpcUaExtensionObject>();
-		MyComplexType::SPtr complexValue = extObject->parameter<MyComplexType>(OpcUaNodeId(3002,1));
-		out(dataValue);
+		if (complexVariable->typeId() != OpcUaNodeId(3002, 1)) {
+			std::cout << std::endl << "**** data value type error ****" << std::endl;
+			return false;
+		}
+
+		OpcUaDouble variable1;
+		OpcUaDouble variable2;
+		OpcUaByteString variable3;
+		decodeDataValue(complexVariable, variable1, variable2, variable3);
+
+		std::cout << std::endl << "**** variable1: " << (double)variable1 << " ****" << std::endl;
+		std::cout << std::endl << "**** variable2: " << (double)variable2 << " ****" << std::endl;
+		std::cout << std::endl << "**** variable3: " << variable3.toString() << " ****" << std::endl;
 
 		std::cout << std::endl << "**** read from opc ua server success ****" << std::endl;
 		return true;
@@ -152,9 +176,6 @@ class ExampleClient
 int main(int argc, char**argv)
 {
 	ExampleClient client;
-
-	// register complex type
-	client.registerComplexTypes();
 
 	// connect to the opc ua server
 	if (!client.connectToServer()) return 0;
