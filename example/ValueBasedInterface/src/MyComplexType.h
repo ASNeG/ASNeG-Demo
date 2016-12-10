@@ -32,8 +32,13 @@ class MyComplexType
   public:
 	typedef boost::shared_ptr<MyComplexType> SPtr;
 
-	MyComplexType(void);
-	virtual ~MyComplexType(void);
+	MyComplexType(void)
+	: Object()
+	, variable1_(0.0)
+	, variable2_(0.0)
+	, variable3_()
+	{}
+	virtual ~MyComplexType(void) {}
 
 	OpcUaDouble variable1_;
 	OpcUaDouble variable2_;
