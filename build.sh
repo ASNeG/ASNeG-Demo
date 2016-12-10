@@ -79,8 +79,8 @@ build_local()
 	: ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/install}
 	set -x
 	cmake ../src \
-	    -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} \
-	    "${CMAKE_GENERATOR_LOCAL}" 
+            "${CMAKE_GENERATOR_LOCAL}" \
+	    -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} 
 	set +x
 	if [ $? -ne 0 ] ;
 	then
