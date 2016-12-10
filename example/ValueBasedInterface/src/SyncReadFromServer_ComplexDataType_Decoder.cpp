@@ -54,7 +54,6 @@ class ExampleClient
 		return true;
 	}
 
-
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
 	//
@@ -82,69 +81,78 @@ class ExampleClient
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
 	//
-	// Encode DataValue
+	// Decoder DataValue
 	//
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
-	void encodeDataValue(
-		OpcUaDouble variable1,						// in
-		OpcUaDouble variable2,						// in
-		OpcUaByteString& variable3,					// in
-		OpcUaExtensionObject::SPtr& complexValue 	// out
+	void decodeDataValue(
+		OpcUaExtensionObject::SPtr& complexValue, 	// in
+		OpcUaDouble& variable1,						// out
+		OpcUaDouble& variable2,						// out
+		OpcUaByteString& variable3					// out
 	)
 	{
+		char *buffer;
+		int32_t bufferLen;
 		std::stringstream ss;
-		OpcUaNumber::opcUaBinaryEncode(ss, (OpcUaDouble)variable1);
-		OpcUaNumber::opcUaBinaryEncode(ss, (OpcUaDouble)variable2);
-		variable3.opcUaBinaryEncode(ss);
+		OpcUaByteString::SPtr byteString = complexValue->byteString();
+		byteString->value(&buffer, &bufferLen);
+		std::string str(buffer, bufferLen);
+		ss << str;
 
-		OpcUaByteString::SPtr byteString = constructSPtr<OpcUaByteString>();
-		byteString->value(ss.str().c_str(), ss.str().length());
-		complexValue->typeId(OpcUaNodeId(3002,1));
-		complexValue->byteString(byteString);
+		OpcUaNumber::opcUaBinaryDecode(ss, variable1);
+		OpcUaNumber::opcUaBinaryDecode(ss, variable2);
+		variable3.opcUaBinaryDecode(ss);
 	}
 
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
 	//
-	// write some data values to the opc ua server
+	// read complex data type
 	//
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
-	bool writeToServer(void)
+	bool readFromServer(void)
 	{
 		OpcUaDataValue dataValue;
 		OpcUaStatusCode statusCode;
 		OpcUaNodeId nodeId;
 
-		boost::posix_time::ptime ptime1 = boost::posix_time::from_iso_string("20140506T102013.123456789");
-		boost::posix_time::ptime ptime2 = boost::posix_time::from_iso_string("20140506T102014.123456789");
-		OpcUaDateTime sourceTimestamp, serverTimestamp;
-
 		//
-		// write complex data type
+		// read complex variable
 		//
-		OpcUaDouble variable1 = 1.1;
-		OpcUaDouble variable2 = 2.2;
-		OpcUaByteString variable3;
-		variable3.value("Dies ist ein String");
-		OpcUaExtensionObject::SPtr complexValue = constructSPtr<OpcUaExtensionObject>();
-		encodeDataValue(variable1, variable2, variable3, complexValue);
-
-		dataValue.variant()->variant(complexValue);
-		dataValue.statusCode((OpcUaStatusCode)Success);
-		dataValue.sourceTimestamp(sourceTimestamp);
-		dataValue.serverTimestamp(serverTimestamp);
-
 		nodeId.set(std::string("ComplexVariable"), 6);
-		statusCode = client.syncWrite(nodeId, dataValue);
+
+		statusCode = client.syncRead(nodeId, dataValue);
 		if (statusCode != Success) {
-			std::cout << std::endl << "**** write to opc ua server error (Double) ****" << std::endl;
+			std::cout << std::endl << "**** read from opc ua server error (Double) ****" << std::endl;
 			return false;
 		}
 		out(dataValue);
 
-		std::cout << std::endl << "**** write to opc ua server success ****" << std::endl;
+		// get data variable
+		if (dataValue.variant()->variantType() != OpcUaBuildInType_OpcUaExtensionObject) {
+			std::cout << std::endl << "**** data value build in type error ****" << std::endl;
+			return false;
+		}
+		OpcUaExtensionObject::SPtr complexVariable;
+		complexVariable = dataValue.variant()->variantSPtr<OpcUaExtensionObject>();
+
+		if (complexVariable->typeId() != OpcUaNodeId(3002, 1)) {
+			std::cout << std::endl << "**** data value type error ****" << std::endl;
+			return false;
+		}
+
+		OpcUaDouble variable1;
+		OpcUaDouble variable2;
+		OpcUaByteString variable3;
+		decodeDataValue(complexVariable, variable1, variable2, variable3);
+
+		std::cout << std::endl << "**** variable1: " << (double)variable1 << " ****" << std::endl;
+		std::cout << std::endl << "**** variable2: " << (double)variable2 << " ****" << std::endl;
+		std::cout << std::endl << "**** variable3: " << variable3.toString() << " ****" << std::endl;
+
+		std::cout << std::endl << "**** read from opc ua server success ****" << std::endl;
 		return true;
 	}
 
@@ -172,8 +180,8 @@ int main(int argc, char**argv)
 	// connect to the opc ua server
 	if (!client.connectToServer()) return 0;
 
-	// write data to opc ua server
-	if (!client.writeToServer()) return 0;
+	// read data from opc ua server
+	if (!client.readFromServer()) return 0;
 
 	// disconnect from the opc ua server
 	if (!client.disconnectFromServer()) return 0;

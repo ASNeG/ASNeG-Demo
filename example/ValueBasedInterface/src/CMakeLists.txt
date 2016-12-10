@@ -148,6 +148,18 @@ target_link_libraries(
 )
 
 add_executable(
+    SyncReadFromServer_ComplexDataType_Decoder
+    SyncReadFromServer_ComplexDataType_Decoder.cpp
+)
+
+target_link_libraries(
+    SyncReadFromServer_ComplexDataType_Decoder
+    ${OPCUASTACK_LIBRARY_CORE}
+    ${OPCUASTACK_LIBRARY_CLIENT}
+    ${Boost_LIBRARIES}
+)
+
+add_executable(
     SyncWriteToServer_ComplexDataType_Encoder
     SyncWriteToServer_ComplexDataType_Encoder.cpp
 )
@@ -158,4 +170,3 @@ target_link_libraries(
     ${OPCUASTACK_LIBRARY_CLIENT}
     ${Boost_LIBRARIES}
 )
-
