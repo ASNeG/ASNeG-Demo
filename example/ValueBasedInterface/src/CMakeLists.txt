@@ -97,6 +97,18 @@ target_link_libraries(
     ${Boost_LIBRARIES}
 )
 
+add_executable(
+    SyncMonitoring
+    SyncMonitoring.cpp
+)
+
+target_link_libraries(
+    SyncMonitoring
+    ${OPCUASTACK_LIBRARY_CORE}
+    ${OPCUASTACK_LIBRARY_CLIENT}
+    ${Boost_LIBRARIES}
+)
+
 
 add_executable(
     SyncReadFromServer
