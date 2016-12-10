@@ -102,7 +102,6 @@ class ExampleClient
 	// ------------------------------------------------------------------------
 	bool startMonitoring(void)
 	{
-		VBIClientHandlerTest vbiClientHandlerTest;
 		OpcUaStatusCode statusCode;
 
 		// set data change callback
