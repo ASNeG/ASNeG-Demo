@@ -99,7 +99,7 @@ namespace OpcUaServerApplicationDemo
 			it++
 		)
 		{
-			if (it->second == "http://ASNeG.de/Function/") {
+			if (it->second == "http://ASNeG-Demo.de/Function/") {
 				namespaceIndex_ = it->first;
 
 				func1_.set(std::string("func1"), namespaceIndex_);
@@ -111,7 +111,7 @@ namespace OpcUaServerApplicationDemo
  		}
 
 		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG.de/Function/");
+	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Function/");
 
 		return false;
 	}

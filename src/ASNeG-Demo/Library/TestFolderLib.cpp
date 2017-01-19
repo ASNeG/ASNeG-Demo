@@ -113,7 +113,7 @@ namespace OpcUaServerApplicationDemo
 			it++
 		)
 		{
-			if (it->second == "http://yourorganisation.org/Test-Server-Lib/") {
+			if (it->second == "http://ASNeG-Demo.de/Test-Server-Lib/") {
 				namespaceIndex_ = it->first;
 			}
  		}

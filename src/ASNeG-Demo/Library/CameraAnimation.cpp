@@ -123,14 +123,14 @@ namespace OpcUaServerApplicationDemo
 			it++
 		)
 		{
-			if (it->second == "http://ASNeG.de/Camera/") {
+			if (it->second == "http://ASNeG-Demo.de/Camera/") {
 				namespaceIndex_ = it->first;
 				return true;
 			}
  		}
 
 		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG.de/Camera/");
+	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Camera/");
 
 		return false;
 	}
