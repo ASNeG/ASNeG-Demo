@@ -81,7 +81,7 @@ build_local()
 	cmake ../src \
             "${CMAKE_GENERATOR_LOCAL}" \
 	    -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} 
-        RESULT = $?
+        RESULT=$?
 	set +x
 	if [ ${RESULT} -ne 0 ] ;
 	then
@@ -90,7 +90,7 @@ build_local()
 	fi
     else
         cmake .
-	RESULT = $?
+	RESULT=$?
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -157,7 +157,7 @@ build_deb()
 	    "${CMAKE_GENERATOR_LOCAL}" \
 	    "-DCPACK_BINARY_DEB=1" \
 	    "-DCPACK_BINARY_RPM=0" 
-        RESULT = $?
+        RESULT=$?
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -165,7 +165,7 @@ build_deb()
 	fi
     else
         cmake .
-	RESULT = $?
+	RESULT=$?
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -174,7 +174,7 @@ build_deb()
     fi
 
     make package
-    RESULT = $?
+    RESULT=$?
     if [ ${RESULT} -ne 0 ] ;
     then
         echo "make package error"
@@ -232,7 +232,7 @@ build_rpm()
 	    "${CMAKE_GENERATOR_LOCAL}" \
 	    "-DCPACK_BINARY_DEB=0" \
 	    "-DCPACK_BINARY_RPM=1"
-        RESULT = $?
+        RESULT=$?
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -240,7 +240,7 @@ build_rpm()
 	fi
     else
         cmake .
-        RESULT = $?
+        RESULT=$?
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -249,7 +249,7 @@ build_rpm()
     fi
 
     make package
-    RESULT = $?
+    RESULT=$?
     if [ ${RESULT} -ne 0 ] ;
     then
         echo "make package error"
@@ -298,7 +298,7 @@ build_tst()
             -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} \
   	    "${CMAKE_GENERATOR_LOCAL}" \
 	    -DOPCUASTACK_INSTALL_PREFIX="${HOME}/install"
-        RESULT = $?
+        RESULT=$?
         if [ ${RESULT} -ne 0 ] ;
         then
             echo "cmake error"
@@ -306,7 +306,7 @@ build_tst()
         fi
     else 
         cmake .
-        RESULT = $?
+        RESULT=$?
         if [ ${RESULT} -ne 0 ] ;
         then
             echo "cmake error"
@@ -315,7 +315,7 @@ build_tst()
     fi
 
     make 
-    RESULT = $?
+    RESULT=$?
     if [ ${RESULT} -ne 0 ] ;
     then
         echo "make error"
