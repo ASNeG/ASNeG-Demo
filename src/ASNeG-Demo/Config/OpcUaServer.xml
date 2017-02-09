@@ -32,11 +32,11 @@
   
   <Endpoints>
     <EndpointDescription>
-	  <EndpointUrl>opc.tcp://0.0.0.0:8889/0.0.0.0</EndpointUrl>
-	  <ApplicationUri>urn:localhost:OpcUaServer::TestAppl</ApplicationUri>
-	  <ProductUri>urn:company:OpcUaServer</ProductUri>
-	  <ApplicationName>OpcUaServer</ApplicationName>
-	  <DiscoveryUrl>opc.tcp://localhost:4841/0.0.0.0</DiscoveryUrl>	
+	  <EndpointUrl>opc.tcp://0.0.0.0:8889</EndpointUrl>
+	  <ApplicationUri>urn:0.0.0.0:ASNeG.de::ASNeG-Demo</ApplicationUri>
+	  <ProductUri>urn:ASNeG.de:ASNeG-Demo</ProductUri>
+	  <ApplicationName>ASNeG-Demo</ApplicationName>
+	  <DiscoveryUrl>opc.tcp://localhost:4841</DiscoveryUrl>	
 	  <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
 	  <UserTokenPolicy>
 	    <PolicyId>OpcUaStack</PolicyId>
