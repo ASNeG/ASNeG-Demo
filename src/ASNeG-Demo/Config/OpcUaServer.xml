@@ -32,6 +32,7 @@
   
   <DiscoveryServer>
       <DiscoveryUrl>opc.tcp://localhost:4840</DiscoveryUrl>
+      <RegisterInterval>40000</RegisterInterval>
   </DiscoveryServer>
   
   <Endpoints>
