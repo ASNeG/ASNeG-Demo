@@ -21,6 +21,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include <iostream>
+#include "BuildConfig.h"
 
 namespace OpcUaServerApplicationDemo
 {
@@ -31,12 +32,10 @@ namespace OpcUaServerApplicationDemo
 	, testFolderLib_()
 	, function_()
 	{
-		Log(Debug, "DemoLibrary::DemoLibrary");
 	}
 
 	DemoLibrary::~DemoLibrary(void)
 	{
-		Log(Debug, "DemoLibrary::~DemoLibrary");
 	}
 
 	bool
@@ -62,6 +61,15 @@ namespace OpcUaServerApplicationDemo
 		ioThread_.shutdown();
 
 		return true;
+	}
+
+	std::string
+	DemoLibrary::version(void)
+	{
+		std::stringstream version;
+
+		version << LIBRARY_VERSION_MAJOR << "." << LIBRARY_VERSION_MINOR << "." << LIBRARY_VERSION_PATCH;
+		return version.str();
 	}
 
 }

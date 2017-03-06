@@ -6,6 +6,11 @@
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 configure_file(
+    "${PROJECT_SOURCE_DIR}/ASNeG-Demo/Build/BuildConfig.h.in"
+    "${PROJECT_BINARY_DIR}/BuildConfig.h"
+)
+
+configure_file(
     "${PROJECT_SOURCE_DIR}/ASNeG-Demo/linux/etc/init/ASNeG-Demo.conf.in"
     "${PROJECT_BINARY_DIR}/ASNeG-Demo.conf"
 )
@@ -30,6 +35,7 @@ configure_file(
 # -----------------------------------------------------------------------------
 include_directories(
     ${OPCUASTACK_INSTALL_PREFIX}/usr/include/OpcUaStack${OPCUASTACK_VERSION_MAJOR}
+    ${PROJECT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR}
     ${Boost_INCLUDE_DIR}
     ${OPENSSL_INCLUDE_DIR}
