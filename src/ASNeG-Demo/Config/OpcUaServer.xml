@@ -87,7 +87,7 @@
   
   <Applications>
     <Application>
-      <Name>ASNeG-Demo</name>  
+      <Name>ASNeG-Demo</Name>  
       <Library>ASNeG-Demo</Library>
       <Config>@CONF_DIR@/ApplicationDemoModel.xml</Config>
     </Application>
