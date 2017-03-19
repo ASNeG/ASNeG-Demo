@@ -18,7 +18,7 @@
     </Aliases>
     <Extensions>
         <Extension>
-            <ModelInfo Tool="UaModeler" Hash="5nhl7esCRal19RUW2kgUWw==" Version="1.4.1"/>
+            <ModelInfo Tool="UaModeler" Hash="UPReljlyRW0Ivg/nLiFDQQ==" Version="1.4.1"/>
         </Extension>
     </Extensions>
     <UADataType NodeId="ns=1;i=3002" BrowseName="1:ModelConfigDataType">
@@ -169,15 +169,86 @@
     <UAObject NodeId="ns=1;i=5002" BrowseName="1:StructureExample">
         <DisplayName>StructureExample</DisplayName>
         <References>
-            <Reference ReferenceType="Organizes">ns=1;i=6017</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
-            <Reference ReferenceType="Organizes">ns=1;i=5003</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ModelConfigFolder</Reference>
             <Reference ReferenceType="Organizes">ns=1;i=5004</Reference>
+            <Reference ReferenceType="Organizes">ns=1;i=6008</Reference>
             <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
         </References>
     </UAObject>
-    <UAVariable DataType="ModelConfigDataType" NodeId="ns=1;i=6017" BrowseName="1:ModelConfigValue" UserAccessLevel="3" AccessLevel="3">
-        <DisplayName>ModelConfigValue</DisplayName>
+    <UAObject NodeId="ns=1;s=ModelConfigFolder" BrowseName="1:ModelConfigFolder">
+        <DisplayName>ModelConfigFolder</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ConfigValue1</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ConfigValue2</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ConfigValue3</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Double" NodeId="ns=1;s=ConfigValue1" BrowseName="1:ConfigValue1" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>ConfigValue1</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ModelConfigFolder</Reference>
+        </References>
+        <Value>
+            <uax:Double>0</uax:Double>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Double" NodeId="ns=1;s=ConfigValue2" BrowseName="1:ConfigValue2" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>ConfigValue2</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ModelConfigFolder</Reference>
+        </References>
+        <Value>
+            <uax:Double>0</uax:Double>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Double" NodeId="ns=1;s=ConfigValue3" BrowseName="1:ConfigValue3" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>ConfigValue3</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ModelConfigFolder</Reference>
+        </References>
+        <Value>
+            <uax:Double>0</uax:Double>
+        </Value>
+    </UAVariable>
+    <UAObject NodeId="ns=1;i=5004" BrowseName="1:ModelConfigObject">
+        <DisplayName>ModelConfigObject</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=6001</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;i=6003</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">ns=1;i=1002</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Double" ParentNodeId="ns=1;i=5004" NodeId="ns=1;i=6001" BrowseName="1:ConfigValue1" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>ConfigValue1</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5004</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Double" ParentNodeId="ns=1;i=5004" NodeId="ns=1;i=6002" BrowseName="1:ConfigValue2" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>ConfigValue2</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5004</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Double" ParentNodeId="ns=1;i=5004" NodeId="ns=1;i=6003" BrowseName="1:ConfigValue3" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>ConfigValue3</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5004</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ModelConfigDataType" NodeId="ns=1;i=6008" BrowseName="1:ModelConfigVariable" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>ModelConfigVariable</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
             <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
@@ -196,68 +267,6 @@
                 </uax:Body>
             </uax:ExtensionObject>
         </Value>
-    </UAVariable>
-    <UAObject NodeId="ns=1;i=5003" BrowseName="1:ModelConfigFolder">
-        <DisplayName>ModelConfigFolder</DisplayName>
-        <References>
-            <Reference ReferenceType="HasComponent">ns=1;i=6001</Reference>
-            <Reference ReferenceType="HasComponent">ns=1;i=6002</Reference>
-            <Reference ReferenceType="HasComponent">ns=1;i=6003</Reference>
-            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
-            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
-        </References>
-    </UAObject>
-    <UAVariable DataType="Double" NodeId="ns=1;i=6001" BrowseName="1:ConfigValue1" UserAccessLevel="3" AccessLevel="3">
-        <DisplayName>ConfigValue1</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="Double" NodeId="ns=1;i=6002" BrowseName="1:ConfigValue2" UserAccessLevel="3" AccessLevel="3">
-        <DisplayName>ConfigValue2</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="Double" NodeId="ns=1;i=6003" BrowseName="1:ConfigValue3" UserAccessLevel="3" AccessLevel="3">
-        <DisplayName>ConfigValue3</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAObject NodeId="ns=1;i=5004" BrowseName="1:ModelConfigObject">
-        <DisplayName>ModelConfigObject</DisplayName>
-        <References>
-            <Reference ReferenceType="HasComponent">ns=1;i=6007</Reference>
-            <Reference ReferenceType="HasComponent">ns=1;i=6008</Reference>
-            <Reference ReferenceType="HasComponent">ns=1;i=6009</Reference>
-            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
-            <Reference ReferenceType="HasTypeDefinition">ns=1;i=1002</Reference>
-        </References>
-    </UAObject>
-    <UAVariable DataType="Double" ParentNodeId="ns=1;i=5004" NodeId="ns=1;i=6007" BrowseName="1:ConfigValue1" UserAccessLevel="3" AccessLevel="3">
-        <DisplayName>ConfigValue1</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5004</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="Double" ParentNodeId="ns=1;i=5004" NodeId="ns=1;i=6008" BrowseName="1:ConfigValue2" UserAccessLevel="3" AccessLevel="3">
-        <DisplayName>ConfigValue2</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5004</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="Double" ParentNodeId="ns=1;i=5004" NodeId="ns=1;i=6009" BrowseName="1:ConfigValue3" UserAccessLevel="3" AccessLevel="3">
-        <DisplayName>ConfigValue3</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5004</Reference>
-        </References>
     </UAVariable>
     <UAObject SymbolicName="DefaultBinary" NodeId="ns=1;i=5001" BrowseName="Default Binary">
         <DisplayName>Default Binary</DisplayName>
