@@ -1,0 +1,19 @@
+###########################
+# UaModeler Project File  #
+# Generated at 19.03.2017 #
+###########################
+
+PROJECTNAME = StructureExample
+
+TEMPLATESET = ($TEMPLATES)/modeling/v1_0/t0/modeling.tt2set
+
+MODELS += ($MODELS)/Opc.Ua.NodeSet2.ua \
+    structureexample.ua
+
+COLORS = ($MODELS)/Opc.Ua.NodeSet2.ua: #0000ff\
+    structureexample.ua: #008000
+
+OUTPUTPATH = 
+
+GENERATE += structureexample.ua
+

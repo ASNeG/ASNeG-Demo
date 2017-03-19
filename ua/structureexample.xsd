@@ -1,0 +1,17 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://BakerHughes/StructureExample/Types.xsd" xmlns:tns="http://BakerHughes/StructureExample/Types.xsd" xmlns:ua="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://opcfoundation.org/UA/2008/02/Types.xsd"/>
+    <xs:complexType name="ModelConfigDataType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" type="xs:double" name="ConfigValue1"/>
+            <xs:element minOccurs="0" maxOccurs="1" type="xs:double" name="ConfigValue2"/>
+            <xs:element minOccurs="0" maxOccurs="1" type="xs:double" name="ConfigValue3"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="tns:ModelConfigDataType" name="ModelConfigDataType"/>
+    <xs:complexType name="ListOfModelConfigDataType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" type="tns:ModelConfigDataType" name="ModelConfigDataType" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="tns:ListOfModelConfigDataType" name="ListOfModelConfigDataType" nillable="true"/>
+</xs:schema>
