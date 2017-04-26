@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2017 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -122,10 +122,10 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "register method callbacks");
 
 	  	ServiceTransactionRegisterForward::SPtr trx = constructSPtr<ServiceTransactionRegisterForward>();
-	  	RegisterForwardRequest::SPtr req = trx->request();
-	  	RegisterForwardResponse::SPtr res = trx->response();
+	  	RegisterForwardNodeRequest::SPtr req = trx->request();
+	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardInfoSync()->methodService().setCallback(methodCallback_);
+	  	req->forwardCallbackSync()->methodService().setCallback(methodCallback_);
 	  	req->nodesToRegister()->resize(1);
 
 	  	OpcUaNodeId::SPtr nodeId;

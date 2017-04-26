@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2017 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -410,11 +410,11 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::registerCallbacks(void)
 	{
 	  	ServiceTransactionRegisterForward::SPtr trx = constructSPtr<ServiceTransactionRegisterForward>();
-	  	RegisterForwardRequest::SPtr req = trx->request();
-	  	RegisterForwardResponse::SPtr res = trx->response();
+	  	RegisterForwardNodeRequest::SPtr req = trx->request();
+	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardInfoSync()->readService().setCallback(readCallback_);
-	  	req->forwardInfoSync()->writeService().setCallback(writeCallback_);
+	  	req->forwardCallbackSync()->readService().setCallback(readCallback_);
+	  	req->forwardCallbackSync()->writeService().setCallback(writeCallback_);
 	  	req->nodesToRegister()->resize(valueMap_.size());
 
 	  	uint32_t pos = 0;
@@ -452,11 +452,11 @@ namespace OpcUaServerApplicationDemo
 	  	nodeId->set(3, namespaceIndex_);
 
 	  	ServiceTransactionRegisterForward::SPtr trx = constructSPtr<ServiceTransactionRegisterForward>();
-	  	RegisterForwardRequest::SPtr req = trx->request();
-	  	RegisterForwardResponse::SPtr res = trx->response();
+	  	RegisterForwardNodeRequest::SPtr req = trx->request();
+	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardInfoSync()->readService().setCallback(readLoopTimeCallback_);
-	  	req->forwardInfoSync()->writeService().setCallback(writeLoopTimeCallback_);
+	  	req->forwardCallbackSync()->readService().setCallback(readLoopTimeCallback_);
+	  	req->forwardCallbackSync()->writeService().setCallback(writeLoopTimeCallback_);
 	  	req->nodesToRegister()->resize(1);
 	  	req->nodesToRegister()->set(0, nodeId);
 
