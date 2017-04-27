@@ -409,7 +409,7 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::registerCallbacks(void)
 	{
-	  	ServiceTransactionRegisterForward::SPtr trx = constructSPtr<ServiceTransactionRegisterForward>();
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
@@ -451,7 +451,7 @@ namespace OpcUaServerApplicationDemo
 	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
 	  	nodeId->set(3, namespaceIndex_);
 
-	  	ServiceTransactionRegisterForward::SPtr trx = constructSPtr<ServiceTransactionRegisterForward>();
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 

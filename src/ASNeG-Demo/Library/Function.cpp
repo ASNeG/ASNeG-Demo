@@ -121,7 +121,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "register method callbacks");
 
-	  	ServiceTransactionRegisterForward::SPtr trx = constructSPtr<ServiceTransactionRegisterForward>();
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
