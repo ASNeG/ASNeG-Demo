@@ -41,7 +41,7 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		bool getNamespaceInfo(void);
-		bool registerCallbacks();
+		bool registerCallbacks(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId);
 		void method(ApplicationMethodContext* applicationMethodContext);
 
 		IOThread* ioThread_;
