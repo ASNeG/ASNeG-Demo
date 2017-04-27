@@ -125,7 +125,7 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardCallbackSync()->methodService().setCallback(methodCallback_);
+	  	req->forwardNodeSync()->methodService().setCallback(methodCallback_);
 	  	req->nodesToRegister()->resize(1);
 
 	  	OpcUaNodeId::SPtr nodeId;

@@ -413,8 +413,8 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardCallbackSync()->readService().setCallback(readCallback_);
-	  	req->forwardCallbackSync()->writeService().setCallback(writeCallback_);
+	  	req->forwardNodeSync()->readService().setCallback(readCallback_);
+	  	req->forwardNodeSync()->writeService().setCallback(writeCallback_);
 	  	req->nodesToRegister()->resize(valueMap_.size());
 
 	  	uint32_t pos = 0;
@@ -455,8 +455,8 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardCallbackSync()->readService().setCallback(readLoopTimeCallback_);
-	  	req->forwardCallbackSync()->writeService().setCallback(writeLoopTimeCallback_);
+	  	req->forwardNodeSync()->readService().setCallback(readLoopTimeCallback_);
+	  	req->forwardNodeSync()->writeService().setCallback(writeLoopTimeCallback_);
 	  	req->nodesToRegister()->resize(1);
 	  	req->nodesToRegister()->set(0, nodeId);
 
