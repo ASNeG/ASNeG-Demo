@@ -1,0 +1,61 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://yourorganisation.org/NodeSetExample/Types.xsd" xmlns:tns="http://yourorganisation.org/NodeSetExample/Types.xsd" xmlns:ua="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:import namespace="http://opcfoundation.org/UA/2008/02/Types.xsd"/>
+    <xs:simpleType name="EnumGapType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Enum1_-1"/>
+            <xs:enumeration value="Enum2_3"/>
+            <xs:enumeration value="Enum3_5"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element type="tns:EnumGapType" name="EnumGapType"/>
+    <xs:complexType name="ListOfEnumGapType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" type="tns:EnumGapType" name="EnumGapType" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="tns:ListOfEnumGapType" name="ListOfEnumGapType" nillable="true"/>
+    <xs:simpleType name="EnumSimpleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Enum1_0"/>
+            <xs:enumeration value="Enum2_1"/>
+            <xs:enumeration value="Enum3_2"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element type="tns:EnumSimpleType" name="EnumSimpleType"/>
+    <xs:complexType name="ListOfEnumSimpleType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" type="tns:EnumSimpleType" name="EnumSimpleType" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="tns:ListOfEnumSimpleType" name="ListOfEnumSimpleType" nillable="true"/>
+    <xs:complexType name="MyComplexStructureType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" type="xs:double" name="Element1"/>
+            <xs:element minOccurs="0" maxOccurs="1" type="tns:MyStructureType" name="Element2"/>
+            <xs:element minOccurs="0" maxOccurs="1" type="tns:EnumSimpleType" name="Element3"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="tns:MyComplexStructureType" name="MyComplexStructureType"/>
+    <xs:complexType name="ListOfMyComplexStructureType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" type="tns:MyComplexStructureType" name="MyComplexStructureType" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="tns:ListOfMyComplexStructureType" name="ListOfMyComplexStructureType" nillable="true"/>
+    <xs:complexType name="MyStructureType">
+        <xs:sequence>
+            <xs:element minOccurs="0" type="xs:unsignedInt" name="EncodingMask"/>
+            <xs:element minOccurs="0" maxOccurs="1" type="xs:double" name="Element1"/>
+            <xs:element minOccurs="0" maxOccurs="1" type="xs:double" name="Element2"/>
+            <xs:element minOccurs="0" maxOccurs="1" type="xs:double" name="Element3"/>
+        </xs:sequence>
+        <xs:attribute name="EncodingTable" fixed="Element3:0"/>
+    </xs:complexType>
+    <xs:element type="tns:MyStructureType" name="MyStructureType"/>
+    <xs:complexType name="ListOfMyStructureType">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" type="tns:MyStructureType" name="MyStructureType" nillable="true"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element type="tns:ListOfMyStructureType" name="ListOfMyStructureType" nillable="true"/>
+</xs:schema>

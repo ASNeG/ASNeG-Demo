@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2017 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -61,9 +61,17 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		// register function callbacks
-		if (!registerCallbacks()) {
-			return false;
-		}
+		OpcUaNodeId object("Function", namespaceIndex_);
+		OpcUaNodeId method;
+
+		method.set("func1", namespaceIndex_);
+		if (!registerCallbacks(object, method)) return false;
+		method.set("func2", namespaceIndex_);
+		if (!registerCallbacks(object, method)) return false;
+		method.set("func3", namespaceIndex_);
+		if (!registerCallbacks(object, method)) return false;
+		method.set("funcMult", namespaceIndex_);
+		if (!registerCallbacks(object, method)) return false;
 
 		return true;
 	}
@@ -117,23 +125,17 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	bool
-	Function::registerCallbacks(void)
+	Function::	(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId)
 	{
 		Log(Debug, "register method callbacks");
 
-	  	ServiceTransactionRegisterForward::SPtr trx = constructSPtr<ServiceTransactionRegisterForward>();
-	  	RegisterForwardRequest::SPtr req = trx->request();
-	  	RegisterForwardResponse::SPtr res = trx->response();
+	  	ServiceTransactionRegisterForwardMethod::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardMethod>();
+	  	RegisterForwardMethodRequest::SPtr req = trx->request();
+	  	RegisterForwardMethodResponse::SPtr res = trx->response();
 
-	  	req->forwardInfoSync()->methodService().setCallback(methodCallback_);
-	  	req->nodesToRegister()->resize(1);
-
-	  	OpcUaNodeId::SPtr nodeId;
-
-	  	// add func1
-	  	nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set(std::string("Function"), namespaceIndex_);
-	  	req->nodesToRegister()->push_back(nodeId);
+	  	req->forwardMethodSync()->methodService().setCallback(methodCallback_);
+	  	req->objectNodeId(objectNodeId);
+	  	req->methodNodeId(methodNodeId);
 
 	  	applicationServiceIf_->sendSync(trx);
 	  	if (trx->statusCode() != Success) {
@@ -141,13 +143,9 @@ namespace OpcUaServerApplicationDemo
 	  		return false;
 	  	}
 
-	  	for (uint32_t pos = 0; pos < res->statusCodeArray()->size(); pos++) {
-	  		OpcUaStatusCode statusCode;
-	  		res->statusCodeArray()->get(pos, statusCode);
-	  		if (statusCode != Success) {
-	  			std::cout << "register value error" << std::endl;
-	  			return false;
-	  		}
+	  	if (res->statusCode() != Success) {
+  			std::cout << "register value error" << std::endl;
+  			return false;
 	  	}
 
 		return true;

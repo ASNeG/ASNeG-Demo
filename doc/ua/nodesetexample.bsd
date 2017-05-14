@@ -1,0 +1,25 @@
+<opc:TypeDictionary xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://yourorganisation.org/NodeSetExample/" DefaultByteOrder="LittleEndian" xmlns:opc="http://opcfoundation.org/BinarySchema/" xmlns:ua="http://opcfoundation.org/UA/" TargetNamespace="http://yourorganisation.org/NodeSetExample/">
+    <opc:Import Namespace="http://opcfoundation.org/UA/"/>
+    <opc:StructuredType BaseType="ua:ExtensionObject" Name="MyComplexStructureType">
+        <opc:Field TypeName="opc:Double" Name="Element1"/>
+        <opc:Field TypeName="tns:MyStructureType" Name="Element2"/>
+        <opc:Field TypeName="tns:EnumSimpleType" Name="Element3"/>
+    </opc:StructuredType>
+    <opc:StructuredType BaseType="ua:ExtensionObject" Name="MyStructureType">
+        <opc:Field TypeName="opc:Bit" Name="Element3Specified"/>
+        <opc:Field Length="31" TypeName="opc:Bit" Name="Reserved1"/>
+        <opc:Field TypeName="opc:Double" Name="Element1"/>
+        <opc:Field TypeName="opc:Double" Name="Element2"/>
+        <opc:Field SwitchField="Element3Specified" TypeName="opc:Double" Name="Element3"/>
+    </opc:StructuredType>
+    <opc:EnumeratedType LengthInBits="32" Name="EnumGapType">
+        <opc:EnumeratedValue Name="Enum1" Value="-1"/>
+        <opc:EnumeratedValue Name="Enum2" Value="3"/>
+        <opc:EnumeratedValue Name="Enum3" Value="5"/>
+    </opc:EnumeratedType>
+    <opc:EnumeratedType LengthInBits="32" Name="EnumSimpleType">
+        <opc:EnumeratedValue Name="Enum1" Value="0"/>
+        <opc:EnumeratedValue Name="Enum2" Value="1"/>
+        <opc:EnumeratedValue Name="Enum3" Value="2"/>
+    </opc:EnumeratedType>
+</opc:TypeDictionary>
