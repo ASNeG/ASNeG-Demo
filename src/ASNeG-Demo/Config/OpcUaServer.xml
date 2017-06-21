@@ -103,6 +103,7 @@
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Function.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Complex.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.StructureExample.xml</NodeSetFile>
+    <NodeSetFile>@CONF_DIR@/Opc.Ua.StatusCode.NodeSet.xml</NodeSetFile>
   </InformationModel>
 
 </OpcUaServer>

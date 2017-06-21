@@ -125,7 +125,7 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	bool
-	Function::	(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId)
+	Function::registerCallbacks(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId)
 	{
 		Log(Debug, "register method callbacks");
 
