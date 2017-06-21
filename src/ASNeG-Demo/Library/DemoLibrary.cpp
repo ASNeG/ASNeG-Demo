@@ -1,5 +1,5 @@
 /*
-   Copyright 2015 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2017 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -45,6 +45,7 @@ namespace OpcUaServerApplicationDemo
 
 		ioThread_.startup();
 		testFolderLib_.startup(ioThread_, service(), applicationInfo());
+		testStatusCode_.startup(ioThread_, service(), applicationInfo());
 		cameraAnimation_.startup(ioThread_, service(), applicationInfo());
 		function_.startup(ioThread_, service(), applicationInfo());
 		return true;
@@ -57,6 +58,7 @@ namespace OpcUaServerApplicationDemo
 
 		function_.shutdown();
 		cameraAnimation_.shutdown();
+		testStatusCode_.shutdown();
 		testFolderLib_.shutdown();
 		ioThread_.shutdown();
 

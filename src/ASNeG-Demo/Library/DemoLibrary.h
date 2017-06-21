@@ -27,6 +27,7 @@
 #include "ASNeG-Demo/Library/CameraAnimation.h"
 #include "ASNeG-Demo/Library/Function.h"
 #include "ASNeG-Demo/Library/TestFolderLib.h"
+#include "ASNeG-Demo/Library/TestStatusCode.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -50,6 +51,7 @@ namespace OpcUaServerApplicationDemo
 	  private:
 		CameraAnimation cameraAnimation_;
 		TestFolderLib testFolderLib_;
+		TestStatusCode testStatusCode_;
 		Function function_;
 
 		IOThread ioThread_;
