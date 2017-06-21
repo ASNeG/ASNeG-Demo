@@ -35,6 +35,8 @@ namespace OpcUaServerApplicationDemo
 	, valueMap_()
 	, ioThread_()
 	, slotTimerElement_()
+	, switchTime_(boost::posix_time::microsec_clock::universal_time())
+	, statusCode_(Success)
 	{
 		Log(Debug, "TestStatusCode::TestStatusCode");
 
@@ -599,14 +601,23 @@ namespace OpcUaServerApplicationDemo
 	void
 	TestStatusCode::timerLoop(void)
 	{
+		boost::posix_time::ptime now = boost::posix_time::microsec_clock::universal_time();
+		if (now > (switchTime_ + boost::posix_time::seconds(5))) {
+			switchTime_ = boost::posix_time::microsec_clock::universal_time();
+			if (statusCode_ == Success) {
+				statusCode_ = BadNotConnected;
+			}
+			else if (statusCode_ == BadNotConnected) {
+				statusCode_ = Success;
+			}
+		}
+
 	  	ValueMap::iterator it1;
 	  	for (it1 = valueMap_.begin(); it1 != valueMap_.end(); it1++) {
 
 	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
 	  		OpcUaDataValue::SPtr dataValue = it1->second;
 	  		*nodeId = it1->first;
-
-	  		//std::cout << "update " << *nodeId << std::endl;
 
 	  		BaseNodeClassWMap::iterator it2;
 	  		it2 = baseNodeClassWMap_.find(*nodeId);
@@ -644,7 +655,11 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	void
-	TestStatusCode::updateSingle(const OpcUaNodeId& nodeId, const OpcUaDataValue::SPtr dataValue, const BaseNodeClass::SPtr baseNodeClass)
+	TestStatusCode::updateSingle(
+		const OpcUaNodeId& nodeId,
+		const OpcUaDataValue::SPtr dataValue,
+		const BaseNodeClass::SPtr baseNodeClass
+	)
 	{
 		switch (dataValue->variant()->variantType())
 		{
@@ -808,12 +823,16 @@ namespace OpcUaServerApplicationDemo
 		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
 		dataValue->serverTimestamp(dateTime);
 		dataValue->sourceTimestamp(dateTime);
-		dataValue->statusCode(Success);
+		dataValue->statusCode(statusCode_);
 		baseNodeClass->setValue(*dataValue);
 	}
 
 	void
-	TestStatusCode::updateArray(const OpcUaNodeId& nodeId, const OpcUaDataValue::SPtr dataValue, const BaseNodeClass::SPtr baseNodeClass)
+	TestStatusCode::updateArray(
+		const OpcUaNodeId& nodeId,
+		const OpcUaDataValue::SPtr dataValue,
+		const BaseNodeClass::SPtr baseNodeClass
+	)
 	{
 		switch (dataValue->variant()->variantType())
 		{
@@ -996,7 +1015,7 @@ namespace OpcUaServerApplicationDemo
 		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
 		dataValue->serverTimestamp(dateTime);
 		dataValue->sourceTimestamp(dateTime);
-		dataValue->statusCode(Success);
+		dataValue->statusCode(statusCode_);
 		baseNodeClass->setValue(*dataValue);
 	}
 

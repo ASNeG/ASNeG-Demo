@@ -62,6 +62,8 @@ namespace OpcUaServerApplicationDemo
 
 		uint32_t namespaceIndex_;
 		OpcUaDataValue::SPtr loopTime_;
+		boost::posix_time::ptime switchTime_;
+		OpcUaStatusCode statusCode_;
 		Callback readCallback_;
 		Callback readLoopTimeCallback_;
 		Callback writeCallback_;
