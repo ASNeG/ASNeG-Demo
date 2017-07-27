@@ -41,8 +41,11 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		bool getNamespaceInfo(void);
+		void startTimerLoop(void);
+		void timerLoop(void);
 
 		IOThread* ioThread_;
+		SlotTimerElement::SPtr slotTimerElement_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
 

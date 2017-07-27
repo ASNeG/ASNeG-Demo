@@ -28,6 +28,7 @@
 #include "ASNeG-Demo/Library/Function.h"
 #include "ASNeG-Demo/Library/TestFolderLib.h"
 #include "ASNeG-Demo/Library/TestStatusCode.h"
+#include "ASNeG-Demo/Library/Event.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -53,6 +54,7 @@ namespace OpcUaServerApplicationDemo
 		TestFolderLib testFolderLib_;
 		TestStatusCode testStatusCode_;
 		Function function_;
+		Event event_;
 
 		IOThread ioThread_;
 	};

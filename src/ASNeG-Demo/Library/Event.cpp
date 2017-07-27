@@ -58,6 +58,8 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+		startTimerLoop();
+
 		return true;
 	}
 
@@ -102,6 +104,35 @@ namespace OpcUaServerApplicationDemo
 	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Event/");
 
 		return false;
+	}
+
+	void
+	Event::startTimerLoop(void)
+	{
+		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_->callback().reset(boost::bind(&Event::timerLoop, this));
+		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 5000);
+		ioThread_->slotTimer()->start(slotTimerElement_);
+	}
+
+	void
+	Event::timerLoop(void)
+	{
+		EventBase::SPtr eventBase;
+
+		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
+		FireEventRequest::SPtr req = trx->request();
+		FireEventResponse::SPtr res = trx->response();
+
+		// event on node Event11
+		eventBase = constructSPtr<EventBase>();
+		req->nodeId().set("Event11", namespaceIndex_);
+		req->eventBase(eventBase);
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			  std::cout << "event response error" << std::endl;
+		}
 	}
 
 }
