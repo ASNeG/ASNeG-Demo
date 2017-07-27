@@ -1,0 +1,69 @@
+<UANodeSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:s1="http://ASNeG-Demo.de/Event/Types.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <NamespaceUris>
+        <Uri>http://ASNeG-Demo.de/Event/</Uri>
+    </NamespaceUris>
+    <Aliases>
+        <Alias Alias="Organizes">i=35</Alias>
+        <Alias Alias="HasTypeDefinition">i=40</Alias>
+    </Aliases>
+    <Extensions>
+        <Extension>
+            <ModelInfo Tool="UaModeler" Hash="8sEKa2oog67nLCMb46PWUQ==" Version="1.4.1"/>
+        </Extension>
+    </Extensions>
+    <UAObject NodeId="ns=1;s=Event" BrowseName="1:Event">
+        <DisplayName>Event</DisplayName>
+        <References>
+            <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=EventGroup1</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=EventGroup2</Reference>
+        </References>
+    </UAObject>
+    <UAObject EventNotifier="1" NodeId="ns=1;s=EventGroup1" BrowseName="1:EventGroup1">
+        <DisplayName>EventGroup1</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=Event11</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=Event12</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=Event</Reference>
+        </References>
+    </UAObject>
+    <UAObject EventNotifier="1" NodeId="ns=1;s=Event11" BrowseName="1:Event11">
+        <DisplayName>Event11</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=EventGroup1</Reference>
+        </References>
+    </UAObject>
+    <UAObject EventNotifier="1" NodeId="ns=1;s=Event12" BrowseName="1:Event12">
+        <DisplayName>Event12</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=EventGroup1</Reference>
+        </References>
+    </UAObject>
+    <UAObject EventNotifier="1" NodeId="ns=1;s=EventGroup2" BrowseName="1:EventGroup2">
+        <DisplayName>EventGroup2</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=Event21</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=Event22</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=Event</Reference>
+        </References>
+    </UAObject>
+    <UAObject EventNotifier="1" NodeId="ns=1;s=Event21" BrowseName="1:Event21">
+        <DisplayName>Event21</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=EventGroup2</Reference>
+        </References>
+    </UAObject>
+    <UAObject EventNotifier="1" NodeId="ns=1;s=Event22" BrowseName="1:Event22">
+        <DisplayName>Event22</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=EventGroup2</Reference>
+        </References>
+    </UAObject>
+</UANodeSet>
