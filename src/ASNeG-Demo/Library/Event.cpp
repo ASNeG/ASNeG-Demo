@@ -118,6 +118,8 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::timerLoop(void)
 	{
+		// FIXME: dummy event ...
+
 		EventBase::SPtr eventBase;
 
 		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
