@@ -50,6 +50,7 @@ namespace OpcUaServerApplicationDemo
 		ApplicationInfo* applicationInfo_;
 
 		uint32_t namespaceIndex_;
+		uint32_t counter_;
 	};
 
 }

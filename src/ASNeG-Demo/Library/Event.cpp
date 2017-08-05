@@ -20,6 +20,7 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
+#include "OpcUaStackCore/EventType/BaseEventType.h"
 #include "OpcUaStackCore/Utility/Environment.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
@@ -33,6 +34,7 @@ namespace OpcUaServerApplicationDemo
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
+	, counter_(0)
 	{
 	}
 
@@ -118,17 +120,30 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::timerLoop(void)
 	{
-		// FIXME: dummy event ...
-
+		BaseEventType::SPtr baseEventType = constructSPtr<BaseEventType>();
 		EventBase::SPtr eventBase;
+		OpcUaVariant::SPtr variant;
 
 		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
 		FireEventRequest::SPtr req = trx->request();
 		FireEventResponse::SPtr res = trx->response();
 
-		// event on node Event11
-		eventBase = constructSPtr<EventBase>();
+		// set message value
+		std::stringstream ss;
+		counter_++;
+		ss << "Event message " << counter_;
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(OpcUaLocalizedText("de", ss.str()));
+		baseEventType->message(variant);
+
+		// set severity message
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaUInt16)100);
+		baseEventType->severity(variant);
+
+		// send event on node Event11
 		req->nodeId().set("Event11", namespaceIndex_);
+		eventBase = baseEventType;
 		req->eventBase(eventBase);
 
 		applicationServiceIf_->sendSync(trx);
