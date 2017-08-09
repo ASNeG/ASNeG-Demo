@@ -18,16 +18,40 @@
 #ifndef __OpcUaServerApplicationDemo_CustomerEventType_h__
 #define __OpcUaServerApplicationDemo_CustomerEventType_h__
 
+#include "OpcUaStackCore/EventType/BaseEventType.h"
+
+using namespace OpcUaStackCore;
 
 namespace OpcUaServerApplicationDemo
 {
 
 	class CustomerEventType
+	: public BaseEventType
 	{
 	  public:
+		typedef boost::shared_ptr<CustomerEventType> SPtr;
+
 		CustomerEventType(void);
-		~CustomerEventType(void);
-	};
+		virtual ~CustomerEventType(void);
+
+		bool variable1(OpcUaVariant::SPtr& variable1);
+		OpcUaVariant::SPtr variable1(void);
+		bool variable2(OpcUaVariant::SPtr& variable2);
+		OpcUaVariant::SPtr variable2(void);
+
+
+		//- EventBase interface
+		virtual void mapNamespaceUri(void);
+		virtual OpcUaVariant::SPtr get(
+			OpcUaNodeId& eventType,
+			std::list<OpcUaQualifiedName::SPtr>& browseNameList,
+			EventResult::Code& resultCode
+		);
+		//- EventBase interface
+
+	  private:
+		EventVariables eventVariables_;
+};
 
 }
 
