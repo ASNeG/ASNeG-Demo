@@ -1,0 +1,19 @@
+###########################
+# UaModeler Project File  #
+# Generated at 27.07.2017 #
+###########################
+
+PROJECTNAME = Event
+
+TEMPLATESET = ($TEMPLATES)/modeling/v1_0/t0/modeling.tt2set
+
+MODELS += ($MODELS)/Opc.Ua.NodeSet2.ua \
+    event.ua
+
+COLORS = ($MODELS)/Opc.Ua.NodeSet2.ua: #0000ff\
+    event.ua: #008000
+
+OUTPUTPATH = 
+
+GENERATE += event.ua
+

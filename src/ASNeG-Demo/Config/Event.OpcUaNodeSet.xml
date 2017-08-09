@@ -3,19 +3,53 @@
         <Uri>http://ASNeG-Demo.de/Event/</Uri>
     </NamespaceUris>
     <Aliases>
+        <Alias Alias="Double">i=11</Alias>
         <Alias Alias="Organizes">i=35</Alias>
+        <Alias Alias="HasModellingRule">i=37</Alias>
         <Alias Alias="HasTypeDefinition">i=40</Alias>
+        <Alias Alias="HasSubtype">i=45</Alias>
+        <Alias Alias="HasProperty">i=46</Alias>
     </Aliases>
     <Extensions>
         <Extension>
-            <ModelInfo Tool="UaModeler" Hash="8sEKa2oog67nLCMb46PWUQ==" Version="1.4.1"/>
+            <ModelInfo Tool="UaModeler" Hash="N5nZbBFxAqVBTTKAERasVQ==" Version="1.4.1"/>
         </Extension>
     </Extensions>
+    <UAObjectType NodeId="ns=1;i=1002" BrowseName="1:MyEventType">
+        <DisplayName>MyEventType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;i=6001</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasSubtype" IsForward="false">i=2041</Reference>
+        </References>
+    </UAObjectType>
+    <UAVariable DataType="Double" ParentNodeId="ns=1;i=1002" NodeId="ns=1;i=6001" BrowseName="1:Variable1" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>Variable1</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=1002</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:Double>0</uax:Double>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Double" ParentNodeId="ns=1;i=1002" NodeId="ns=1;i=6002" BrowseName="1:Variable2" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>Variable2</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=1002</Reference>
+            <Reference ReferenceType="HasModellingRule">i=78</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:Double>0</uax:Double>
+        </Value>
+    </UAVariable>
     <UAObject NodeId="ns=1;s=Event" BrowseName="1:Event">
         <DisplayName>Event</DisplayName>
         <References>
-            <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
             <Reference ReferenceType="Organizes">ns=1;s=EventGroup1</Reference>
             <Reference ReferenceType="Organizes">ns=1;s=EventGroup2</Reference>
         </References>
