@@ -44,6 +44,8 @@ namespace OpcUaServerApplicationDemo
 		void startTimerLoop(void);
 		void timerLoop(void);
 
+		void sendEvent11(void);
+
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;
 		ApplicationServiceIf* applicationServiceIf_;

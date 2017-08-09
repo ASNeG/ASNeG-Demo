@@ -25,6 +25,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Event.h"
+#include "ASNeG-Demo/CustomerEventType/CustomerEventType.h"
 
 namespace OpcUaServerApplicationDemo
 {
@@ -119,6 +120,12 @@ namespace OpcUaServerApplicationDemo
 
 	void
 	Event::timerLoop(void)
+	{
+		sendEvent11();
+	}
+
+	void
+	Event::sendEvent11(void)
 	{
 		BaseEventType::SPtr baseEventType = constructSPtr<BaseEventType>();
 		EventBase::SPtr eventBase;
