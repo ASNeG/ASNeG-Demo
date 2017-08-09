@@ -122,6 +122,7 @@ namespace OpcUaServerApplicationDemo
 	Event::timerLoop(void)
 	{
 		sendEvent11();
+		sendEvent12();
 	}
 
 	void
@@ -151,6 +152,51 @@ namespace OpcUaServerApplicationDemo
 		// send event on node Event11
 		req->nodeId().set("Event11", namespaceIndex_);
 		eventBase = baseEventType;
+		req->eventBase(eventBase);
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			  std::cout << "event response error" << std::endl;
+		}
+	}
+
+	void
+	Event::sendEvent12(void)
+	{
+		CustomerEventType::SPtr customerEventType = constructSPtr<CustomerEventType>();
+		EventBase::SPtr eventBase;
+		OpcUaVariant::SPtr variant;
+
+		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
+		FireEventRequest::SPtr req = trx->request();
+		FireEventResponse::SPtr res = trx->response();
+
+		// set message value
+		std::stringstream ss;
+		counter_++;
+		ss << "Event message " << counter_;
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(OpcUaLocalizedText("de", ss.str()));
+		customerEventType->message(variant);
+
+		// set severity message
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaUInt16)100);
+		customerEventType->severity(variant);
+
+		// set variable1
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaDouble)1234);
+		customerEventType->variable1(variant);
+
+		// set variable2
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaDouble)5678);
+		customerEventType->variable2(variant);
+
+		// send event on node Event12
+		req->nodeId().set("Event12", namespaceIndex_);
+		eventBase = customerEventType;
 		req->eventBase(eventBase);
 
 		applicationServiceIf_->sendSync(trx);

@@ -45,6 +45,7 @@ namespace OpcUaServerApplicationDemo
 		void timerLoop(void);
 
 		void sendEvent11(void);
+		void sendEvent12(void);
 
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;
