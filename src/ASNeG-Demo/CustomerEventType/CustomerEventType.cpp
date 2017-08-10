@@ -28,9 +28,7 @@ namespace OpcUaServerApplicationDemo
 		eventVariables_.registerEventVariable("Variable1", OpcUaBuildInType_OpcUaDouble);
 		eventVariables_.registerEventVariable("Variable2", OpcUaBuildInType_OpcUaDouble);
 
-		OpcUaVariant::SPtr eventType = constructSPtr<OpcUaVariant>();
-		eventType->setValue(OpcUaNodeId((OpcUaUInt32)1000));
-		eventVariables_.setValue("EventType", eventType);
+		eventVariables_.eventType(OpcUaNodeId((OpcUaUInt32)1002));
 		eventVariables_.namespaceIndex(0);
 		eventVariables_.browseName(OpcUaQualifiedName("CustomerEventType"));
 		eventVariables_.namespaceUri("http://ASNeG-Demo.de/Event/");
@@ -71,15 +69,18 @@ namespace OpcUaServerApplicationDemo
 	void
 	CustomerEventType::mapNamespaceUri(void)
 	{
+		std::cout << "CustomerEventType::mapNamespaceUri" << std::endl;
 		uint32_t namespaceIndex;
 		BaseEventType::mapNamespaceUri();
 
-		OpcUaVariant::SPtr eventType;
-		eventVariables_.getValue("EventType", eventType);
+		OpcUaVariant::SPtr eventTypeVariable = constructSPtr<OpcUaVariant>();
+		eventTypeVariable->setValue(eventVariables_.eventType());
 
-		setNamespaceIndex(eventVariables_.namespaceUri(), namespaceIndex, eventVariables_.browseName(), eventType);
+		setNamespaceIndex(eventVariables_.namespaceUri(), namespaceIndex, eventVariables_.browseName(), eventTypeVariable);
 
-		eventVariables_.setValue("EventType", eventType);
+		std::cout << "2 set event type: " << *eventTypeVariable << std::endl;
+		eventType(eventTypeVariable);
+		eventVariables_.eventType(eventTypeVariable);
 		eventVariables_.namespaceIndex(namespaceIndex);
 	}
 
@@ -92,13 +93,8 @@ namespace OpcUaServerApplicationDemo
 	{
 		resultCode = EventResult::Success;
 
-		OpcUaNodeId typeNodeId;
-		OpcUaVariant::SPtr tmpVariant;
-		eventVariables_.getValue("EventType", tmpVariant);
-		tmpVariant->getValue(typeNodeId);
-
 		// check whether eventType and typeNodeId are identical
-		if (eventType == typeNodeId) {
+		if (eventType == eventVariables_.eventType()) {
 			return eventVariables_.get(browseNameList, resultCode);
 		}
 

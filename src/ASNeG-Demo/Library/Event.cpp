@@ -139,7 +139,7 @@ namespace OpcUaServerApplicationDemo
 		// set message value
 		std::stringstream ss;
 		counter_++;
-		ss << "Event message " << counter_;
+		ss << "BaseEventType: Event message " << counter_;
 		variant = constructSPtr<OpcUaVariant>();
 		variant->setValue(OpcUaLocalizedText("de", ss.str()));
 		baseEventType->message(variant);
@@ -174,7 +174,7 @@ namespace OpcUaServerApplicationDemo
 		// set message value
 		std::stringstream ss;
 		counter_++;
-		ss << "Event message " << counter_;
+		ss << "CustomerEventType: Event message " << counter_;
 		variant = constructSPtr<OpcUaVariant>();
 		variant->setValue(OpcUaLocalizedText("de", ss.str()));
 		customerEventType->message(variant);
