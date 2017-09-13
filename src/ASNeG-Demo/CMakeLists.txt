@@ -56,6 +56,8 @@ target_link_libraries(
     ASNeG-Demo
     ${pthread}
     ${OPCUASTACK_LIBRARY_CORE}
+    ${OPCUASTACK_LIBRARY_CLIENT}
+    ${OPCUASTACK_LIBRARY_SERVER}
     ${Boost_LIBRARIES}
 )
 
