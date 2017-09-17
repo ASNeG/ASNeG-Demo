@@ -46,6 +46,7 @@ namespace OpcUaServerApplicationDemo
 
 		void sendEvent11(void);
 		void sendEvent12(void);
+		void sendEvent21(void);
 
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;

@@ -20,7 +20,8 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
-#include "OpcUaStackCore/EventType/BaseEventType.h"
+#include "OpcUaStackCore/StandardEventType/BaseEventType.h"
+#include "OpcUaStackCore/StandardEventType/AlarmConditionType.h"
 #include "OpcUaStackCore/Utility/Environment.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
@@ -123,6 +124,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		sendEvent11();
 		sendEvent12();
+		//sendEvent21();
 	}
 
 	void
@@ -197,6 +199,41 @@ namespace OpcUaServerApplicationDemo
 		// send event on node Event12
 		req->nodeId().set("Event12", namespaceIndex_);
 		eventBase = customerEventType;
+		req->eventBase(eventBase);
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			  std::cout << "event response error" << std::endl;
+		}
+	}
+
+	void
+	Event::sendEvent21(void)
+	{
+		BaseEventType::SPtr eventType = constructSPtr<AlarmConditionType>();
+		EventBase::SPtr eventBase;
+		OpcUaVariant::SPtr variant;
+
+		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
+		FireEventRequest::SPtr req = trx->request();
+		FireEventResponse::SPtr res = trx->response();
+
+		// set message value
+		std::stringstream ss;
+		counter_++;
+		ss << "BaseEventType: Event message " << counter_;
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(OpcUaLocalizedText("de", ss.str()));
+		eventType->message(variant);
+
+		// set severity message
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaUInt16)100);
+		eventType->severity(variant);
+
+		// send event on node Event11
+		req->nodeId().set("Event21", namespaceIndex_);
+		eventBase = eventType;
 		req->eventBase(eventBase);
 
 		applicationServiceIf_->sendSync(trx);
