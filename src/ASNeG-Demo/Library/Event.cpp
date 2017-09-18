@@ -124,7 +124,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		sendEvent11();
 		sendEvent12();
-		//sendEvent21();
+		sendEvent21();
 	}
 
 	void
