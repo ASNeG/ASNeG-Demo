@@ -18,7 +18,7 @@
 #ifndef __OpcUaServerApplicationDemo_CustomerEventType_h__
 #define __OpcUaServerApplicationDemo_CustomerEventType_h__
 
-#include "OpcUaStackCore/EventType/BaseEventType.h"
+#include "OpcUaStackCore/StandardEventType/BaseEventType.h"
 
 using namespace OpcUaStackCore;
 
