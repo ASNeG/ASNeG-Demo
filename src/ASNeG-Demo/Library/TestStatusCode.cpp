@@ -824,7 +824,7 @@ namespace OpcUaServerApplicationDemo
 		dataValue->serverTimestamp(dateTime);
 		dataValue->sourceTimestamp(dateTime);
 		dataValue->statusCode(statusCode_);
-		baseNodeClass->setValue(*dataValue);
+		baseNodeClass->setValueSync(*dataValue);
 	}
 
 	void
@@ -1016,7 +1016,7 @@ namespace OpcUaServerApplicationDemo
 		dataValue->serverTimestamp(dateTime);
 		dataValue->sourceTimestamp(dateTime);
 		dataValue->statusCode(statusCode_);
-		baseNodeClass->setValue(*dataValue);
+		baseNodeClass->setValueSync(*dataValue);
 	}
 
 }

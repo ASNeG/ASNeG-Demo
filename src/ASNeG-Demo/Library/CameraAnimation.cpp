@@ -344,7 +344,7 @@ namespace OpcUaServerApplicationDemo
 		dataValue.variant()->set(byteStringVec_[byteStringVecIdx_]);
 		dataValue.sourceTimestamp(dateTime);
 		dataValue.serverTimestamp(dateTime);
-		baseNodeClass->setValue(dataValue);
+		baseNodeClass->setValueSync(dataValue);
 	}
 
 }

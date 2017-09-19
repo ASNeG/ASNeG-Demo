@@ -997,7 +997,7 @@ namespace OpcUaServerApplicationDemo
 		dataValue->serverTimestamp(dateTime);
 		dataValue->sourceTimestamp(dateTime);
 		dataValue->statusCode(Success);
-		baseNodeClass->setValue(*dataValue);
+		baseNodeClass->setValueSync(*dataValue);
 	}
 
 }
