@@ -79,6 +79,7 @@ install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Camera.xml 
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Function.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Complex.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.StructureExample.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Service.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/TestStatusCode.OpcUaNodeSet.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Event.OpcUaNodeSet.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/ApplicationDemoModel.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
