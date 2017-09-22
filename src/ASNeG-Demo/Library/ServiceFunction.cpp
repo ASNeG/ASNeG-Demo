@@ -99,7 +99,7 @@ namespace OpcUaServerApplicationDemo
 			it++
 		)
 		{
-			if (it->second == "http://ASNeG-Demo.de/Service/") {
+			if (it->second == "http://ASNeG-Demo/Service/") {
 				namespaceIndex_ = it->first;
 
 				restartFunc_.set(std::string("Service.Restart"), namespaceIndex_);
@@ -108,7 +108,7 @@ namespace OpcUaServerApplicationDemo
  		}
 
 		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/ServiceFunction/");
+	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Service/");
 
 		return false;
 	}
@@ -143,7 +143,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	ServiceFunction::method(ApplicationMethodContext* applicationMethodContext)
 	{
-		Log(Debug, "method call")
+		Log(Debug, "service method call")
 			.parameter("ObjectNodeId", applicationMethodContext->objectNodeId_)
 			.parameter("MethodNodeId", applicationMethodContext->methodNodeId_);
 

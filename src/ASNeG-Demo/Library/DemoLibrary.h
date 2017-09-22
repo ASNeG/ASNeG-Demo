@@ -26,6 +26,7 @@
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 #include "ASNeG-Demo/Library/CameraAnimation.h"
 #include "ASNeG-Demo/Library/Function.h"
+#include "ASNeG-Demo/Library/ServiceFunction.h"
 #include "ASNeG-Demo/Library/TestFolderLib.h"
 #include "ASNeG-Demo/Library/TestStatusCode.h"
 #include "ASNeG-Demo/Library/Event.h"
@@ -54,6 +55,7 @@ namespace OpcUaServerApplicationDemo
 		TestFolderLib testFolderLib_;
 		TestStatusCode testStatusCode_;
 		Function function_;
+		ServiceFunction serviceFunction_;
 		Event event_;
 
 		IOThread ioThread_;
