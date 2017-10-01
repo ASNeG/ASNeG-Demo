@@ -56,7 +56,7 @@ namespace OpcUaServerApplicationDemo
 
 		Callback methodCallback_;
 
-		OpcUaNodeId restartFunc_;
+		OpcUaNodeId reloadFunc_;
 	};
 
 }

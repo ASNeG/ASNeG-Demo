@@ -62,7 +62,7 @@ namespace OpcUaServerApplicationDemo
 		OpcUaNodeId object("Service", namespaceIndex_);
 		OpcUaNodeId method;
 
-		method.set("Service.Restart", namespaceIndex_);
+		method.set("Service.Reload", namespaceIndex_);
 		if (!registerCallbacks(object, method)) return false;
 
 		return true;
@@ -102,7 +102,7 @@ namespace OpcUaServerApplicationDemo
 			if (it->second == "http://ASNeG-Demo/Service/") {
 				namespaceIndex_ = it->first;
 
-				restartFunc_.set(std::string("Service.Restart"), namespaceIndex_);
+				reloadFunc_.set(std::string("Service.Reload"), namespaceIndex_);
 				return true;
 			}
  		}
@@ -147,9 +147,9 @@ namespace OpcUaServerApplicationDemo
 			.parameter("ObjectNodeId", applicationMethodContext->objectNodeId_)
 			.parameter("MethodNodeId", applicationMethodContext->methodNodeId_);
 
-		// restart function
-		if (applicationMethodContext->methodNodeId_ == restartFunc_) {
-			applicationServiceIf_->restart();
+		// reload function
+		if (applicationMethodContext->methodNodeId_ == reloadFunc_) {
+			applicationServiceIf_->reload();
 			applicationMethodContext->statusCode_ = Success;
 		}
 
