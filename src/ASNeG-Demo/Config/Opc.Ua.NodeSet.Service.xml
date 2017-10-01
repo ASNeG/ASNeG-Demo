@@ -9,19 +9,19 @@
     </Aliases>
     <Extensions>
         <Extension>
-            <ModelInfo Tool="UaModeler" Hash="7I5Vs186RM8FWauFU1AjFw==" Version="1.4.1"/>
+            <ModelInfo Tool="UaModeler" Hash="2hheNXLKQSYZQog+rgxllA==" Version="1.4.1"/>
         </Extension>
     </Extensions>
     <UAObject NodeId="ns=1;s=Service" BrowseName="1:Service">
         <DisplayName>Service</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
-            <Reference ReferenceType="HasComponent">ns=1;s=Service.Restart</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Service.Reload</Reference>
             <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
         </References>
     </UAObject>
-    <UAMethod NodeId="ns=1;s=Service.Restart" BrowseName="1:Restart">
-        <DisplayName>Restart</DisplayName>
+    <UAMethod NodeId="ns=1;s=Service.Reload" BrowseName="1:Reload">
+        <DisplayName>Reload</DisplayName>
         <References>
             <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Service</Reference>
         </References>
