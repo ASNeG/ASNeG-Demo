@@ -37,6 +37,8 @@ namespace OpcUaServerApplicationDemo
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
 	, counter_(0)
+	, eventItemStartCallback_(boost::bind(&Event::eventItemStartCallback, this, _1))
+	, eventItemStopCallback_(boost::bind(&Event::eventItemStopCallback, this, _1))
 	{
 	}
 
@@ -62,6 +64,11 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+		// register event callbacks
+		if (!registerEventCallbacks()) {
+			return false;
+		}
+
 		startTimerLoop();
 
 		return true;
@@ -73,6 +80,52 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "Event::shutdown");
 
 		return true;
+	}
+
+
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	//
+	// private functions
+	//
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	void
+	Event::eventItemStartCallback(ApplicationEventItemStartContext* applicationEventItemStartContext)
+	{
+		Log(Debug, "Event::eventItemStartCallback");
+	}
+
+	void
+	Event::eventItemStopCallback(ApplicationEventItemStopContext* applicationEventItemStopContext)
+	{
+		Log(Debug, "Event::eventItemStopCallback");
+	}
+
+	bool
+	Event::registerEventCallbacks(void)
+	{
+		Log(Debug, "registern event callbacks");
+
+		ServiceTransactionRegisterForwardGlobal::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardGlobal>();
+		RegisterForwardGlobalRequest::SPtr req = trx->request();
+		RegisterForwardGlobalResponse::SPtr res = trx->response();
+
+		req->forwardGlobalSync()->eventItemStartService().setCallback(eventItemStartCallback_);
+		req->forwardGlobalSync()->eventItemStopService().setCallback(eventItemStopCallback_);
+
+	  	applicationServiceIf_->sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		std::cout << "response error" << std::endl;
+	  		return false;
+	  	}
+
+	  	if (res->statusCode() != Success) {
+  			std::cout << "register event callbacks error" << std::endl;
+  			return false;
+	  	}
+
+	  	return true;
 	}
 
 	bool
@@ -113,6 +166,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::startTimerLoop(void)
 	{
+		Log(Debug, "start Event loop");
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
 		slotTimerElement_->callback().reset(boost::bind(&Event::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 5000);
@@ -122,6 +176,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::timerLoop(void)
 	{
+		Log(Debug, "send Event");
 		sendEvent11();
 		sendEvent12();
 		sendEvent21();

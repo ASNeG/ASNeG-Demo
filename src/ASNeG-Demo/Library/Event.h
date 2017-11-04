@@ -20,6 +20,8 @@
 
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
+#include "OpcUaStackCore/Application/ApplicationEventItemStartContext.h"
+#include "OpcUaStackCore/Application/ApplicationEventItemStopContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
@@ -40,6 +42,10 @@ namespace OpcUaServerApplicationDemo
 		bool shutdown(void);
 
 	  private:
+		void eventItemStartCallback(ApplicationEventItemStartContext* applicationEventItemStartContext);
+		void eventItemStopCallback(ApplicationEventItemStopContext* applicationEventItemStopContext);
+
+		bool registerEventCallbacks(void);
 		bool getNamespaceInfo(void);
 		void startTimerLoop(void);
 		void timerLoop(void);
@@ -55,6 +61,9 @@ namespace OpcUaServerApplicationDemo
 
 		uint32_t namespaceIndex_;
 		uint32_t counter_;
+
+		Callback eventItemStartCallback_;
+		Callback eventItemStopCallback_;
 	};
 
 }
