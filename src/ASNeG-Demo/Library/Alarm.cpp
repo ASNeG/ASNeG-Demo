@@ -128,14 +128,8 @@ namespace OpcUaServerApplicationDemo
 		nodeId.set(5003, namespaceIndex_);
 
 		req->browseNameArray()->resize(2);
-
-		browseName = constructSPtr<BrowseName>();
-		browseName->set(nodeId, OpcUaQualifiedName("AckedState"));
-		req->browseNameArray()->push_back(browseName);
-
-		browseName = constructSPtr<BrowseName>();
-		browseName->set(nodeId, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
-		req->browseNameArray()->push_back(browseName);
+		req->addBrowsePath(nodeId, OpcUaQualifiedName("AckedState"));
+		req->addBrowsePath(nodeId, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
 
 		applicationServiceIf_->sendSync(trx);
 		if (trx->statusCode() != Success) {
