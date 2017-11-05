@@ -30,6 +30,7 @@
 #include "ASNeG-Demo/Library/TestFolderLib.h"
 #include "ASNeG-Demo/Library/TestStatusCode.h"
 #include "ASNeG-Demo/Library/Event.h"
+#include "ASNeG-Demo/Library/Alarm.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -57,6 +58,7 @@ namespace OpcUaServerApplicationDemo
 		Function function_;
 		ServiceFunction serviceFunction_;
 		Event event_;
+		Alarm alarm_;
 
 		IOThread ioThread_;
 	};
