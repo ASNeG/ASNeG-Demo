@@ -54,6 +54,11 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+		// get node ids from opc ua information model
+		if (!getNodeIds()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -108,5 +113,23 @@ namespace OpcUaServerApplicationDemo
 		return false;
 	}
 
+	bool
+	Alarm::getNodeIds(void)
+	{
+		Log(Debug, "get namespace info");
+
+		ServiceTransactionBrowsePathToNodeId::SPtr trx = constructSPtr<ServiceTransactionBrowsePathToNodeId>();
+		BrowsePathToNodeIdRequest::SPtr req = trx->request();
+		BrowsePathToNodeIdResponse::SPtr res = trx->response();
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			Log(Error, "BrowsePathToNodeIdResponse error")
+			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+			return false;
+		}
+
+		return true;
+	}
 
 }

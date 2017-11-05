@@ -40,6 +40,7 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		bool getNamespaceInfo(void);
+		bool getNodeIds(void);
 
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;
