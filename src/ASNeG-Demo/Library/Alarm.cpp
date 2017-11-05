@@ -122,11 +122,34 @@ namespace OpcUaServerApplicationDemo
 		BrowsePathToNodeIdRequest::SPtr req = trx->request();
 		BrowsePathToNodeIdResponse::SPtr res = trx->response();
 
+		BrowseName::SPtr browseName;
+		OpcUaQualifiedName::SPtr pathElement;
+		OpcUaNodeId nodeId;
+		nodeId.set(5003, namespaceIndex_);
+
+		req->browseNameArray()->resize(2);
+
+		browseName = constructSPtr<BrowseName>();
+		browseName->set(nodeId, OpcUaQualifiedName("AckedState"));
+		req->browseNameArray()->push_back(browseName);
+
+		browseName = constructSPtr<BrowseName>();
+		browseName->set(nodeId, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
+		req->browseNameArray()->push_back(browseName);
+
 		applicationServiceIf_->sendSync(trx);
 		if (trx->statusCode() != Success) {
 			Log(Error, "BrowsePathToNodeIdResponse error")
 			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
 			return false;
+		}
+
+		for (uint32_t idx = 0; idx < res->nodeIdResults()->size(); idx++) {
+			NodeIdResult::SPtr nodeIdResult;
+			res->nodeIdResults()->get(idx, nodeIdResult);
+
+			std::cout << "StatusCode=" << (uint32_t)nodeIdResult->statusCode() << std::endl;
+			std::cout << "NodeId=" << nodeIdResult->nodeId() << std::endl;
 		}
 
 		return true;
