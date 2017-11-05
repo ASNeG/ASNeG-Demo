@@ -39,6 +39,8 @@ namespace OpcUaServerApplicationDemo
 		bool shutdown(void);
 
 	  private:
+		bool getNamespaceInfo(void);
+
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;
 		ApplicationServiceIf* applicationServiceIf_;

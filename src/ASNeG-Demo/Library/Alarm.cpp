@@ -18,6 +18,7 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
+#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 namespace OpcUaServerApplicationDemo
@@ -48,6 +49,11 @@ namespace OpcUaServerApplicationDemo
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
+		// read namespace array from opc ua information model
+		if (!getNamespaceInfo()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -67,5 +73,40 @@ namespace OpcUaServerApplicationDemo
 	//
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
+	bool
+	Alarm::getNamespaceInfo(void)
+	{
+		Log(Debug, "get namespace info");
+
+		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
+		NamespaceInfoRequest::SPtr req = trx->request();
+		NamespaceInfoResponse::SPtr res = trx->response();
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			Log(Error, "NamespaceInfoResponse error")
+			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+			return false;
+		}
+
+		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
+		for (
+		    it = res->index2NamespaceMap().begin();
+			it != res->index2NamespaceMap().end();
+			it++
+		)
+		{
+			if (it->second == "http://ASNeG-Demo.de/Alarm/") {
+				namespaceIndex_ = it->first;
+				return true;
+			}
+ 		}
+
+		Log(Error, "namespace not found in opc ua information model")
+	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Alarm/");
+
+		return false;
+	}
+
 
 }
