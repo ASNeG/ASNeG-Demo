@@ -1,0 +1,25 @@
+###########################
+# UaModeler Project File  #
+# Generated at 05.11.2017 #
+###########################
+
+PROJECTNAME = Alarm
+
+TEMPLATESET = ($TEMPLATES)/modeling/v1_0/t0/modeling.tt2set
+
+MODELS += ($MODELS)/Opc.Ua.NodeSet2.ua \
+    alarm.ua
+
+COLORS = ($MODELS)/Opc.Ua.NodeSet2.ua: #0000ff\
+    alarm.ua: #008000
+
+OUTPUTPATH = 
+
+GENERATE += alarm.ua
+
+NODEACCESSINFOROLES += Administrator \
+    SecurityAdmin \
+    ConfigurationAdmin \
+    Operator \
+    Observer
+
