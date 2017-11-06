@@ -15,14 +15,16 @@
         <Alias Alias="HasTypeDefinition">i=40</Alias>
         <Alias Alias="HasProperty">i=46</Alias>
         <Alias Alias="HasComponent">i=47</Alias>
+        <Alias Alias="Duration">i=290</Alias>
         <Alias Alias="UtcTime">i=294</Alias>
         <Alias Alias="Argument">i=296</Alias>
+        <Alias Alias="AlwaysGeneratesEvent">i=3065</Alias>
         <Alias Alias="TimeZoneDataType">i=8912</Alias>
         <Alias Alias="HasTrueSubState">i=9004</Alias>
     </Aliases>
     <Extensions>
         <Extension>
-            <ua:ModelInfo Tool="UaModeler" Hash="iVT45uxlvfBqgFDkQNm6hw==" Version="1.5.2"/>
+            <ua:ModelInfo Tool="UaModeler" Hash="rIjE098qg/RX4QdY+ReSiA==" Version="1.5.2"/>
         </Extension>
     </Extensions>
     <UAObject NodeId="ns=1;i=5002" BrowseName="1:Alarm">
@@ -30,10 +32,10 @@
         <References>
             <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
-            <Reference ReferenceType="Organizes">ns=1;i=5003</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=AlarmObject</Reference>
         </References>
     </UAObject>
-    <UAObject NodeId="ns=1;i=5003" BrowseName="1:OffNormalAlarm">
+    <UAObject NodeId="ns=1;s=AlarmObject" BrowseName="1:OffNormalAlarm">
         <DisplayName>OffNormalAlarm</DisplayName>
         <References>
             <Reference ReferenceType="HasComponent">ns=1;i=6008</Reference>
@@ -46,6 +48,7 @@
             <Reference ReferenceType="HasProperty">ns=1;i=6016</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6017</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6018</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.Confirm</Reference>
             <Reference ReferenceType="HasComponent">ns=1;i=7003</Reference>
             <Reference ReferenceType="HasComponent">ns=1;i=7004</Reference>
             <Reference ReferenceType="HasComponent">ns=1;i=6004</Reference>
@@ -62,18 +65,20 @@
             <Reference ReferenceType="HasProperty">ns=1;i=6028</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6023</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6029</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.ShelvingState</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6030</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6031</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6007</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.SuppressedState</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6032</Reference>
         </References>
     </UAObject>
-    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6008" BrowseName="AckedState">
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6008" BrowseName="AckedState">
         <DisplayName>AckedState</DisplayName>
         <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6009</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=8995</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
     <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=6008" NodeId="ns=1;i=6009" BrowseName="Id">
@@ -83,18 +88,18 @@
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
-    <UAMethod ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=7001" BrowseName="Acknowledge">
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=7001" BrowseName="Acknowledge">
         <DisplayName>Acknowledge</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6010</Reference>
         </References>
     </UAMethod>
     <UAVariable DataType="Argument" ParentNodeId="ns=1;i=7001" ValueRank="1" NodeId="ns=1;i=6010" ArrayDimensions="2" BrowseName="InputArguments">
         <DisplayName>InputArguments</DisplayName>
         <References>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=7001</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=7001</Reference>
         </References>
         <Value>
             <uax:ListOfExtensionObject>
@@ -137,12 +142,12 @@
             </uax:ListOfExtensionObject>
         </Value>
     </UAVariable>
-    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6002" BrowseName="ActiveState">
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6002" BrowseName="ActiveState">
         <DisplayName>ActiveState</DisplayName>
         <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6003</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=8995</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
             <Reference ReferenceType="HasTrueSubState" IsForward="false">ns=1;i=6004</Reference>
         </References>
     </UAVariable>
@@ -153,17 +158,121 @@
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
-    <UAMethod ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=7002" BrowseName="AddComment">
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=7002" BrowseName="AddComment">
         <DisplayName>AddComment</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6011</Reference>
         </References>
     </UAMethod>
     <UAVariable DataType="Argument" ParentNodeId="ns=1;i=7002" ValueRank="1" NodeId="ns=1;i=6011" ArrayDimensions="2" BrowseName="InputArguments">
         <DisplayName>InputArguments</DisplayName>
         <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=7002</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>EventId</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=15</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description>
+                                <uax:Text>The identifier for the event to comment.</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Comment</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=21</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description>
+                                <uax:Text>The comment to add to the condition.</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6012" BrowseName="BranchId">
+        <DisplayName>BranchId</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6013" BrowseName="ClientUserId">
+        <DisplayName>ClientUserId</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6014" BrowseName="Comment">
+        <DisplayName>Comment</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=9002</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6015</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;i=6014" NodeId="ns=1;i=6015" BrowseName="SourceTimestamp">
+        <DisplayName>SourceTimestamp</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=6014</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6016" BrowseName="ConditionClassId">
+        <DisplayName>ConditionClassId</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6017" BrowseName="ConditionClassName">
+        <DisplayName>ConditionClassName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6018" BrowseName="ConditionName">
+        <DisplayName>ConditionName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;s=AlarmObject.Confirm" BrowseName="Confirm">
+        <DisplayName>Confirm</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.Confirm.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=AlarmObject.Confirm" ValueRank="1" NodeId="ns=1;s=AlarmObject.Confirm.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.Confirm</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
         <Value>
@@ -207,75 +316,27 @@
             </uax:ListOfExtensionObject>
         </Value>
     </UAVariable>
-    <UAVariable DataType="NodeId" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6012" BrowseName="BranchId">
-        <DisplayName>BranchId</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="String" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6013" BrowseName="ClientUserId">
-        <DisplayName>ClientUserId</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6014" BrowseName="Comment">
-        <DisplayName>Comment</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=9002</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
-            <Reference ReferenceType="HasProperty">ns=1;i=6015</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;i=6014" NodeId="ns=1;i=6015" BrowseName="SourceTimestamp">
-        <DisplayName>SourceTimestamp</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=6014</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="NodeId" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6016" BrowseName="ConditionClassId">
-        <DisplayName>ConditionClassId</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6017" BrowseName="ConditionClassName">
-        <DisplayName>ConditionClassName</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAVariable DataType="String" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6018" BrowseName="ConditionName">
-        <DisplayName>ConditionName</DisplayName>
-        <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
-        </References>
-    </UAVariable>
-    <UAMethod ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=7003" BrowseName="Disable">
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=7003" BrowseName="Disable">
         <DisplayName>Disable</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAMethod>
-    <UAMethod ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=7004" BrowseName="Enable">
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=7004" BrowseName="Enable">
         <DisplayName>Enable</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAMethod>
-    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6004" BrowseName="EnabledState">
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6004" BrowseName="EnabledState">
         <DisplayName>EnabledState</DisplayName>
         <References>
             <Reference ReferenceType="HasTrueSubState">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6005</Reference>
+            <Reference ReferenceType="HasTrueSubState">ns=1;s=AlarmObject.ShelvingState</Reference>
+            <Reference ReferenceType="HasTrueSubState">ns=1;s=AlarmObject.SuppressedState</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=8995</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
     <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=6004" NodeId="ns=1;i=6005" BrowseName="Id">
@@ -285,34 +346,34 @@
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="ByteString" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6024" BrowseName="EventId">
+    <UAVariable DataType="ByteString" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6024" BrowseName="EventId">
         <DisplayName>EventId</DisplayName>
         <Description>A globally unique identifier for the event.</Description>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="NodeId" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6025" BrowseName="EventType">
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6025" BrowseName="EventType">
         <DisplayName>EventType</DisplayName>
         <Description>The identifier for the event type.</Description>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="NodeId" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6006" BrowseName="InputNode">
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6006" BrowseName="InputNode">
         <DisplayName>InputNode</DisplayName>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="UInt16" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6019" BrowseName="LastSeverity">
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6019" BrowseName="LastSeverity">
         <DisplayName>LastSeverity</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=9002</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6020</Reference>
         </References>
     </UAVariable>
@@ -323,34 +384,34 @@
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=6019</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="TimeZoneDataType" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6026" BrowseName="LocalTime">
+    <UAVariable DataType="TimeZoneDataType" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6026" BrowseName="LocalTime">
         <DisplayName>LocalTime</DisplayName>
         <Description>Information about the local time where the event originated.</Description>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6027" BrowseName="Message">
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6027" BrowseName="Message">
         <DisplayName>Message</DisplayName>
         <Description>A localized description of the event.</Description>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="NodeId" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6001" BrowseName="NormalState">
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6001" BrowseName="NormalState">
         <DisplayName>NormalState</DisplayName>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="StatusCode" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6021" BrowseName="Quality">
+    <UAVariable DataType="StatusCode" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6021" BrowseName="Quality">
         <DisplayName>Quality</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=9002</Reference>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6022</Reference>
         </References>
     </UAVariable>
@@ -361,58 +422,192 @@
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=6021</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6028" BrowseName="ReceiveTime">
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6028" BrowseName="ReceiveTime">
         <DisplayName>ReceiveTime</DisplayName>
         <Description>When the server received the event from the underlying system.</Description>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6023" BrowseName="Retain">
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6023" BrowseName="Retain">
         <DisplayName>Retain</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="UInt16" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6029" BrowseName="Severity">
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6029" BrowseName="Severity">
         <DisplayName>Severity</DisplayName>
         <Description>Indicates how urgent an event is.</Description>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="String" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6030" BrowseName="SourceName">
+    <UAObject ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;s=AlarmObject.ShelvingState" BrowseName="ShelvingState">
+        <DisplayName>ShelvingState</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.ShelvingState.CurrentState</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.ShelvingState.LastTransition</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.ShelvingState.OneShotShelve</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2929</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.ShelvingState.TimedShelve</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=AlarmObject.ShelvingState.Unshelve</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.ShelvingState.UnshelveTime</Reference>
+            <Reference ReferenceType="HasTrueSubState" IsForward="false">ns=1;i=6004</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject.ShelvingState" NodeId="ns=1;s=AlarmObject.ShelvingState.CurrentState" BrowseName="CurrentState">
+        <DisplayName>CurrentState</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject.ShelvingState</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2760</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.ShelvingState.CurrentState.Id</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject.ShelvingState.CurrentState" NodeId="ns=1;s=AlarmObject.ShelvingState.CurrentState.Id" BrowseName="Id">
+        <DisplayName>Id</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.ShelvingState.CurrentState</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject.ShelvingState" NodeId="ns=1;s=AlarmObject.ShelvingState.LastTransition" BrowseName="LastTransition">
+        <DisplayName>LastTransition</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=2767</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.ShelvingState.LastTransition.Id</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject.ShelvingState</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.ShelvingState.LastTransition.TransitionTime</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject.ShelvingState.LastTransition" NodeId="ns=1;s=AlarmObject.ShelvingState.LastTransition.Id" BrowseName="Id">
+        <DisplayName>Id</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.ShelvingState.LastTransition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=AlarmObject.ShelvingState.LastTransition" NodeId="ns=1;s=AlarmObject.ShelvingState.LastTransition.TransitionTime" BrowseName="TransitionTime">
+        <DisplayName>TransitionTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.ShelvingState.LastTransition</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject.ShelvingState" NodeId="ns=1;s=AlarmObject.ShelvingState.OneShotShelve" BrowseName="OneShotShelve" MethodDeclarationId="i=2948">
+        <DisplayName>OneShotShelve</DisplayName>
+        <References>
+            <Reference ReferenceType="AlwaysGeneratesEvent">i=11093</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject.ShelvingState</Reference>
+        </References>
+    </UAMethod>
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject.ShelvingState" NodeId="ns=1;s=AlarmObject.ShelvingState.TimedShelve" BrowseName="TimedShelve" MethodDeclarationId="i=2949">
+        <DisplayName>TimedShelve</DisplayName>
+        <References>
+            <Reference ReferenceType="AlwaysGeneratesEvent">i=11093</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.ShelvingState.TimedShelve.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject.ShelvingState</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=AlarmObject.ShelvingState.TimedShelve" ValueRank="1" NodeId="ns=1;s=AlarmObject.ShelvingState.TimedShelve.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.ShelvingState.TimedShelve</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>ShelvingTime</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=290</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description>
+                                <uax:Text>If not 0, this parameter specifies a fixed time for which the Alarm is to be shelved.</uax:Text>
+                            </uax:Description>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=AlarmObject.ShelvingState" NodeId="ns=1;s=AlarmObject.ShelvingState.Unshelve" BrowseName="Unshelve" MethodDeclarationId="i=2947">
+        <DisplayName>Unshelve</DisplayName>
+        <References>
+            <Reference ReferenceType="AlwaysGeneratesEvent">i=11093</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject.ShelvingState</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Duration" ParentNodeId="ns=1;s=AlarmObject.ShelvingState" NodeId="ns=1;s=AlarmObject.ShelvingState.UnshelveTime" BrowseName="UnshelveTime">
+        <DisplayName>UnshelveTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.ShelvingState</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6030" BrowseName="SourceName">
         <DisplayName>SourceName</DisplayName>
         <Description>A description of the source of the event.</Description>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="NodeId" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6031" BrowseName="SourceNode">
+    <UAVariable DataType="NodeId" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6031" BrowseName="SourceNode">
         <DisplayName>SourceNode</DisplayName>
         <Description>The source of the event.</Description>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6007" BrowseName="SuppressedOrShelved">
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6007" BrowseName="SuppressedOrShelved">
         <DisplayName>SuppressedOrShelved</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6032" BrowseName="Time">
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;s=AlarmObject.SuppressedState" BrowseName="SuppressedState">
+        <DisplayName>SuppressedState</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.SuppressedState.Id</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=AlarmObject.SuppressedState.TransitionTime</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=8995</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=AlarmObject</Reference>
+            <Reference ReferenceType="HasTrueSubState" IsForward="false">ns=1;i=6004</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=AlarmObject.SuppressedState" NodeId="ns=1;s=AlarmObject.SuppressedState.Id" BrowseName="Id">
+        <DisplayName>Id</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.SuppressedState</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=AlarmObject.SuppressedState" NodeId="ns=1;s=AlarmObject.SuppressedState.TransitionTime" BrowseName="TransitionTime">
+        <DisplayName>TransitionTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject.SuppressedState</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=AlarmObject" NodeId="ns=1;i=6032" BrowseName="Time">
         <DisplayName>Time</DisplayName>
         <Description>When the event occurred.</Description>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=AlarmObject</Reference>
         </References>
     </UAVariable>
 </UANodeSet>
