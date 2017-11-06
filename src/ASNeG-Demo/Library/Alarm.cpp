@@ -18,6 +18,7 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
+#include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 namespace OpcUaServerApplicationDemo
@@ -53,8 +54,13 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
-		// get node ids from opc ua information model
+		// get alarm node ids from opc ua information model
 		if (!getNodeIds()) {
+			return false;
+		}
+
+		// get references to alarm nodes from opc ua information model
+		if (!createNodeReferences()) {
 			return false;
 		}
 
@@ -115,7 +121,7 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Alarm::getNodeIds(void)
 	{
-		Log(Debug, "get namespace info");
+		Log(Debug, "get node ids");
 
 		ServiceTransactionBrowsePathToNodeId::SPtr trx = constructSPtr<ServiceTransactionBrowsePathToNodeId>();
 		BrowsePathToNodeIdRequest::SPtr req = trx->request();
@@ -123,23 +129,24 @@ namespace OpcUaServerApplicationDemo
 
 		BrowseName::SPtr browseName;
 		OpcUaQualifiedName::SPtr pathElement;
-		rootNodeId_.set("AlarmObject", namespaceIndex_);
+		rootNodeId_ = constructSPtr<OpcUaNodeId>();
+		rootNodeId_->set("AlarmObject", namespaceIndex_);
 
 		req->browseNameArray()->resize(13);
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("AckedState"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("ActiveState"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("EnabledState"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("EnabledState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Comment"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Comment"), OpcUaQualifiedName("SourceTimestamp"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("EnabledState"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("EnabledState"), OpcUaQualifiedName("Id"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Comment"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Comment"), OpcUaQualifiedName("SourceTimestamp"));
 
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Acknowledge"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Confirm"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("AddComment"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Enable"));
-		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Disable"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Acknowledge"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Confirm"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AddComment"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Enable"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Disable"));
 
 		applicationServiceIf_->sendSync(trx);
 		if (trx->statusCode() != Success) {
@@ -175,7 +182,7 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	bool
-	Alarm::getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId& nodeId)
+	Alarm::getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId::SPtr& nodeId)
 	{
 		NodeIdResult::SPtr nodeIdResult;
 		if (!res->nodeIdResults()->get(idx, nodeIdResult)) {
@@ -185,13 +192,84 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		if (nodeIdResult->statusCode() != Success) {
-			Log(Error, "node id result not error in response")
+			Log(Error, "node id result error in response")
 				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeIdResult->statusCode()))
 				.parameter("Idx", idx);
 			return false;
 		}
 
-		nodeId = nodeIdResult->nodeId();
+		nodeId = constructSPtr<OpcUaNodeId>();
+		*nodeId = nodeIdResult->nodeId();
+		return true;
+	}
+
+	bool
+	Alarm::createNodeReferences(void)
+	{
+		Log(Debug, "get references");
+
+		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
+		GetNodeReferenceRequest::SPtr req = trx->request();
+		GetNodeReferenceResponse::SPtr res = trx->response();
+
+	  	req->nodes()->resize(8);
+	  	req->nodes()->push_back(ackedStateNodeId_);
+	  	req->nodes()->push_back(ackedStateIdNodeId_);
+	  	req->nodes()->push_back(activeStateNodeId_);
+	  	req->nodes()->push_back(activeStateIdNodeId_);
+	  	req->nodes()->push_back(enableStateNodeId_);
+	  	req->nodes()->push_back(enableStateIdNodeId_);
+	  	req->nodes()->push_back(commentNodeId_);
+	  	req->nodes()->push_back(commentSourceTimestampNodeId_);
+
+	  	applicationServiceIf_->sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		Log(Error, "GetNodeReference error")
+	  		    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+	  		return false;
+	  	}
+		if (res->nodeReferenceArray().get() == nullptr) {
+			Log(Error, "GetNodeReference error");
+			return false;
+		}
+		if (res->nodeReferenceArray()->size() != req->nodes()->size()) {
+			Log(Error, "GetNodeReference size error");
+			return false;
+		}
+
+		if (!getRefFromResponse(res, 0, ackedState_)) return false;
+		if (!getRefFromResponse(res, 1, ackedStateId_)) return false;
+		if (!getRefFromResponse(res, 2, activeState_)) return false;
+		if (!getRefFromResponse(res, 3, activeStateId_)) return false;
+		if (!getRefFromResponse(res, 4, enableState_)) return false;
+		if (!getRefFromResponse(res, 5, enableStateId_)) return false;
+		if (!getRefFromResponse(res, 6, comment_)) return false;
+		if (!getRefFromResponse(res, 7, commentSourceTimestamp_)) return false;
+
+		return true;
+	}
+
+	bool
+	Alarm::getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref)
+	{
+		NodeReference::SPtr nodeReference;
+		if (!res->nodeReferenceArray()->get(idx, nodeReference)) {
+			Log(Error, "reference result not exist in response")
+				.parameter("Idx", idx);
+			return false;
+		}
+
+		if (nodeReference->statusCode() != Success) {
+			Log(Error, "reference error in response")
+				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeReference->statusCode()))
+				.parameter("Idx", idx);
+			return false;
+		}
+
+  		NodeReferenceApplication::SPtr nodeReferenceApplication;
+  		nodeReferenceApplication = boost::static_pointer_cast<NodeReferenceApplication>(nodeReference);
+  		ref = nodeReferenceApplication->baseNodeClass();
+
 		return true;
 	}
 

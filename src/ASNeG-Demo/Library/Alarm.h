@@ -42,7 +42,9 @@ namespace OpcUaServerApplicationDemo
 	  private:
 		bool getNamespaceInfo(void);
 		bool getNodeIds(void);
-		bool getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId& nodeId);
+		bool getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId::SPtr& nodeId);
+		bool createNodeReferences(void);
+		bool getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref);
 
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;
@@ -54,21 +56,33 @@ namespace OpcUaServerApplicationDemo
 		//
 		// node ids
 		//
-		OpcUaNodeId rootNodeId_;
-		OpcUaNodeId ackedStateNodeId_;
-		OpcUaNodeId ackedStateIdNodeId_;
-		OpcUaNodeId activeStateNodeId_;
-		OpcUaNodeId activeStateIdNodeId_;
-		OpcUaNodeId enableStateNodeId_;
-		OpcUaNodeId enableStateIdNodeId_;
-		OpcUaNodeId commentNodeId_;
-		OpcUaNodeId commentSourceTimestampNodeId_;
+		OpcUaNodeId::SPtr rootNodeId_;
+		OpcUaNodeId::SPtr ackedStateNodeId_;
+		OpcUaNodeId::SPtr ackedStateIdNodeId_;
+		OpcUaNodeId::SPtr activeStateNodeId_;
+		OpcUaNodeId::SPtr activeStateIdNodeId_;
+		OpcUaNodeId::SPtr enableStateNodeId_;
+		OpcUaNodeId::SPtr enableStateIdNodeId_;
+		OpcUaNodeId::SPtr commentNodeId_;
+		OpcUaNodeId::SPtr commentSourceTimestampNodeId_;
 
-		OpcUaNodeId acknowlegeNodeId_;
-		OpcUaNodeId confirmNodeId_;
-		OpcUaNodeId addCommentNodeId_;
-		OpcUaNodeId enableNodeId_;
-		OpcUaNodeId disableNodeId_;
+		OpcUaNodeId::SPtr acknowlegeNodeId_;
+		OpcUaNodeId::SPtr confirmNodeId_;
+		OpcUaNodeId::SPtr addCommentNodeId_;
+		OpcUaNodeId::SPtr enableNodeId_;
+		OpcUaNodeId::SPtr disableNodeId_;
+
+		//
+		// base node class references
+		//
+		BaseNodeClass::WPtr ackedState_;
+		BaseNodeClass::WPtr ackedStateId_;
+		BaseNodeClass::WPtr activeState_;
+		BaseNodeClass::WPtr activeStateId_;
+		BaseNodeClass::WPtr enableState_;
+		BaseNodeClass::WPtr enableStateId_;
+		BaseNodeClass::WPtr comment_;
+		BaseNodeClass::WPtr commentSourceTimestamp_;
 	};
 
 }
