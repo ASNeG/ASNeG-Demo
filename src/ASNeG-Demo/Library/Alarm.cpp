@@ -69,6 +69,7 @@ namespace OpcUaServerApplicationDemo
 
 		// set default values
 		ackedState(true);
+		activeState(false);
 
 		return true;
 	}
@@ -122,11 +123,39 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::activeState(bool activeState)
 	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = activeStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->set(activeState);
+		baseNodeClass->setValueSync(dataValue);
+
+		baseNodeClass = activeState_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		if (activeState) dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","Active"));
+		else dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","Inactive"));
+		baseNodeClass->setValueSync(dataValue);
 	}
 
 	bool
 	Alarm::activeState(void)
 	{
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = activeStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+
+		baseNodeClass->getValueSync(dataValue);
+		return dataValue.variant()->get<OpcUaBoolean>();
 	}
 
 	void
