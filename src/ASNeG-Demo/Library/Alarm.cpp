@@ -53,11 +53,13 @@ namespace OpcUaServerApplicationDemo
 		applicationInfo_ = applicationInfo;
 
 		// read namespace array from opc ua information model
+		// we will find the right namespace index
 		if (!getNamespaceInfo()) {
 			return false;
 		}
 
 		// get alarm node ids from opc ua information model
+		// we can use the browse name to find the node id
 		if (!getNodeIds()) {
 			return false;
 		}
@@ -70,6 +72,7 @@ namespace OpcUaServerApplicationDemo
 		// set default values
 		ackedState(true);
 		activeState(false);
+		enableState(true);
 
 		return true;
 	}
@@ -161,11 +164,39 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::enableState(bool enableState)
 	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = enableStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->set(enableState);
+		baseNodeClass->setValueSync(dataValue);
+
+		baseNodeClass = enableState_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		if (enableState) dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","Enabled"));
+		else dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","Disabled"));
+		baseNodeClass->setValueSync(dataValue);
 	}
 
 	bool
 	Alarm::enableState(void)
 	{
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = enableStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+
+		baseNodeClass->getValueSync(dataValue);
+		return dataValue.variant()->get<OpcUaBoolean>();
 	}
 
 	// ------------------------------------------------------------------------
