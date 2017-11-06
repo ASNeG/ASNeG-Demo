@@ -22,6 +22,7 @@
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
+#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -41,6 +42,7 @@ namespace OpcUaServerApplicationDemo
 	  private:
 		bool getNamespaceInfo(void);
 		bool getNodeIds(void);
+		bool getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId& nodeId);
 
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;
@@ -48,6 +50,25 @@ namespace OpcUaServerApplicationDemo
 		ApplicationInfo* applicationInfo_;
 
 		uint32_t namespaceIndex_;
+
+		//
+		// node ids
+		//
+		OpcUaNodeId rootNodeId_;
+		OpcUaNodeId ackedStateNodeId_;
+		OpcUaNodeId ackedStateIdNodeId_;
+		OpcUaNodeId activeStateNodeId_;
+		OpcUaNodeId activeStateIdNodeId_;
+		OpcUaNodeId enableStateNodeId_;
+		OpcUaNodeId enableStateIdNodeId_;
+		OpcUaNodeId commentNodeId_;
+		OpcUaNodeId commentSourceTimestampNodeId_;
+
+		OpcUaNodeId acknowlegeNodeId_;
+		OpcUaNodeId confirmNodeId_;
+		OpcUaNodeId addCommentNodeId_;
+		OpcUaNodeId enableNodeId_;
+		OpcUaNodeId disableNodeId_;
 	};
 
 }

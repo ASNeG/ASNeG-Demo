@@ -18,7 +18,6 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
-#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 namespace OpcUaServerApplicationDemo
@@ -124,12 +123,23 @@ namespace OpcUaServerApplicationDemo
 
 		BrowseName::SPtr browseName;
 		OpcUaQualifiedName::SPtr pathElement;
-		OpcUaNodeId nodeId;
-		nodeId.set(5003, namespaceIndex_);
+		rootNodeId_.set("AlarmObject", namespaceIndex_);
 
-		req->browseNameArray()->resize(2);
-		req->addBrowsePath(nodeId, OpcUaQualifiedName("AckedState"));
-		req->addBrowsePath(nodeId, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
+		req->browseNameArray()->resize(13);
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("AckedState"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("ActiveState"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("EnabledState"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("EnabledState"), OpcUaQualifiedName("Id"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Comment"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Comment"), OpcUaQualifiedName("SourceTimestamp"));
+
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Acknowledge"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Confirm"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("AddComment"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Enable"));
+		req->addBrowsePath(rootNodeId_, OpcUaQualifiedName("Disable"));
 
 		applicationServiceIf_->sendSync(trx);
 		if (trx->statusCode() != Success) {
@@ -137,15 +147,51 @@ namespace OpcUaServerApplicationDemo
 			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
 			return false;
 		}
-
-		for (uint32_t idx = 0; idx < res->nodeIdResults()->size(); idx++) {
-			NodeIdResult::SPtr nodeIdResult;
-			res->nodeIdResults()->get(idx, nodeIdResult);
-
-			std::cout << "StatusCode=" << (uint32_t)nodeIdResult->statusCode() << std::endl;
-			std::cout << "NodeId=" << nodeIdResult->nodeId() << std::endl;
+		if (res->nodeIdResults().get() == nullptr) {
+			Log(Error, "BrowsePathToNodeIdResponse error");
+			return false;
+		}
+		if (res->nodeIdResults()->size() != req->browseNameArray()->size()) {
+			Log(Error, "BrowsePathToNodeIdResponse size error");
+			return false;
 		}
 
+		if (!getNodeIdFromResponse(res, 0, ackedStateNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 1, ackedStateIdNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 2, activeStateNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 3, activeStateIdNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 4, enableStateNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 5, enableStateIdNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 6, commentNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 7, commentSourceTimestampNodeId_)) return false;
+
+		if (!getNodeIdFromResponse(res, 8, acknowlegeNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 9, confirmNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 10, addCommentNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 11, enableNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 12, disableNodeId_)) return false;
+
+		return true;
+	}
+
+	bool
+	Alarm::getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId& nodeId)
+	{
+		NodeIdResult::SPtr nodeIdResult;
+		if (!res->nodeIdResults()->get(idx, nodeIdResult)) {
+			Log(Error, "node id result not exist in response")
+				.parameter("Idx", idx);
+			return false;
+		}
+
+		if (nodeIdResult->statusCode() != Success) {
+			Log(Error, "node id result not error in response")
+				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeIdResult->statusCode()))
+				.parameter("Idx", idx);
+			return false;
+		}
+
+		nodeId = nodeIdResult->nodeId();
 		return true;
 	}
 
