@@ -18,8 +18,11 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
+#include "OpcUaStackCore/BuildInTypes/BuildInTypes.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Alarm.h"
+
+using namespace OpcUaStackCore;
 
 namespace OpcUaServerApplicationDemo
 {
@@ -64,6 +67,9 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+		// set default values
+		ackedState(true);
+
 		return true;
 	}
 
@@ -75,6 +81,63 @@ namespace OpcUaServerApplicationDemo
 		return true;
 	}
 
+	void
+	Alarm::ackedState(bool ackedState)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = ackedStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->set(ackedState);
+		baseNodeClass->setValueSync(dataValue);
+
+		baseNodeClass = ackedState_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		if (ackedState) dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","Acknowledged"));
+		else dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","NotAcknowledged"));
+		baseNodeClass->setValueSync(dataValue);
+	}
+
+	bool
+	Alarm::ackedState(void)
+	{
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = ackedStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+
+		baseNodeClass->getValueSync(dataValue);
+		return dataValue.variant()->get<OpcUaBoolean>();
+	}
+
+	void
+	Alarm::activeState(bool activeState)
+	{
+	}
+
+	bool
+	Alarm::activeState(void)
+	{
+	}
+
+	void
+	Alarm::enableState(bool enableState)
+	{
+	}
+
+	bool
+	Alarm::enableState(void)
+	{
+	}
 
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------

@@ -39,6 +39,13 @@ namespace OpcUaServerApplicationDemo
 		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
 		bool shutdown(void);
 
+		void ackedState(bool ackedState);
+		bool ackedState(void);
+		void activeState(bool activeState);
+		bool activeState(void);
+		void enableState(bool enableState);
+		bool enableState(void);
+
 	  private:
 		bool getNamespaceInfo(void);
 		bool getNodeIds(void);
