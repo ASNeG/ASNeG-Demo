@@ -19,6 +19,7 @@
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
 #include "OpcUaStackCore/BuildInTypes/BuildInTypes.h"
+#include "OpcUaStackCore/StandardEventType/OffNormalAlarmType.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
@@ -82,6 +83,9 @@ namespace OpcUaServerApplicationDemo
 		ackedState(true);
 		activeState(false);
 		enableState(true);
+
+		// start timer loop - fire event each 60 seconds
+		startTimerLoop();
 
 		return true;
 	}
@@ -479,6 +483,78 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "disable callback");
 		// FIXME: todo
+	}
+
+	void
+	Alarm::startTimerLoop(void)
+	{
+		Log(Debug, "start Event loop");
+		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_->callback().reset(boost::bind(&Alarm::timerLoop, this));
+		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 60000);
+		ioThread_->slotTimer()->start(slotTimerElement_);
+	}
+
+	void
+	Alarm::timerLoop(void)
+	{
+		Log(Debug, "activate alarm");
+		fireEvent("alarm activated...");
+	}
+
+	void
+	Alarm::fireEvent(const std::string& eventMessage)
+	{
+		if (!enableState()) {
+			return;
+		}
+
+		ackedState(false);
+		activeState(true);
+
+		OffNormalAlarmType::SPtr event = constructSPtr<OffNormalAlarmType>();
+		EventBase::SPtr eventBase;
+		OpcUaVariant::SPtr variant;
+
+		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
+		FireEventRequest::SPtr req = trx->request();
+		FireEventResponse::SPtr res = trx->response();
+
+		// set active state
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaBoolean)activeState());
+		event->activeState(variant);
+
+		// set acked state
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaBoolean)ackedState());
+		event->ackedState(variant);
+
+		// set enable state
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaBoolean)enableState());
+		event->enabledState(variant);
+
+		// set message value
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(OpcUaLocalizedText("en", eventMessage.c_str()));
+		event->message(variant);
+
+		// set severity message
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaUInt16)100);
+		event->severity(variant);
+
+		// send event on alarm node
+		req->nodeId(*rootNodeId_);
+		eventBase = event;
+		req->eventBase(eventBase);
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			Log(Debug, "event response error")
+				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		}
 	}
 
 }
