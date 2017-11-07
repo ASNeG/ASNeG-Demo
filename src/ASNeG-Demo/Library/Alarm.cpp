@@ -32,6 +32,10 @@ namespace OpcUaServerApplicationDemo
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
+	, acknowledgeCallback_(boost::bind(&Alarm::acknowledge, this, _1))
+	, confirmCallback_(boost::bind(&Alarm::confirm, this, _1))
+	, enableCallback_(boost::bind(&Alarm::enable, this, _1))
+	, disableCallback_(boost::bind(&Alarm::disable, this, _1))
 	{
 	}
 
@@ -66,6 +70,11 @@ namespace OpcUaServerApplicationDemo
 
 		// get references to alarm nodes from opc ua information model
 		if (!createNodeReferences()) {
+			return false;
+		}
+
+		// register callback functions
+		if (!registerCallbacks()) {
 			return false;
 		}
 
@@ -197,6 +206,19 @@ namespace OpcUaServerApplicationDemo
 
 		baseNodeClass->getValueSync(dataValue);
 		return dataValue.variant()->get<OpcUaBoolean>();
+	}
+
+	void
+	Alarm::comment(const std::string& comment)
+	{
+		// FIXME: todo
+	}
+
+	std::string
+	Alarm::comment(void)
+	{
+		// FIXME: todo
+		return "";
 	}
 
 	// ------------------------------------------------------------------------
@@ -394,6 +416,69 @@ namespace OpcUaServerApplicationDemo
   		ref = nodeReferenceApplication->baseNodeClass();
 
 		return true;
+	}
+
+	bool
+	Alarm::registerCallbacks(void)
+	{
+		if (!registerCallback(*rootNodeId_, *acknowlegeNodeId_, &acknowledgeCallback_)) return false;
+		if (!registerCallback(*rootNodeId_, *confirmNodeId_, &confirmCallback_)) return false;
+		if (!registerCallback(*rootNodeId_, *enableNodeId_, &enableCallback_)) return false;
+		if (!registerCallback(*rootNodeId_, *disableNodeId_, &disableCallback_)) return false;
+		return true;
+	}
+
+	bool
+	Alarm::registerCallback(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback)
+	{
+	  	ServiceTransactionRegisterForwardMethod::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardMethod>();
+	  	RegisterForwardMethodRequest::SPtr req = trx->request();
+	  	RegisterForwardMethodResponse::SPtr res = trx->response();
+
+	  	req->forwardMethodSync()->methodService().setCallback(*callback);
+	  	req->objectNodeId(objectNodeId);
+	  	req->methodNodeId(methodNodeId);
+
+	  	applicationServiceIf_->sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		std::cout << "response error" << std::endl;
+	  		return false;
+	  	}
+
+	  	if (res->statusCode() != Success) {
+  			std::cout << "register value error" << std::endl;
+  			return false;
+	  	}
+
+		return true;
+	}
+
+	void
+	Alarm::acknowledge(ApplicationMethodContext* applicationMethodContext)
+	{
+		Log(Debug, "acknowledge callback");
+		// FIXME: todo
+	}
+
+	void
+	Alarm::confirm(ApplicationMethodContext* applicationMethodContext)
+	{
+		Log(Debug, "confirm callback");
+		// FIXME: todo
+	}
+
+	void
+	Alarm::enable(ApplicationMethodContext* applicationMethodContext)
+	{
+		Log(Debug, "enable callback");
+		// FIXME: todo
+	}
+
+	void
+	Alarm::disable(ApplicationMethodContext* applicationMethodContext)
+	{
+		Log(Debug, "disable callback");
+		// FIXME: todo
 	}
 
 }

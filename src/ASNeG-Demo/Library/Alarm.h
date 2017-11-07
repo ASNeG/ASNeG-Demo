@@ -19,6 +19,7 @@
 #define __OpcUaServerApplicationDemo_Alarm_h__
 
 #include "OpcUaStackCore/Utility/IOThread.h"
+#include "OpcUaStackCore/Application/ApplicationMethodContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
@@ -45,6 +46,8 @@ namespace OpcUaServerApplicationDemo
 		bool activeState(void);
 		void enableState(bool enableState);
 		bool enableState(void);
+		void comment(const std::string& comment);
+		std::string comment(void);
 
 	  private:
 		bool getNamespaceInfo(void);
@@ -52,6 +55,12 @@ namespace OpcUaServerApplicationDemo
 		bool getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId::SPtr& nodeId);
 		bool createNodeReferences(void);
 		bool getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref);
+		bool registerCallbacks(void);
+		bool registerCallback(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback);
+		void acknowledge(ApplicationMethodContext* applicationMethodContext);
+		void confirm(ApplicationMethodContext* applicationMethodContext);
+		void enable(ApplicationMethodContext* applicationMethodContext);
+		void disable(ApplicationMethodContext* applicationMethodContext);
 
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;
@@ -90,6 +99,14 @@ namespace OpcUaServerApplicationDemo
 		BaseNodeClass::WPtr enableStateId_;
 		BaseNodeClass::WPtr comment_;
 		BaseNodeClass::WPtr commentSourceTimestamp_;
+
+		//
+		// alarm callbacks
+		//
+		Callback acknowledgeCallback_;
+		Callback confirmCallback_;
+		Callback enableCallback_;
+		Callback disableCallback_;
 	};
 
 }
