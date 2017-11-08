@@ -650,14 +650,16 @@ namespace OpcUaServerApplicationDemo
 	Alarm::enabled(ApplicationMethodContext* applicationMethodContext)
 	{
 		Log(Debug, "enabled callback");
-		// FIXME: todo
+		enabledState(OpcUaLocalizedText("en", "Enabled"));
+		enabledState_Id(true);
 	}
 
 	void
 	Alarm::disable(ApplicationMethodContext* applicationMethodContext)
 	{
 		Log(Debug, "disable callback");
-		// FIXME: todo
+		enabledState(OpcUaLocalizedText("en", "Disabled"));
+		enabledState_Id(false);
 	}
 
 	void
@@ -699,6 +701,16 @@ namespace OpcUaServerApplicationDemo
 		FireEventRequest::SPtr req = trx->request();
 		FireEventResponse::SPtr res = trx->response();
 
+		// set condition name
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(OpcUaString("OffNormalAlarm")); // FIXME:
+		event->conditionName(variant);
+
+		// set branch id
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(OpcUaNodeId()); // FIXME:
+		event->branchId(variant);
+
 		// set active state
 		variant = constructSPtr<OpcUaVariant>();
 		variant->setValue(activeState());
@@ -739,6 +751,11 @@ namespace OpcUaServerApplicationDemo
 		variant->setValue(enabledState_Id());
 		event->enabledState_Id(variant);
 
+		// set retain
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue((OpcUaBoolean)true); // FIXME: todo
+		event->retain(variant);
+
 		// set message value
 		variant = constructSPtr<OpcUaVariant>();
 		variant->setValue(OpcUaLocalizedText("en", eventMessage.c_str()));
@@ -746,7 +763,7 @@ namespace OpcUaServerApplicationDemo
 
 		// set severity message
 		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaUInt16)100);
+		variant->setValue((OpcUaUInt16)500);
 		event->severity(variant);
 
 		// send event on alarm node
