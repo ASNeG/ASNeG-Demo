@@ -44,8 +44,10 @@ namespace OpcUaServerApplicationDemo
 		OpcUaLocalizedText ackedState(void);
 		void ackedState_Id(bool ackedState);
 		bool ackedState_Id(void);
-		void activeState(bool activeState);
-		bool activeState(void);
+		void activeState(const OpcUaLocalizedText& activeState);
+		OpcUaLocalizedText activeState(void);
+		void activeState_Id(bool activeState);
+		bool activeState_Id(void);
 		void enableState(bool enableState);
 		bool enableState(void);
 		void comment(const OpcUaLocalizedText& comment);
