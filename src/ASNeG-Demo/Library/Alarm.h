@@ -40,14 +40,16 @@ namespace OpcUaServerApplicationDemo
 		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
 		bool shutdown(void);
 
-		void ackedState(bool ackedState);
-		bool ackedState(void);
+		void ackedState(const OpcUaLocalizedText& ackedState);
+		OpcUaLocalizedText ackedState(void);
+		void ackedState_Id(bool ackedState);
+		bool ackedState_Id(void);
 		void activeState(bool activeState);
 		bool activeState(void);
 		void enableState(bool enableState);
 		bool enableState(void);
-		void comment(const std::string& comment);
-		std::string comment(void);
+		void comment(const OpcUaLocalizedText& comment);
+		OpcUaLocalizedText comment(void);
 
 	  private:
 		bool getNamespaceInfo(void);
