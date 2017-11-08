@@ -82,6 +82,8 @@ namespace OpcUaServerApplicationDemo
 		// set default values
 		ackedState(OpcUaLocalizedText("en", "Acknowledged"));
 		ackedState_Id(true);
+		confirmedState(OpcUaLocalizedText("en", "Confirmed"));
+		confirmedState_Id(true);
 		activeState(OpcUaLocalizedText("en", "Inactive"));
 		activeState_Id(false);
 		enabledState(OpcUaLocalizedText("en", "Enabled"));
@@ -164,6 +166,70 @@ namespace OpcUaServerApplicationDemo
 		dataValue.variant()->getValue(ackedState);
 
 		return ackedState;
+	}
+
+	void
+	Alarm::confirmedState(const OpcUaLocalizedText& confirmedState)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = confirmedState_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue(confirmedState);
+		baseNodeClass->setValueSync(dataValue);
+	}
+
+	OpcUaLocalizedText
+	Alarm::confirmedState(void)
+	{
+		OpcUaLocalizedText confirmedState;
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = confirmedState_.lock();
+		if (baseNodeClass.get() == nullptr) return confirmedState;
+
+		baseNodeClass->getValueSync(dataValue);
+		dataValue.variant()->getValue(confirmedState);
+
+		return confirmedState;
+	}
+
+	void
+	Alarm::confirmedState_Id(bool confirmedState)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = confirmedStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue(confirmedState);
+		baseNodeClass->setValueSync(dataValue);
+	}
+
+	bool
+	Alarm::confirmedState_Id(void)
+	{
+		OpcUaBoolean confirmedState;
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = confirmedStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return confirmedState;
+
+		baseNodeClass->getValueSync(dataValue);
+		dataValue.variant()->getValue(confirmedState);
+
+		return confirmedState;
 	}
 
 	void
@@ -382,9 +448,11 @@ namespace OpcUaServerApplicationDemo
 		rootNodeId_ = constructSPtr<OpcUaNodeId>();
 		rootNodeId_->set("AlarmObject", namespaceIndex_);
 
-		req->browseNameArray()->resize(13);
+		req->browseNameArray()->resize(15);
 		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"));
 		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ConfirmedState"));
+		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ConfirmedState"), OpcUaQualifiedName("Id"));
 		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"));
 		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id"));
 		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("EnabledState"));
@@ -415,18 +483,20 @@ namespace OpcUaServerApplicationDemo
 
 		if (!getNodeIdFromResponse(res, 0, ackedStateNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 1, ackedStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 2, activeStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 3, activeStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 4, enabledStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 5, enabledStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 6, commentNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 7, commentSourceTimestampNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 2, confirmedStateNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 3, confirmedStateIdNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 4, activeStateNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 5, activeStateIdNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 6, enabledStateNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 7, enabledStateIdNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 8, commentNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 9, commentSourceTimestampNodeId_)) return false;
 
-		if (!getNodeIdFromResponse(res, 8, acknowlegeNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 9, confirmNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 10, addCommentNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 11, enabledNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 12, disableNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 10, acknowlegeNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 11, confirmNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 12, addCommentNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 13, enabledNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 14, disableNodeId_)) return false;
 
 		return true;
 	}
@@ -462,9 +532,11 @@ namespace OpcUaServerApplicationDemo
 		GetNodeReferenceRequest::SPtr req = trx->request();
 		GetNodeReferenceResponse::SPtr res = trx->response();
 
-	  	req->nodes()->resize(8);
+	  	req->nodes()->resize(10);
 	  	req->nodes()->push_back(ackedStateNodeId_);
 	  	req->nodes()->push_back(ackedStateIdNodeId_);
+	  	req->nodes()->push_back(confirmedStateNodeId_);
+	  	req->nodes()->push_back(confirmedStateIdNodeId_);
 	  	req->nodes()->push_back(activeStateNodeId_);
 	  	req->nodes()->push_back(activeStateIdNodeId_);
 	  	req->nodes()->push_back(enabledStateNodeId_);
@@ -489,12 +561,14 @@ namespace OpcUaServerApplicationDemo
 
 		if (!getRefFromResponse(res, 0, ackedState_)) return false;
 		if (!getRefFromResponse(res, 1, ackedStateId_)) return false;
-		if (!getRefFromResponse(res, 2, activeState_)) return false;
-		if (!getRefFromResponse(res, 3, activeStateId_)) return false;
-		if (!getRefFromResponse(res, 4, enabledState_)) return false;
-		if (!getRefFromResponse(res, 5, enabledStateId_)) return false;
-		if (!getRefFromResponse(res, 6, comment_)) return false;
-		if (!getRefFromResponse(res, 7, commentSourceTimestamp_)) return false;
+		if (!getRefFromResponse(res, 2, confirmedState_)) return false;
+		if (!getRefFromResponse(res, 3, confirmedStateId_)) return false;
+		if (!getRefFromResponse(res, 4, activeState_)) return false;
+		if (!getRefFromResponse(res, 5, activeStateId_)) return false;
+		if (!getRefFromResponse(res, 6, enabledState_)) return false;
+		if (!getRefFromResponse(res, 7, enabledStateId_)) return false;
+		if (!getRefFromResponse(res, 8, comment_)) return false;
+		if (!getRefFromResponse(res, 9, commentSourceTimestamp_)) return false;
 
 		return true;
 	}
@@ -592,7 +666,7 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "start Event loop");
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
 		slotTimerElement_->callback().reset(boost::bind(&Alarm::timerLoop, this));
-		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 60000);
+		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), /*60000*/ 1000);
 		ioThread_->slotTimer()->start(slotTimerElement_);
 	}
 
@@ -612,6 +686,8 @@ namespace OpcUaServerApplicationDemo
 
 		ackedState(OpcUaLocalizedText("en", "Unacknowledged"));
 		ackedState_Id(false);
+		confirmedState(OpcUaLocalizedText("en", "Unconfirmed"));
+		confirmedState_Id(false);
 		activeState(OpcUaLocalizedText("en", "Active"));
 		activeState_Id(true);
 
@@ -642,6 +718,16 @@ namespace OpcUaServerApplicationDemo
 		variant = constructSPtr<OpcUaVariant>();
 		variant->setValue(ackedState_Id());
 		event->ackedState_Id(variant);
+
+		// set confirm state
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(confirmedState());
+		event->confirmedState(variant);
+
+		// set confirm state id
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(confirmedState_Id());
+		event->confirmedState_Id(variant);
 
 		// set enabled state
 		variant = constructSPtr<OpcUaVariant>();

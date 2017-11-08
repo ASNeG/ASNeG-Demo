@@ -44,6 +44,10 @@ namespace OpcUaServerApplicationDemo
 		OpcUaLocalizedText ackedState(void);
 		void ackedState_Id(bool ackedState);
 		bool ackedState_Id(void);
+		void confirmedState(const OpcUaLocalizedText& confirmedState);
+		OpcUaLocalizedText confirmedState(void);
+		void confirmedState_Id(bool confirmedState);
+		bool confirmedState_Id(void);
 		void activeState(const OpcUaLocalizedText& activeState);
 		OpcUaLocalizedText activeState(void);
 		void activeState_Id(bool activeState);
@@ -84,6 +88,8 @@ namespace OpcUaServerApplicationDemo
 		OpcUaNodeId::SPtr rootNodeId_;
 		OpcUaNodeId::SPtr ackedStateNodeId_;
 		OpcUaNodeId::SPtr ackedStateIdNodeId_;
+		OpcUaNodeId::SPtr confirmedStateNodeId_;
+		OpcUaNodeId::SPtr confirmedStateIdNodeId_;
 		OpcUaNodeId::SPtr activeStateNodeId_;
 		OpcUaNodeId::SPtr activeStateIdNodeId_;
 		OpcUaNodeId::SPtr enabledStateNodeId_;
@@ -102,6 +108,8 @@ namespace OpcUaServerApplicationDemo
 		//
 		BaseNodeClass::WPtr ackedState_;
 		BaseNodeClass::WPtr ackedStateId_;
+		BaseNodeClass::WPtr confirmedState_;
+		BaseNodeClass::WPtr confirmedStateId_;
 		BaseNodeClass::WPtr activeState_;
 		BaseNodeClass::WPtr activeStateId_;
 		BaseNodeClass::WPtr enabledState_;
