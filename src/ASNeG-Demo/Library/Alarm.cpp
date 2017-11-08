@@ -86,6 +86,7 @@ namespace OpcUaServerApplicationDemo
 		activeState_Id(false);
 		enabledState(OpcUaLocalizedText("en", "Enabled"));
 		enabledState_Id(true);
+		comment(OpcUaLocalizedText("", ""));
 
 		// start timer loop - fire event each 60 seconds
 		startTimerLoop();
@@ -296,14 +297,33 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::comment(const OpcUaLocalizedText& comment)
 	{
-		// FIXME: todo
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = comment_.lock();
+		if (baseNodeClass.get() == nullptr) return;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue(comment);
+		baseNodeClass->setValueSync(dataValue);
 	}
 
 	OpcUaLocalizedText
 	Alarm::comment(void)
 	{
-		// FIXME: todo
-		return OpcUaLocalizedText();
+		OpcUaLocalizedText comment("", "");
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = comment_.lock();
+		if (baseNodeClass.get() == nullptr) return comment;
+
+		baseNodeClass->getValueSync(dataValue);
+		dataValue.variant()->getValue(comment);
+
+		return comment;
 	}
 
 	// ------------------------------------------------------------------------

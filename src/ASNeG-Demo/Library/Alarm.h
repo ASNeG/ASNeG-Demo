@@ -52,8 +52,6 @@ namespace OpcUaServerApplicationDemo
 		OpcUaLocalizedText enabledState(void);
 		void enabledState_Id(bool activeState);
 		bool enabledState_Id(void);
-
-
 		void comment(const OpcUaLocalizedText& comment);
 		OpcUaLocalizedText comment(void);
 
