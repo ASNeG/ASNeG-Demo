@@ -703,6 +703,11 @@ namespace OpcUaServerApplicationDemo
 		FireEventRequest::SPtr req = trx->request();
 		FireEventResponse::SPtr res = trx->response();
 
+		// set condition identifier
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(*rootNodeId_);
+		event->setAlarmConditionType(variant);
+
 		// set event id
 		variant = constructSPtr<OpcUaVariant>();
 		variant->setValue(OpcUaByteString("0123456789012345")); // FIXME:
