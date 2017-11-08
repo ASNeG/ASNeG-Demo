@@ -48,8 +48,12 @@ namespace OpcUaServerApplicationDemo
 		OpcUaLocalizedText activeState(void);
 		void activeState_Id(bool activeState);
 		bool activeState_Id(void);
-		void enableState(bool enableState);
-		bool enableState(void);
+		void enabledState(const OpcUaLocalizedText& activeState);
+		OpcUaLocalizedText enabledState(void);
+		void enabledState_Id(bool activeState);
+		bool enabledState_Id(void);
+
+
 		void comment(const OpcUaLocalizedText& comment);
 		OpcUaLocalizedText comment(void);
 
@@ -63,7 +67,7 @@ namespace OpcUaServerApplicationDemo
 		bool registerCallback(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback);
 		void acknowledge(ApplicationMethodContext* applicationMethodContext);
 		void confirm(ApplicationMethodContext* applicationMethodContext);
-		void enable(ApplicationMethodContext* applicationMethodContext);
+		void enabled(ApplicationMethodContext* applicationMethodContext);
 		void disable(ApplicationMethodContext* applicationMethodContext);
 		void startTimerLoop(void);
 		void timerLoop(void);
@@ -84,15 +88,15 @@ namespace OpcUaServerApplicationDemo
 		OpcUaNodeId::SPtr ackedStateIdNodeId_;
 		OpcUaNodeId::SPtr activeStateNodeId_;
 		OpcUaNodeId::SPtr activeStateIdNodeId_;
-		OpcUaNodeId::SPtr enableStateNodeId_;
-		OpcUaNodeId::SPtr enableStateIdNodeId_;
+		OpcUaNodeId::SPtr enabledStateNodeId_;
+		OpcUaNodeId::SPtr enabledStateIdNodeId_;
 		OpcUaNodeId::SPtr commentNodeId_;
 		OpcUaNodeId::SPtr commentSourceTimestampNodeId_;
 
 		OpcUaNodeId::SPtr acknowlegeNodeId_;
 		OpcUaNodeId::SPtr confirmNodeId_;
 		OpcUaNodeId::SPtr addCommentNodeId_;
-		OpcUaNodeId::SPtr enableNodeId_;
+		OpcUaNodeId::SPtr enabledNodeId_;
 		OpcUaNodeId::SPtr disableNodeId_;
 
 		//
@@ -102,8 +106,8 @@ namespace OpcUaServerApplicationDemo
 		BaseNodeClass::WPtr ackedStateId_;
 		BaseNodeClass::WPtr activeState_;
 		BaseNodeClass::WPtr activeStateId_;
-		BaseNodeClass::WPtr enableState_;
-		BaseNodeClass::WPtr enableStateId_;
+		BaseNodeClass::WPtr enabledState_;
+		BaseNodeClass::WPtr enabledStateId_;
 		BaseNodeClass::WPtr comment_;
 		BaseNodeClass::WPtr commentSourceTimestamp_;
 
@@ -112,7 +116,7 @@ namespace OpcUaServerApplicationDemo
 		//
 		Callback acknowledgeCallback_;
 		Callback confirmCallback_;
-		Callback enableCallback_;
+		Callback enabledCallback_;
 		Callback disableCallback_;
 	};
 

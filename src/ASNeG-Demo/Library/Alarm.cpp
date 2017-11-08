@@ -35,7 +35,7 @@ namespace OpcUaServerApplicationDemo
 	, namespaceIndex_(0)
 	, acknowledgeCallback_(boost::bind(&Alarm::acknowledge, this, _1))
 	, confirmCallback_(boost::bind(&Alarm::confirm, this, _1))
-	, enableCallback_(boost::bind(&Alarm::enable, this, _1))
+	, enabledCallback_(boost::bind(&Alarm::enabled, this, _1))
 	, disableCallback_(boost::bind(&Alarm::disable, this, _1))
 	{
 	}
@@ -84,7 +84,8 @@ namespace OpcUaServerApplicationDemo
 		ackedState_Id(true);
 		activeState(OpcUaLocalizedText("en", "Inactive"));
 		activeState_Id(false);
-		enableState(true);
+		enabledState(OpcUaLocalizedText("en", "Enabled"));
+		enabledState_Id(true);
 
 		// start timer loop - fire event each 60 seconds
 		startTimerLoop();
@@ -229,41 +230,67 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	void
-	Alarm::enableState(bool enableState)
+	Alarm::enabledState(const OpcUaLocalizedText& enabledState)
 	{
 		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
 		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = enableStateId_.lock();
+		baseNodeClass = enabledState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
 		dataValue.serverTimestamp(dateTime);
 		dataValue.sourceTimestamp(dateTime);
 		dataValue.statusCode(Success);
-		dataValue.variant()->set(enableState);
+		dataValue.variant()->setValue(enabledState);
 		baseNodeClass->setValueSync(dataValue);
+	}
 
-		baseNodeClass = enableState_.lock();
+	OpcUaLocalizedText
+	Alarm::enabledState(void)
+	{
+		OpcUaLocalizedText enabledState;
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = enabledState_.lock();
+		if (baseNodeClass.get() == nullptr) return enabledState;
+
+		baseNodeClass->getValueSync(dataValue);
+		dataValue.variant()->getValue(enabledState);
+
+		return enabledState;
+	}
+
+	void
+	Alarm::enabledState_Id(bool enabledState)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+
+		baseNodeClass = enabledStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
 		dataValue.serverTimestamp(dateTime);
 		dataValue.sourceTimestamp(dateTime);
 		dataValue.statusCode(Success);
-		if (enableState) dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","Enabled"));
-		else dataValue.variant()->set(constructSPtr<OpcUaLocalizedText>("en","Disabled"));
+		dataValue.variant()->setValue(enabledState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
 	bool
-	Alarm::enableState(void)
+	Alarm::enabledState_Id(void)
 	{
+		OpcUaBoolean enabledState;
 		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = enableStateId_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
+		baseNodeClass = enabledStateId_.lock();
+		if (baseNodeClass.get() == nullptr) return enabledState;
 
 		baseNodeClass->getValueSync(dataValue);
-		return dataValue.variant()->get<OpcUaBoolean>();
+		dataValue.variant()->getValue(enabledState);
+
+		return enabledState;
 	}
 
 	void
@@ -370,15 +397,15 @@ namespace OpcUaServerApplicationDemo
 		if (!getNodeIdFromResponse(res, 1, ackedStateIdNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 2, activeStateNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 3, activeStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 4, enableStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 5, enableStateIdNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 4, enabledStateNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 5, enabledStateIdNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 6, commentNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 7, commentSourceTimestampNodeId_)) return false;
 
 		if (!getNodeIdFromResponse(res, 8, acknowlegeNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 9, confirmNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 10, addCommentNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 11, enableNodeId_)) return false;
+		if (!getNodeIdFromResponse(res, 11, enabledNodeId_)) return false;
 		if (!getNodeIdFromResponse(res, 12, disableNodeId_)) return false;
 
 		return true;
@@ -420,8 +447,8 @@ namespace OpcUaServerApplicationDemo
 	  	req->nodes()->push_back(ackedStateIdNodeId_);
 	  	req->nodes()->push_back(activeStateNodeId_);
 	  	req->nodes()->push_back(activeStateIdNodeId_);
-	  	req->nodes()->push_back(enableStateNodeId_);
-	  	req->nodes()->push_back(enableStateIdNodeId_);
+	  	req->nodes()->push_back(enabledStateNodeId_);
+	  	req->nodes()->push_back(enabledStateIdNodeId_);
 	  	req->nodes()->push_back(commentNodeId_);
 	  	req->nodes()->push_back(commentSourceTimestampNodeId_);
 
@@ -444,8 +471,8 @@ namespace OpcUaServerApplicationDemo
 		if (!getRefFromResponse(res, 1, ackedStateId_)) return false;
 		if (!getRefFromResponse(res, 2, activeState_)) return false;
 		if (!getRefFromResponse(res, 3, activeStateId_)) return false;
-		if (!getRefFromResponse(res, 4, enableState_)) return false;
-		if (!getRefFromResponse(res, 5, enableStateId_)) return false;
+		if (!getRefFromResponse(res, 4, enabledState_)) return false;
+		if (!getRefFromResponse(res, 5, enabledStateId_)) return false;
 		if (!getRefFromResponse(res, 6, comment_)) return false;
 		if (!getRefFromResponse(res, 7, commentSourceTimestamp_)) return false;
 
@@ -481,7 +508,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		if (!registerCallback(*rootNodeId_, *acknowlegeNodeId_, &acknowledgeCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *confirmNodeId_, &confirmCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, *enableNodeId_, &enableCallback_)) return false;
+		if (!registerCallback(*rootNodeId_, *enabledNodeId_, &enabledCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *disableNodeId_, &disableCallback_)) return false;
 		return true;
 	}
@@ -526,9 +553,9 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	void
-	Alarm::enable(ApplicationMethodContext* applicationMethodContext)
+	Alarm::enabled(ApplicationMethodContext* applicationMethodContext)
 	{
-		Log(Debug, "enable callback");
+		Log(Debug, "enabled callback");
 		// FIXME: todo
 	}
 
@@ -559,7 +586,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::fireEvent(const std::string& eventMessage)
 	{
-		if (!enableState()) {
+		if (!enabledState_Id()) {
 			return;
 		}
 
@@ -596,10 +623,15 @@ namespace OpcUaServerApplicationDemo
 		variant->setValue(ackedState_Id());
 		event->ackedState_Id(variant);
 
-		// set enable state
+		// set enabled state
 		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaBoolean)enableState());
+		variant->setValue(enabledState());
 		event->enabledState(variant);
+
+		// set enabled state id
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(enabledState_Id());
+		event->enabledState_Id(variant);
 
 		// set message value
 		variant = constructSPtr<OpcUaVariant>();
