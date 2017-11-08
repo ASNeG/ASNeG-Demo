@@ -701,6 +701,11 @@ namespace OpcUaServerApplicationDemo
 		FireEventRequest::SPtr req = trx->request();
 		FireEventResponse::SPtr res = trx->response();
 
+		// set event id
+		variant = constructSPtr<OpcUaVariant>();
+		variant->setValue(OpcUaByteString("0123456789012345")); // FIXME:
+		event->eventId(variant);
+
 		// set condition name
 		variant = constructSPtr<OpcUaVariant>();
 		variant->setValue(OpcUaString("OffNormalAlarm")); // FIXME:
