@@ -636,14 +636,16 @@ namespace OpcUaServerApplicationDemo
 	Alarm::acknowledge(ApplicationMethodContext* applicationMethodContext)
 	{
 		Log(Debug, "acknowledge callback");
-		// FIXME: todo
+		ackedState(OpcUaLocalizedText("en", "Acknowledged"));
+		ackedState_Id(true);
 	}
 
 	void
 	Alarm::confirm(ApplicationMethodContext* applicationMethodContext)
 	{
 		Log(Debug, "confirm callback");
-		// FIXME: todo
+		confirmedState(OpcUaLocalizedText("en", "Confirmed"));
+		confirmedState_Id(true);
 	}
 
 	void
