@@ -73,7 +73,7 @@ namespace OpcUaServerApplicationDemo
 		void disable(ApplicationMethodContext* applicationMethodContext);
 		void startTimerLoop(void);
 		void timerLoop(void);
-		void fireEvent(const std::string& eventMessage);
+		void sendAlarmEvent(const std::string& eventMessage);
 
 		IOThread* ioThread_;
 		SlotTimerElement::SPtr slotTimerElement_;

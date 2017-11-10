@@ -670,7 +670,7 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "start Event loop");
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
 		slotTimerElement_->callback().reset(boost::bind(&Alarm::timerLoop, this));
-		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), /*60000*/ 1000);
+		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 10000);
 		ioThread_->slotTimer()->start(slotTimerElement_);
 	}
 
@@ -678,12 +678,7 @@ namespace OpcUaServerApplicationDemo
 	Alarm::timerLoop(void)
 	{
 		Log(Debug, "activate alarm");
-		fireEvent("alarm activated...");
-	}
 
-	void
-	Alarm::fireEvent(const std::string& eventMessage)
-	{
 		if (!enabledState_Id()) {
 			return;
 		}
@@ -694,6 +689,16 @@ namespace OpcUaServerApplicationDemo
 		confirmedState_Id(false);
 		activeState(OpcUaLocalizedText("en", "Active"));
 		activeState_Id(true);
+
+		sendAlarmEvent("alarm activated...");
+	}
+
+	void
+	Alarm::sendAlarmEvent(const std::string& eventMessage)
+	{
+		if (!enabledState_Id()) {
+			return;
+		}
 
 		OffNormalAlarmType::SPtr event = constructSPtr<OffNormalAlarmType>();
 		EventBase::SPtr eventBase;
