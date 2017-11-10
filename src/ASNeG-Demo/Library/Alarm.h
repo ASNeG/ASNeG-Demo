@@ -71,6 +71,7 @@ namespace OpcUaServerApplicationDemo
 		void confirm(ApplicationMethodContext* applicationMethodContext);
 		void enabled(ApplicationMethodContext* applicationMethodContext);
 		void disable(ApplicationMethodContext* applicationMethodContext);
+		void conditionRefresh(ApplicationMethodContext* applicationMethodContext);
 		void startTimerLoop(void);
 		void timerLoop(void);
 		void sendAlarmEvent(const std::string& eventMessage);
@@ -124,6 +125,7 @@ namespace OpcUaServerApplicationDemo
 		Callback confirmCallback_;
 		Callback enabledCallback_;
 		Callback disableCallback_;
+		Callback conditionRefreshCallback_;
 	};
 
 }

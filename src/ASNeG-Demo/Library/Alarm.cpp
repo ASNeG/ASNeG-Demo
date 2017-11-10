@@ -37,6 +37,7 @@ namespace OpcUaServerApplicationDemo
 	, confirmCallback_(boost::bind(&Alarm::confirm, this, _1))
 	, enabledCallback_(boost::bind(&Alarm::enabled, this, _1))
 	, disableCallback_(boost::bind(&Alarm::disable, this, _1))
+	, conditionRefreshCallback_(boost::bind(&Alarm::conditionRefresh, this, _1))
 	{
 	}
 
@@ -602,12 +603,16 @@ namespace OpcUaServerApplicationDemo
 	{
 		OpcUaNodeId acknowlegeNodeId(9111);
 		OpcUaNodeId confirmNodeId(9113);
+		OpcUaNodeId contionRefresh(3875);
+		OpcUaNodeId offNormalAlarmType(2782);
+
 		if (!registerCallback(*rootNodeId_, *acknowlegeNodeId_, &acknowledgeCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, acknowlegeNodeId, &acknowledgeCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *confirmNodeId_, &confirmCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, confirmNodeId, &confirmCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *enabledNodeId_, &enabledCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *disableNodeId_, &disableCallback_)) return false;
+		if (!registerCallback(offNormalAlarmType, contionRefresh, &conditionRefreshCallback_)) return false;
 		return true;
 	}
 
@@ -679,12 +684,20 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	void
+	Alarm::conditionRefresh(ApplicationMethodContext* applicationMethodContext)
+	{
+		Log(Debug, "condition refresh callback");
+
+		sendAlarmEvent("alarm condition refresh...");
+	}
+
+	void
 	Alarm::startTimerLoop(void)
 	{
 		Log(Debug, "start Event loop");
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
 		slotTimerElement_->callback().reset(boost::bind(&Alarm::timerLoop, this));
-		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 10000);
+		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 60000);
 		ioThread_->slotTimer()->start(slotTimerElement_);
 	}
 
