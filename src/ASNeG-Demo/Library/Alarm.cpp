@@ -600,8 +600,12 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Alarm::registerCallbacks(void)
 	{
+		OpcUaNodeId acknowlegeNodeId(9111);
+		OpcUaNodeId confirmNodeId(9113);
 		if (!registerCallback(*rootNodeId_, *acknowlegeNodeId_, &acknowledgeCallback_)) return false;
+		if (!registerCallback(*rootNodeId_, acknowlegeNodeId, &acknowledgeCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *confirmNodeId_, &confirmCallback_)) return false;
+		if (!registerCallback(*rootNodeId_, confirmNodeId, &confirmCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *enabledNodeId_, &enabledCallback_)) return false;
 		if (!registerCallback(*rootNodeId_, *disableNodeId_, &disableCallback_)) return false;
 		return true;
@@ -638,14 +642,20 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "acknowledge callback");
 		ackedState(OpcUaLocalizedText("en", "Acknowledged"));
 		ackedState_Id(true);
+
+		sendAlarmEvent("alarm acknowledged...");
 	}
 
 	void
 	Alarm::confirm(ApplicationMethodContext* applicationMethodContext)
 	{
 		Log(Debug, "confirm callback");
+		ackedState(OpcUaLocalizedText("en", "Acknowledged"));
+		ackedState_Id(true);
 		confirmedState(OpcUaLocalizedText("en", "Confirmed"));
 		confirmedState_Id(true);
+
+		sendAlarmEvent("alarm confirmed...");
 	}
 
 	void
@@ -654,6 +664,8 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "enabled callback");
 		enabledState(OpcUaLocalizedText("en", "Enabled"));
 		enabledState_Id(true);
+
+		sendAlarmEvent("alarm enable...");
 	}
 
 	void
@@ -662,6 +674,8 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "disable callback");
 		enabledState(OpcUaLocalizedText("en", "Disabled"));
 		enabledState_Id(false);
+
+		sendAlarmEvent("alarm disable...");
 	}
 
 	void
@@ -696,10 +710,6 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::sendAlarmEvent(const std::string& eventMessage)
 	{
-		if (!enabledState_Id()) {
-			return;
-		}
-
 		OffNormalAlarmType::SPtr event = constructSPtr<OffNormalAlarmType>();
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
