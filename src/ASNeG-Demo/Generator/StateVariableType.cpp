@@ -28,8 +28,9 @@ namespace OpcUaServerApplicationDemo
 {
 
 	StateVariableType::StateVariableType(void)
-	: VariableBase()
+	: BaseVariableType()
 	{
+		variableType(OpcUaNodeId(2755));
 	}
 
 	StateVariableType::~StateVariableType(void)
