@@ -28,6 +28,7 @@ namespace OpcUaServerApplicationDemo
 {
 
 	VariableType::VariableType(void)
+	: VariableBase()
 	{
 	}
 

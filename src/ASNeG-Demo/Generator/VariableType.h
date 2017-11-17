@@ -20,6 +20,7 @@
 
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
+#include "OpcUaStackCore/VariableType/VariableBase.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
@@ -32,6 +33,7 @@ namespace OpcUaServerApplicationDemo
 {
 
 	class VariableType
+	: public VariableBase
 	{
 	  public:
 		VariableType(void);
