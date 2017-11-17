@@ -44,6 +44,17 @@ namespace OpcUaServerApplicationDemo
 	)
 	{
 		Log(Debug, "Generator::startup");
+
+		ioThread_ = &ioThread;
+		applicationServiceIf_ = &applicationServiceIf;
+		applicationInfo_ = applicationInfo;
+
+		// read namespace array from opc ua information model
+		// we will find the right namespace index
+		if (!getNamespaceInfo()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -53,5 +64,48 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "Generator::shutdown");
 		return true;
 	}
+
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	//
+	// private functions
+	//
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	bool
+	Generator::getNamespaceInfo(void)
+	{
+		Log(Debug, "get namespace info");
+
+		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
+		NamespaceInfoRequest::SPtr req = trx->request();
+		NamespaceInfoResponse::SPtr res = trx->response();
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			Log(Error, "NamespaceInfoResponse error")
+			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+			return false;
+		}
+
+		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
+		for (
+		    it = res->index2NamespaceMap().begin();
+			it != res->index2NamespaceMap().end();
+			it++
+		)
+		{
+			if (it->second == "http://ASNeG-Demo.de/Generator/") {
+				namespaceIndex_ = it->first;
+				return true;
+			}
+ 		}
+
+		Log(Error, "namespace not found in opc ua information model")
+	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Generator/");
+
+		return false;
+	}
+
 
 }

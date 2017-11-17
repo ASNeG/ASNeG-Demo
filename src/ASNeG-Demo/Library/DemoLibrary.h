@@ -31,6 +31,7 @@
 #include "ASNeG-Demo/Library/TestStatusCode.h"
 #include "ASNeG-Demo/Library/Event.h"
 #include "ASNeG-Demo/Library/Alarm.h"
+#include "ASNeG-Demo/Library/Generator.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -59,6 +60,7 @@ namespace OpcUaServerApplicationDemo
 		ServiceFunction serviceFunction_;
 		Event event_;
 		Alarm alarm_;
+		Generator generator_;
 
 		IOThread ioThread_;
 	};

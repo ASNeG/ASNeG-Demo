@@ -34,6 +34,7 @@ namespace OpcUaServerApplicationDemo
 	, serviceFunction_()
 	, event_()
 	, alarm_()
+	, generator_()
 	{
 	}
 
@@ -54,6 +55,7 @@ namespace OpcUaServerApplicationDemo
 		serviceFunction_.startup(ioThread_, service(), applicationInfo());
 		event_.startup(ioThread_, service(), applicationInfo());
 		alarm_.startup(ioThread_, service(), applicationInfo());
+		generator_.startup(ioThread_, service(), applicationInfo());
 		return true;
 	}
 
@@ -62,6 +64,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "DemoLibrary::shutdown");
 
+		generator_.shutdown();
 		alarm_.shutdown();
 		event_.shutdown();
 		serviceFunction_.shutdown();
