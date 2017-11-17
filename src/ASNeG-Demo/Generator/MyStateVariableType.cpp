@@ -15,24 +15,24 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
+#include <ASNeG-Demo/Generator/MyStateVariableType.h>
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
 #include "OpcUaStackCore/BuildInTypes/BuildInTypes.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
-#include "ASNeG-Demo/Generator/VariableType.h"
 
 using namespace OpcUaStackCore;
 
 namespace OpcUaServerApplicationDemo
 {
 
-	VariableType::VariableType(void)
-	: VariableBase()
+	MyStateVariableType::MyStateVariableType(void)
+	: StateVariableType()
 	{
 	}
 
-	VariableType::~VariableType(void)
+	MyStateVariableType::~MyStateVariableType(void)
 	{
 	}
 

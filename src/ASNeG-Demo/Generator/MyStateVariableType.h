@@ -25,6 +25,7 @@
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
+#include "ASNeG-Demo/Generator/StateVariableType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -32,12 +33,12 @@ using namespace OpcUaStackServer;
 namespace OpcUaServerApplicationDemo
 {
 
-	class VariableType
-	: public VariableBase
+	class MyStateVariableType
+	: public StateVariableType
 	{
 	  public:
-		VariableType(void);
-		~VariableType(void);
+		MyStateVariableType(void);
+		~MyStateVariableType(void);
 
 	  private:
 	};
