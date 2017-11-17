@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UANodeSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uax="http://opcfoundation.org/UA/2008/02/Types.xsd" xmlns="http://opcfoundation.org/UA/2011/03/UANodeSet.xsd" xmlns:s1="http://ASNeG-Demo.de/Generator/Types.xsd" xmlns:ua="http://unifiedautomation.com/Configuration/NodeSet.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <NamespaceUris>
+        <Uri>http://ASNeG-Demo.de/Generator/</Uri>
+    </NamespaceUris>
+    <Aliases>
+        <Alias Alias="UInt32">i=7</Alias>
+        <Alias Alias="QualifiedName">i=20</Alias>
+        <Alias Alias="LocalizedText">i=21</Alias>
+        <Alias Alias="Organizes">i=35</Alias>
+        <Alias Alias="HasTypeDefinition">i=40</Alias>
+        <Alias Alias="HasProperty">i=46</Alias>
+        <Alias Alias="HasComponent">i=47</Alias>
+        <Alias Alias="Argument">i=296</Alias>
+    </Aliases>
+    <Extensions>
+        <Extension>
+            <ua:ModelInfo Tool="UaModeler" Hash="2fFBU3dxbwEh8ycF2fu/jg==" Version="1.5.2"/>
+        </Extension>
+    </Extensions>
+    <UAObject NodeId="ns=1;i=5002" BrowseName="1:Generator">
+        <DisplayName>Generator</DisplayName>
+        <References>
+            <Reference ReferenceType="Organizes">ns=1;s=DataTypes</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=VariableTypes</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;s=DataTypes" BrowseName="1:DataTypes">
+        <DisplayName>DataTypes</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;s=ObjectTypes" BrowseName="1:ObjectTypes">
+        <DisplayName>ObjectTypes</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;s=VariableTypes" BrowseName="1:VariableTypes">
+        <DisplayName>VariableTypes</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.createStateVariableType</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.deleteStateVariableType</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.StateVariableType1</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.StateVariable2</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.StateVariable3</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+        </References>
+    </UAObject>
+    <UAMethod NodeId="ns=1;s=VariableTypes.createStateVariableType" BrowseName="1:createStateVariableType">
+        <DisplayName>createStateVariableType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.createStateVariableType.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=VariableTypes.createStateVariableType" ValueRank="1" NodeId="ns=1;s=VariableTypes.createStateVariableType.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.createStateVariableType</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeId</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=17</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod NodeId="ns=1;s=VariableTypes.deleteStateVariableType" BrowseName="1:deleteStateVariableType">
+        <DisplayName>deleteStateVariableType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.deleteStateVariableType.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=VariableTypes.deleteStateVariableType" ValueRank="1" NodeId="ns=1;s=VariableTypes.deleteStateVariableType.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.deleteStateVariableType</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeId</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=17</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeId2</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" NodeId="ns=1;s=VariableTypes.StateVariableType1" BrowseName="1:StateVariable1" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>StateVariable1</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.EffectiveDisplayName</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.Id</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.Name</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.Number</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+        </References>
+        <Value>
+            <uax:LocalizedText/>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.EffectiveDisplayName" BrowseName="EffectiveDisplayName">
+        <DisplayName>EffectiveDisplayName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Id" BrowseName="Id">
+        <DisplayName>Id</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="QualifiedName" ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Name" BrowseName="Name">
+        <DisplayName>Name</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Number" BrowseName="Number">
+        <DisplayName>Number</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" NodeId="ns=1;s=VariableTypes.StateVariable2" BrowseName="1:StateVariable2" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>StateVariable2</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable2.EffectiveDisplayName</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable2.Id</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable2.Name</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable2.Number</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+        </References>
+        <Value>
+            <uax:LocalizedText/>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.EffectiveDisplayName" BrowseName="EffectiveDisplayName">
+        <DisplayName>EffectiveDisplayName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable2</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.Id" BrowseName="Id">
+        <DisplayName>Id</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable2</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="QualifiedName" ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.Name" BrowseName="Name">
+        <DisplayName>Name</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable2</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.Number" BrowseName="Number">
+        <DisplayName>Number</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable2</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" NodeId="ns=1;s=VariableTypes.StateVariable3" BrowseName="1:StateVariable3" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>StateVariable3</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable3.EffectiveDisplayName</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable3.Id</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable3.Name</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable3.Number</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+        </References>
+        <Value>
+            <uax:LocalizedText/>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.EffectiveDisplayName" BrowseName="EffectiveDisplayName">
+        <DisplayName>EffectiveDisplayName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable3</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.Id" BrowseName="Id">
+        <DisplayName>Id</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable3</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="QualifiedName" ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.Name" BrowseName="Name">
+        <DisplayName>Name</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable3</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.Number" BrowseName="Number">
+        <DisplayName>Number</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable3</Reference>
+        </References>
+    </UAVariable>
+</UANodeSet>
