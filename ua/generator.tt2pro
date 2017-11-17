@@ -1,0 +1,25 @@
+###########################
+# UaModeler Project File  #
+# Generated at 17.11.2017 #
+###########################
+
+PROJECTNAME = Generator
+
+TEMPLATESET = ($TEMPLATES)/modeling/v1_0/t0/modeling.tt2set
+
+MODELS += ($MODELS)/Opc.Ua.NodeSet2.ua \
+    generator.ua
+
+COLORS = ($MODELS)/Opc.Ua.NodeSet2.ua: #0000ff\
+    generator.ua: #008000
+
+OUTPUTPATH = 
+
+GENERATE += generator.ua
+
+NODEACCESSINFOROLES += Administrator \
+    SecurityAdmin \
+    ConfigurationAdmin \
+    Operator \
+    Observer
+
