@@ -90,6 +90,9 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::shutdown(void)
 	{
 		Log(Debug, "TestFolderLib::shutdown");
+
+		ioThread_->slotTimer()->stop(slotTimerElement_);
+		slotTimerElement_.reset();
 		return true;
 	}
 

@@ -102,6 +102,8 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "Alarm::shutdown");
 
+		ioThread_->slotTimer()->stop(slotTimerElement_);
+		slotTimerElement_.reset();
 		return true;
 	}
 
