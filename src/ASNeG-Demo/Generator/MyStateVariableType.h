@@ -20,7 +20,7 @@
 
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
-#include "OpcUaStackCore/VariableType/VariableBase.h"
+#include "OpcUaStackServer/VariableType/VariableBase.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
