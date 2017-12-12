@@ -20,11 +20,11 @@
 
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
-#include "OpcUaStackServer/StandardVariableType/BaseVariableType.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
+#include "ASNeG-Demo/Generator/BaseDataVariableType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -33,13 +33,21 @@ namespace OpcUaServerApplicationDemo
 {
 
 	class StateVariableType
-	: public BaseVariableType
+	: public BaseDataVariableType
 	{
 	  public:
 		StateVariableType(void);
 		~StateVariableType(void);
 
+		BaseNodeClass::SPtr effectiveDisplayName(void);
+		bool setEffectiveDisplayName(const OpcUaDataValue& dataValue);
+		bool getEffectiveDisplayName(OpcUaDataValue& dataValue);
+
 	  private:
+		BaseNodeClass::WPtr effectiveDisplayName_;
+		BaseNodeClass::WPtr id_;
+		BaseNodeClass::WPtr name_;
+		BaseNodeClass::WPtr number_;
 
 	};
 

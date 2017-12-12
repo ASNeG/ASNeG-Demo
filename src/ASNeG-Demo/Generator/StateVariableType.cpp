@@ -28,13 +28,44 @@ namespace OpcUaServerApplicationDemo
 {
 
 	StateVariableType::StateVariableType(void)
-	: BaseVariableType()
+	: BaseDataVariableType()
 	{
 		variableType(OpcUaNodeId(2755));
 	}
 
 	StateVariableType::~StateVariableType(void)
 	{
+	}
+
+	BaseNodeClass::SPtr
+	StateVariableType::effectiveDisplayName(void)
+	{
+		return effectiveDisplayName_.lock();
+	}
+
+	bool
+	StateVariableType::setEffectiveDisplayName(const OpcUaDataValue& dataValue)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = effectiveDisplayName_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
+		return true;
+	}
+
+	bool
+	StateVariableType::getEffectiveDisplayName(OpcUaDataValue& dataValue)
+	{
+		OpcUaLocalizedText ackedState;
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = effectiveDisplayName_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+
+		baseNodeClass->getValueSync(dataValue);
+		return true;
 	}
 
 }
