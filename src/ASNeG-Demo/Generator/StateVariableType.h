@@ -39,11 +39,16 @@ namespace OpcUaServerApplicationDemo
 		StateVariableType(void);
 		~StateVariableType(void);
 
+		BaseNodeClass::SPtr value(void);
+		bool setValue(const OpcUaDataValue& dataValue);
+		bool getValue(OpcUaDataValue& dataValue);
+
 		BaseNodeClass::SPtr effectiveDisplayName(void);
 		bool setEffectiveDisplayName(const OpcUaDataValue& dataValue);
 		bool getEffectiveDisplayName(OpcUaDataValue& dataValue);
 
 	  private:
+		BaseNodeClass::WPtr value_;
 		BaseNodeClass::WPtr effectiveDisplayName_;
 		BaseNodeClass::WPtr id_;
 		BaseNodeClass::WPtr name_;
