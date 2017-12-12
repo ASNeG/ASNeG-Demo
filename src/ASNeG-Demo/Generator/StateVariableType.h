@@ -47,6 +47,18 @@ namespace OpcUaServerApplicationDemo
 		bool setEffectiveDisplayName(const OpcUaDataValue& dataValue);
 		bool getEffectiveDisplayName(OpcUaDataValue& dataValue);
 
+		BaseNodeClass::SPtr id(void);
+		bool setId(const OpcUaDataValue& dataValue);
+		bool getId(OpcUaDataValue& dataValue);
+
+		BaseNodeClass::SPtr name(void);
+		bool setName(const OpcUaDataValue& dataValue);
+		bool getName(OpcUaDataValue& dataValue);
+
+		BaseNodeClass::SPtr number(void);
+		bool setNumber(const OpcUaDataValue& dataValue);
+		bool getNumber(OpcUaDataValue& dataValue);
+
 	  private:
 		BaseNodeClass::WPtr value_;
 		BaseNodeClass::WPtr effectiveDisplayName_;

@@ -39,8 +39,12 @@ namespace OpcUaServerApplicationDemo
 		BaseDataVariableType(void);
 		~BaseDataVariableType(void);
 
-	  private:
+		BaseNodeClass::SPtr value(void);
+		bool setValue(const OpcUaDataValue& dataValue);
+		bool getValue(OpcUaDataValue& dataValue);
 
+	  private:
+		BaseNodeClass::WPtr value_;
 	};
 
 }

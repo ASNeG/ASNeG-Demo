@@ -99,4 +99,97 @@ namespace OpcUaServerApplicationDemo
 		return true;
 	}
 
+	BaseNodeClass::SPtr
+	StateVariableType::id(void)
+	{
+		return id_.lock();
+	}
+
+	bool
+	StateVariableType::setId(const OpcUaDataValue& dataValue)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = id_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
+		return true;
+	}
+
+	bool
+	StateVariableType::getId(OpcUaDataValue& dataValue)
+	{
+		OpcUaLocalizedText ackedState;
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = id_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+
+		baseNodeClass->getValueSync(dataValue);
+		return true;
+	}
+
+	BaseNodeClass::SPtr
+	StateVariableType::name(void)
+	{
+		return name_.lock();
+	}
+
+	bool
+	StateVariableType::setName(const OpcUaDataValue& dataValue)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = name_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
+		return true;
+	}
+
+	bool
+	StateVariableType::getName(OpcUaDataValue& dataValue)
+	{
+		OpcUaLocalizedText ackedState;
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = name_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+
+		baseNodeClass->getValueSync(dataValue);
+		return true;
+	}
+
+	BaseNodeClass::SPtr
+	StateVariableType::number(void)
+	{
+		return number_.lock();
+	}
+
+	bool
+	StateVariableType::setNumber(const OpcUaDataValue& dataValue)
+	{
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = number_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
+		return true;
+	}
+
+	bool
+	StateVariableType::getNumber(OpcUaDataValue& dataValue)
+	{
+		OpcUaLocalizedText ackedState;
+		BaseNodeClass::SPtr baseNodeClass;
+
+		baseNodeClass = number_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+
+		baseNodeClass->getValueSync(dataValue);
+		return true;
+	}
+
 }
