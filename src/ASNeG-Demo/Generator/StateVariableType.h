@@ -22,7 +22,6 @@
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
-#include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "ASNeG-Demo/Generator/BaseDataVariableType.h"
 
@@ -38,10 +37,6 @@ namespace OpcUaServerApplicationDemo
 	  public:
 		StateVariableType(void);
 		~StateVariableType(void);
-
-		BaseNodeClass::SPtr value(void);
-		bool setValue(const OpcUaDataValue& dataValue);
-		bool getValue(OpcUaDataValue& dataValue);
 
 		BaseNodeClass::SPtr effectiveDisplayName(void);
 		bool setEffectiveDisplayName(const OpcUaDataValue& dataValue);
@@ -60,7 +55,6 @@ namespace OpcUaServerApplicationDemo
 		bool getNumber(OpcUaDataValue& dataValue);
 
 	  private:
-		BaseNodeClass::WPtr value_;
 		BaseNodeClass::WPtr effectiveDisplayName_;
 		BaseNodeClass::WPtr id_;
 		BaseNodeClass::WPtr name_;

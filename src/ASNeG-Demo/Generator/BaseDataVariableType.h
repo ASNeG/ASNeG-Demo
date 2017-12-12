@@ -23,7 +23,6 @@
 #include "OpcUaStackServer/StandardVariableType/BaseVariableType.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
-#include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 
 using namespace OpcUaStackCore;
@@ -44,7 +43,6 @@ namespace OpcUaServerApplicationDemo
 		bool getValue(OpcUaDataValue& dataValue);
 
 	  private:
-		BaseNodeClass::WPtr value_;
 	};
 
 }
