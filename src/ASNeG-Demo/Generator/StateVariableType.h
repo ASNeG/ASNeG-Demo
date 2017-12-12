@@ -39,9 +39,8 @@ namespace OpcUaServerApplicationDemo
 		StateVariableType(void);
 		~StateVariableType(void);
 
-
-
 	  private:
+
 	};
 
 }
