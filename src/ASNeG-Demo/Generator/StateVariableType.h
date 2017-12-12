@@ -20,7 +20,7 @@
 
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
-#include "OpcUaStackCore/StandardVariableType/BaseVariableType.h"
+#include "OpcUaStackServer/StandardVariableType/BaseVariableType.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
@@ -38,6 +38,8 @@ namespace OpcUaServerApplicationDemo
 	  public:
 		StateVariableType(void);
 		~StateVariableType(void);
+
+
 
 	  private:
 	};
