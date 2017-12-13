@@ -29,10 +29,10 @@ namespace OpcUaServerApplicationDemo
 
 	StateVariableType::StateVariableType(void)
 	: BaseDataVariableType()
-	, effectiveDisplayName_()
-	, id_()
-	, name_()
-	, number_()
+	, effectiveDisplayName_("EffectiveDisplayName")
+	, id_("Id")
+	, name_("Name")
+	, number_("Number")
 	{
 		variableType(OpcUaNodeId(2755));
 
