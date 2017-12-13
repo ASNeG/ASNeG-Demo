@@ -38,7 +38,14 @@ namespace OpcUaServerApplicationDemo
 		BaseDataVariableType(void);
 		~BaseDataVariableType(void);
 
+		BaseNodeClass::SPtr value(void);
+		bool setValue(const OpcUaDataValue& dataValue);
+		bool getValue(OpcUaDataValue& dataValue);
+
 	  private:
+		uint32_t namespaceIndex_;
+		std::string namespaceName_;
+		ServerVariable value_;
 	};
 
 }

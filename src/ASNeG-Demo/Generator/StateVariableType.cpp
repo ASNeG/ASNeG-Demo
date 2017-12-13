@@ -29,6 +29,8 @@ namespace OpcUaServerApplicationDemo
 
 	StateVariableType::StateVariableType(void)
 	: BaseDataVariableType()
+	, namespaceName_("http://opcfoundation.org/UA/")
+	, namespaceIndex_(0)
 	, effectiveDisplayName_("EffectiveDisplayName")
 	, id_("Id")
 	, name_("Name")

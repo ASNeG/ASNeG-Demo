@@ -56,6 +56,8 @@ namespace OpcUaServerApplicationDemo
 		bool getNumber(OpcUaDataValue& dataValue);
 
 	  private:
+		std::string namespaceName_;
+		uint32_t namespaceIndex_;
 		ServerVariable effectiveDisplayName_;
 		ServerVariable id_;
 		ServerVariable name_;

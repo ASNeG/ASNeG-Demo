@@ -29,12 +29,36 @@ namespace OpcUaServerApplicationDemo
 
 	BaseDataVariableType::BaseDataVariableType(void)
 	: BaseVariableType()
+	, namespaceName_("http://opcfoundation.org/UA/")
+	, namespaceIndex_(0)
+	, value_("Value")
 	{
 		variableType(OpcUaNodeId(63));
+
+		serverVariables().registerServerVariable(&value_);
 	}
 
 	BaseDataVariableType::~BaseDataVariableType(void)
 	{
+	}
+
+
+	BaseNodeClass::SPtr
+	BaseDataVariableType::value(void)
+	{
+		return value_.baseNode().lock();
+	}
+
+	bool
+	BaseDataVariableType::setValue(const OpcUaDataValue& dataValue)
+	{
+		return value_.setDataValue(dataValue);
+	}
+
+	bool
+	BaseDataVariableType::getValue(OpcUaDataValue& dataValue)
+	{
+		return value_.getDataValue(dataValue);
 	}
 
 }
