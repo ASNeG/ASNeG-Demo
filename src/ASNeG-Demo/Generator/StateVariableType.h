@@ -23,6 +23,7 @@
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
+#include "OpcUaStackServer/VariableType/ServerVariables.h"
 #include "ASNeG-Demo/Generator/BaseDataVariableType.h"
 
 using namespace OpcUaStackCore;
@@ -55,10 +56,10 @@ namespace OpcUaServerApplicationDemo
 		bool getNumber(OpcUaDataValue& dataValue);
 
 	  private:
-		BaseNodeClass::WPtr effectiveDisplayName_;
-		BaseNodeClass::WPtr id_;
-		BaseNodeClass::WPtr name_;
-		BaseNodeClass::WPtr number_;
+		ServerVariable effectiveDisplayName_;
+		ServerVariable id_;
+		ServerVariable name_;
+		ServerVariable number_;
 
 	};
 

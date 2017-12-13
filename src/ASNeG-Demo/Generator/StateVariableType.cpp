@@ -40,125 +40,73 @@ namespace OpcUaServerApplicationDemo
 	BaseNodeClass::SPtr
 	StateVariableType::effectiveDisplayName(void)
 	{
-		return effectiveDisplayName_.lock();
+		return effectiveDisplayName_.baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setEffectiveDisplayName(const OpcUaDataValue& dataValue)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = effectiveDisplayName_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
-		return true;
+		return effectiveDisplayName_.setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getEffectiveDisplayName(OpcUaDataValue& dataValue)
 	{
-		OpcUaLocalizedText ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = effectiveDisplayName_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-
-		baseNodeClass->getValueSync(dataValue);
-		return true;
+		return effectiveDisplayName_.getDataValue(dataValue);
 	}
 
 	BaseNodeClass::SPtr
 	StateVariableType::id(void)
 	{
-		return id_.lock();
+		return id_.baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setId(const OpcUaDataValue& dataValue)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = id_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
-		return true;
+		return id_.setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getId(OpcUaDataValue& dataValue)
 	{
-		OpcUaLocalizedText ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = id_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-
-		baseNodeClass->getValueSync(dataValue);
-		return true;
+		return id_.getDataValue(dataValue);
 	}
 
 	BaseNodeClass::SPtr
 	StateVariableType::name(void)
 	{
-		return name_.lock();
+		return name_.baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setName(const OpcUaDataValue& dataValue)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = name_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
-		return true;
+		return name_.setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getName(OpcUaDataValue& dataValue)
 	{
-		OpcUaLocalizedText ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = name_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-
-		baseNodeClass->getValueSync(dataValue);
-		return true;
+		return name_.getDataValue(dataValue);
 	}
 
 	BaseNodeClass::SPtr
 	StateVariableType::number(void)
 	{
-		return number_.lock();
+		return number_.baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setNumber(const OpcUaDataValue& dataValue)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = number_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-		baseNodeClass->setValueSync(*(const_cast<OpcUaDataValue*>(&dataValue)));
-		return true;
+		return number_.setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getNumber(OpcUaDataValue& dataValue)
 	{
-		OpcUaLocalizedText ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = number_.lock();
-		if (baseNodeClass.get() == nullptr) return false;
-
-		baseNodeClass->getValueSync(dataValue);
-		return true;
+		return number_.getDataValue(dataValue);
 	}
 
 }
