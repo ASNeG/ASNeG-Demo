@@ -39,6 +39,8 @@ namespace OpcUaServerApplicationDemo
 		StateVariableType(void);
 		~StateVariableType(void);
 
+		bool linkInstanceWithModel(const OpcUaNodeId& nodeId);
+
 		BaseNodeClass::SPtr effectiveDisplayName(void);
 		bool setEffectiveDisplayName(const OpcUaDataValue& dataValue);
 		bool getEffectiveDisplayName(OpcUaDataValue& dataValue);

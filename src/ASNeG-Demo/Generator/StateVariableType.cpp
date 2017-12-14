@@ -32,7 +32,7 @@ namespace OpcUaServerApplicationDemo
 	, namespaceName_("http://opcfoundation.org/UA/")
 	, namespaceIndex_(0)
 	, effectiveDisplayName_("EffectiveDisplayName")
-	, id_("Id")
+	, id_("	Id")
 	, name_("Name")
 	, number_("Number")
 	{
@@ -46,6 +46,17 @@ namespace OpcUaServerApplicationDemo
 
 	StateVariableType::~StateVariableType(void)
 	{
+	}
+
+	bool
+	StateVariableType::linkInstanceWithModel(const OpcUaNodeId& nodeId)
+	{
+		if (!getNamespaceIndexFromNamespaceName(namespaceName_, namespaceIndex_)) return false;
+		effectiveDisplayName_.addBrowsePath(nodeId, OpcUaQualifiedName("EffectiveDisplayName", namespaceIndex_));
+		id_.addBrowsePath(nodeId, OpcUaQualifiedName("Id", namespaceIndex_));
+		name_.addBrowsePath(nodeId, OpcUaQualifiedName("Name", namespaceIndex_));
+		number_.addBrowsePath(nodeId, OpcUaQualifiedName("Number", namespaceIndex_));
+		return BaseDataVariableType::linkInstanceWithModel(nodeId);
 	}
 
 	BaseNodeClass::SPtr

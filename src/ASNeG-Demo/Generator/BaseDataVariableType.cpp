@@ -42,6 +42,12 @@ namespace OpcUaServerApplicationDemo
 	{
 	}
 
+	bool
+	BaseDataVariableType::linkInstanceWithModel(const OpcUaNodeId& nodeId)
+	{
+		// FIXME: todo
+		return BaseVariableType::linkInstanceWithModel(nodeId);
+	}
 
 	BaseNodeClass::SPtr
 	BaseDataVariableType::value(void)
