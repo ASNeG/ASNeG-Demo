@@ -45,7 +45,7 @@ namespace OpcUaServerApplicationDemo
 	bool
 	BaseDataVariableType::linkInstanceWithModel(const OpcUaNodeId& nodeId)
 	{
-		// FIXME: todo
+		if (!getNamespaceIndexFromNamespaceName(namespaceName_, namespaceIndex_)) return false;
 		return BaseVariableType::linkInstanceWithModel(nodeId);
 	}
 
