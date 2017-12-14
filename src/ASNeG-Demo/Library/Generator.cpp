@@ -125,6 +125,8 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "connect to variable type");
 
 		OpcUaNodeId nodeId;
+		OpcUaDataValue::SPtr dataValue;
+
 
 		stateVariable1_.applicationServiceIf(applicationServiceIf_);
 		nodeId.set("VariableTypes.StateVariableType1", namespaceIndex_);
@@ -133,6 +135,22 @@ namespace OpcUaServerApplicationDemo
 				.parameter("NodeId", nodeId);
 			return false;
 		}
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "StateVariable1"));
+		stateVariable1_.setValue(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "EffectiveDisplayName1"));
+		stateVariable1_.setEffectiveDisplayName(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "Id1"));
+		stateVariable1_.setId(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaQualifiedName("Name1"));
+		stateVariable1_.setName(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue((OpcUaUInt32)1);
+		stateVariable1_.setNumber(*dataValue);
+
 
 		stateVariable2_.applicationServiceIf(applicationServiceIf_);
 		nodeId.set("VariableTypes.StateVariable2", namespaceIndex_);
@@ -141,6 +159,22 @@ namespace OpcUaServerApplicationDemo
 				.parameter("NodeId", nodeId);
 			return false;
 		}
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "StateVariable2"));
+		stateVariable2_.setValue(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "EffectiveDisplayName2"));
+		stateVariable2_.setEffectiveDisplayName(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "Id2"));
+		stateVariable2_.setId(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaQualifiedName("Name2"));
+		stateVariable2_.setName(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue((OpcUaUInt32)2);
+		stateVariable2_.setNumber(*dataValue);
+
 
 		stateVariable3_.applicationServiceIf(applicationServiceIf_);
 		nodeId.set("VariableTypes.StateVariable3", namespaceIndex_);
@@ -149,6 +183,21 @@ namespace OpcUaServerApplicationDemo
 				.parameter("NodeId", nodeId);
 			return false;
 		}
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "StateVariable3"));
+		stateVariable3_.setValue(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "EffectiveDisplayName3"));
+		stateVariable3_.setEffectiveDisplayName(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaLocalizedText("", "Id3"));
+		stateVariable3_.setId(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue(OpcUaQualifiedName("Name3"));
+		stateVariable3_.setName(*dataValue);
+		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue->variant()->setValue((OpcUaUInt32)3);
+		stateVariable3_.setNumber(*dataValue);
 
 		return true;
 	}
