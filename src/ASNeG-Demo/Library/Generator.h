@@ -23,6 +23,7 @@
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
+#include "ASNeG-Demo/Generator/StateVariableType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -41,11 +42,16 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		bool getNamespaceInfo(void);
+		bool connectToVariableType(void);
 
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
 		uint32_t namespaceIndex_;
+
+		StateVariableType stateVariable1_;
+		StateVariableType stateVariable2_;
+		StateVariableType stateVariable3_;
 	};
 
 }

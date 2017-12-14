@@ -55,6 +55,11 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+		// connect to variable type instance in opc ua information model
+		if (!connectToVariableType()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -105,6 +110,47 @@ namespace OpcUaServerApplicationDemo
 	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Generator/");
 
 		return false;
+	}
+
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	//
+	// variable type functions
+	//
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	bool
+	Generator::connectToVariableType(void)
+	{
+		Log(Debug, "connect to variable type");
+
+		OpcUaNodeId nodeId;
+
+		stateVariable1_.applicationServiceIf(applicationServiceIf_);
+		nodeId.set("VariableTypes.StateVariableType1", namespaceIndex_);
+		if (!stateVariable1_.linkInstanceWithModel(nodeId)) {
+			Log(Error, "link opc ua information model error")
+				.parameter("NodeId", nodeId);
+			return false;
+		}
+
+		stateVariable2_.applicationServiceIf(applicationServiceIf_);
+		nodeId.set("VariableTypes.StateVariable2", namespaceIndex_);
+		if (!stateVariable1_.linkInstanceWithModel(nodeId)) {
+			Log(Error, "link opc ua information model error")
+				.parameter("NodeId", nodeId);
+			return false;
+		}
+
+		stateVariable3_.applicationServiceIf(applicationServiceIf_);
+		nodeId.set("VariableTypes.StateVariable3", namespaceIndex_);
+		if (!stateVariable1_.linkInstanceWithModel(nodeId)) {
+			Log(Error, "link opc ua information model error")
+				.parameter("NodeId", nodeId);
+			return false;
+		}
+
+		return true;
 	}
 
 
