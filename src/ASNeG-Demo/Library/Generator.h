@@ -43,6 +43,7 @@ namespace OpcUaServerApplicationDemo
 	  private:
 		bool getNamespaceInfo(void);
 		bool connectToVariableType(void);
+		bool createAndConnectToVariableType(void);
 
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;

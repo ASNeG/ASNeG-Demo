@@ -38,7 +38,7 @@ namespace OpcUaServerApplicationDemo
 		BaseDataVariableType(void);
 		~BaseDataVariableType(void);
 
-		bool linkInstanceWithModel(const OpcUaNodeId& nodeId);
+		virtual bool linkInstanceWithModel(const OpcUaNodeId& nodeId);
 
 		BaseNodeClass::SPtr value(void);
 		bool setValue(const OpcUaDataValue& dataValue);

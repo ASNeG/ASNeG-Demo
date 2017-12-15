@@ -60,6 +60,11 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+		// create and connect to variable type instance in opc ua information model
+		if (!createAndConnectToVariableType()) {
+			return true;
+		}
+
 		return true;
 	}
 
@@ -202,5 +207,58 @@ namespace OpcUaServerApplicationDemo
 		return true;
 	}
 
+	bool
+	Generator::createAndConnectToVariableType(void)
+	{
+		OpcUaDataValue::SPtr dataValue;
+		bool result;
+
+		StateVariableType stateVariable[1200];
+		for (uint32_t idx=0; idx<1200; idx++) {
+
+			stateVariable[idx].applicationServiceIf(applicationServiceIf_);
+
+			std::stringstream ss;
+			ss << std::setfill('0') << std::setw(3) << idx;
+			std::string name("StateVariable" + ss.str());
+			OpcUaNodeId parentNodeId("ObjectTypeFolder", namespaceIndex_);
+			OpcUaNodeId nodeId("StateVariabl" + ss.str(), namespaceIndex_);
+			OpcUaLocalizedText displayName("", "StateVariable" + ss.str());
+			OpcUaQualifiedName browseName("StateVariable" + ss.str(), namespaceIndex_);
+			OpcUaNodeId referenceNodeId(35);
+			result = stateVariable[idx].createAndLinkInstanceWithModel(
+				name,
+				parentNodeId,
+				nodeId,
+				displayName,
+				browseName,
+				referenceNodeId
+			);
+
+			if (!result) {
+				Log(Error, "create and link opc ua information model error")
+					.parameter("NodeId", nodeId);
+				return false;
+			}
+
+			dataValue = constructSPtr<OpcUaDataValue>();
+			dataValue->variant()->setValue(OpcUaLocalizedText("", "StateVariable" + ss.str()));
+			stateVariable[idx].setValue(*dataValue);
+			dataValue = constructSPtr<OpcUaDataValue>();
+			dataValue->variant()->setValue(OpcUaLocalizedText("", "EffectiveDisplayName" + ss.str()));
+			stateVariable[idx].setEffectiveDisplayName(*dataValue);
+			dataValue = constructSPtr<OpcUaDataValue>();
+			dataValue->variant()->setValue(OpcUaLocalizedText("", "Id" + ss.str()));
+			stateVariable[idx].setId(*dataValue);
+			dataValue = constructSPtr<OpcUaDataValue>();
+			dataValue->variant()->setValue(OpcUaQualifiedName("Name" + ss.str()));
+			stateVariable[idx].setName(*dataValue);
+			dataValue = constructSPtr<OpcUaDataValue>();
+			dataValue->variant()->setValue((OpcUaUInt32)idx);
+			stateVariable[idx].setNumber(*dataValue);
+		}
+
+		return true;
+	}
 
 }
