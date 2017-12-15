@@ -221,7 +221,7 @@ namespace OpcUaServerApplicationDemo
 			std::stringstream ss;
 			ss << std::setfill('0') << std::setw(3) << idx;
 			std::string name("StateVariable" + ss.str());
-			OpcUaNodeId parentNodeId("ObjectTypeFolder", namespaceIndex_);
+			OpcUaNodeId parentNodeId("VariableTypeFolder", namespaceIndex_);
 			OpcUaNodeId nodeId("StateVariabl" + ss.str(), namespaceIndex_);
 			OpcUaLocalizedText displayName("", "StateVariable" + ss.str());
 			OpcUaQualifiedName browseName("StateVariable" + ss.str(), namespaceIndex_);
