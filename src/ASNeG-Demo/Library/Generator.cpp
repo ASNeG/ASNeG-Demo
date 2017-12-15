@@ -129,7 +129,7 @@ namespace OpcUaServerApplicationDemo
 
 
 		stateVariable1_.applicationServiceIf(applicationServiceIf_);
-		nodeId.set("VariableTypes.StateVariableType1", namespaceIndex_);
+		nodeId.set("VariableTypes.StateVariable1", namespaceIndex_);
 		if (!stateVariable1_.linkInstanceWithModel(nodeId)) {
 			Log(Error, "link opc ua information model error")
 				.parameter("NodeId", nodeId);
