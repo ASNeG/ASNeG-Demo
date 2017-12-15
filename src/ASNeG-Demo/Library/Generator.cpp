@@ -213,16 +213,16 @@ namespace OpcUaServerApplicationDemo
 		OpcUaDataValue::SPtr dataValue;
 		bool result;
 
-		StateVariableType stateVariable[1200];
-		for (uint32_t idx=0; idx<1200; idx++) {
+		StateVariableType stateVariable[10];
+		for (uint32_t idx=0; idx<10; idx++) {
 
 			stateVariable[idx].applicationServiceIf(applicationServiceIf_);
 
 			std::stringstream ss;
 			ss << std::setfill('0') << std::setw(3) << idx;
 			std::string name("StateVariable" + ss.str());
-			OpcUaNodeId parentNodeId("VariableTypeFolder", namespaceIndex_);
-			OpcUaNodeId nodeId("StateVariabl" + ss.str(), namespaceIndex_);
+			OpcUaNodeId parentNodeId("VariableTypesFolder", namespaceIndex_);
+			OpcUaNodeId nodeId("StateVariable" + ss.str(), namespaceIndex_);
 			OpcUaLocalizedText displayName("", "StateVariable" + ss.str());
 			OpcUaQualifiedName browseName("StateVariable" + ss.str(), namespaceIndex_);
 			OpcUaNodeId referenceNodeId(35);
