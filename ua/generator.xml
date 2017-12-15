@@ -4,28 +4,48 @@
         <Uri>http://ASNeG-Demo.de/Generator/</Uri>
     </NamespaceUris>
     <Aliases>
+        <Alias Alias="Boolean">i=1</Alias>
+        <Alias Alias="Byte">i=3</Alias>
+        <Alias Alias="UInt16">i=5</Alias>
         <Alias Alias="UInt32">i=7</Alias>
+        <Alias Alias="UInt64">i=9</Alias>
+        <Alias Alias="String">i=12</Alias>
         <Alias Alias="QualifiedName">i=20</Alias>
         <Alias Alias="LocalizedText">i=21</Alias>
         <Alias Alias="Organizes">i=35</Alias>
         <Alias Alias="HasTypeDefinition">i=40</Alias>
         <Alias Alias="HasProperty">i=46</Alias>
         <Alias Alias="HasComponent">i=47</Alias>
+        <Alias Alias="Duration">i=290</Alias>
+        <Alias Alias="UtcTime">i=294</Alias>
+        <Alias Alias="LocaleId">i=295</Alias>
         <Alias Alias="Argument">i=296</Alias>
+        <Alias Alias="BuildInfo">i=338</Alias>
+        <Alias Alias="SignedSoftwareCertificate">i=344</Alias>
+        <Alias Alias="RedundancySupport">i=851</Alias>
+        <Alias Alias="ServerState">i=852</Alias>
+        <Alias Alias="ServerDiagnosticsSummaryDataType">i=859</Alias>
+        <Alias Alias="ServerStatusDataType">i=862</Alias>
+        <Alias Alias="SessionDiagnosticsDataType">i=865</Alias>
+        <Alias Alias="SessionSecurityDiagnosticsDataType">i=868</Alias>
+        <Alias Alias="SubscriptionDiagnosticsDataType">i=874</Alias>
     </Aliases>
     <Extensions>
         <Extension>
-            <ua:ModelInfo Tool="UaModeler" Hash="2fFBU3dxbwEh8ycF2fu/jg==" Version="1.5.2"/>
+            <ua:ModelInfo Tool="UaModeler" Hash="pSR9uNVvLc7PqXBx9KbDWQ==" Version="1.5.2"/>
         </Extension>
     </Extensions>
     <UAObject NodeId="ns=1;i=5002" BrowseName="1:Generator">
         <DisplayName>Generator</DisplayName>
         <References>
             <Reference ReferenceType="Organizes">ns=1;s=DataTypes</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=DataTypesFolder</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
             <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
             <Reference ReferenceType="Organizes">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectTypeFolder</Reference>
             <Reference ReferenceType="Organizes">ns=1;s=VariableTypes</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=VariableTypesFolder</Reference>
         </References>
     </UAObject>
     <UAObject NodeId="ns=1;s=DataTypes" BrowseName="1:DataTypes">
@@ -35,10 +55,2527 @@
             <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
         </References>
     </UAObject>
+    <UAObject NodeId="ns=1;s=DataTypesFolder" BrowseName="1:DataTypesFolder">
+        <DisplayName>DataTypesFolder</DisplayName>
+        <References>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+        </References>
+    </UAObject>
     <UAObject NodeId="ns=1;s=ObjectTypes" BrowseName="1:ObjectTypes">
         <DisplayName>ObjectTypes</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.createFileType</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.deleteFileType</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectTypes.File1</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectTypes.File2</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectTypes.File3</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectType.Server1</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectTypes.Server2</Reference>
+            <Reference ReferenceType="Organizes">ns=1;s=ObjectTypes.Server3</Reference>
+        </References>
+    </UAObject>
+    <UAMethod NodeId="ns=1;s=ObjectTypes.createFileType" BrowseName="1:createFileType">
+        <DisplayName>createFileType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.createFileType.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=ObjectTypes.createFileType" ValueRank="1" NodeId="ns=1;s=ObjectTypes.createFileType.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.createFileType</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeId</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=17</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod NodeId="ns=1;s=ObjectTypes.deleteFileType" BrowseName="1:deleteFileType">
+        <DisplayName>deleteFileType</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.deleteFileType.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=ObjectTypes.deleteFileType" ValueRank="1" NodeId="ns=1;s=ObjectTypes.deleteFileType.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.deleteFileType</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>NodeId</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=17</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAObject NodeId="ns=1;s=ObjectTypes.File1" BrowseName="1:File1">
+        <DisplayName>File1</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=File1.Close</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=11575</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File1.GetPosition</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File1.Open</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.OpenCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File1.Read</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File1.SetPosition</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Size</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.UserWritable</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Writable</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File1.Write</Reference>
+        </References>
+    </UAObject>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.Close" BrowseName="Close">
+        <DisplayName>Close</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Close.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.Close" ValueRank="1" NodeId="ns=1;s=File1.Close.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.Close</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.GetPosition" BrowseName="GetPosition">
+        <DisplayName>GetPosition</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.GetPosition.InputArguments</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.GetPosition.OutputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.GetPosition" ValueRank="1" NodeId="ns=1;s=File1.GetPosition.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.GetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.GetPosition" ValueRank="1" NodeId="ns=1;s=File1.GetPosition.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.GetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Position</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=9</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.Open" BrowseName="Open">
+        <DisplayName>Open</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Open.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Open.OutputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.Open" ValueRank="1" NodeId="ns=1;s=File1.Open.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.Open</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Mode</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=3</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.Open" ValueRank="1" NodeId="ns=1;s=File1.Open.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.Open</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.OpenCount" BrowseName="OpenCount">
+        <DisplayName>OpenCount</DisplayName>
+        <Description>The current number of open file handles.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.Read" BrowseName="Read">
+        <DisplayName>Read</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Read.InputArguments</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Read.OutputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.Read" ValueRank="1" NodeId="ns=1;s=File1.Read.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.Read</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Length</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=6</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.Read" ValueRank="1" NodeId="ns=1;s=File1.Read.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.Read</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Data</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=15</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.SetPosition" BrowseName="SetPosition">
+        <DisplayName>SetPosition</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.SetPosition.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.SetPosition" ValueRank="1" NodeId="ns=1;s=File1.SetPosition.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.SetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Position</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=9</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="UInt64" ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.Size" BrowseName="Size">
+        <DisplayName>Size</DisplayName>
+        <Description>The size of the file in bytes.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.UserWritable" BrowseName="UserWritable">
+        <DisplayName>UserWritable</DisplayName>
+        <Description>Whether the file is writable by the current user.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.Writable" BrowseName="Writable">
+        <DisplayName>Writable</DisplayName>
+        <Description>Whether the file is writable.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File1" NodeId="ns=1;s=File1.Write" BrowseName="Write">
+        <DisplayName>Write</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File1.Write.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File1</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File1.Write" ValueRank="1" NodeId="ns=1;s=File1.Write.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File1.Write</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Data</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=15</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAObject NodeId="ns=1;s=ObjectTypes.File2" BrowseName="1:File2">
+        <DisplayName>File2</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=File2.Close</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=11575</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File2.GetPosition</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File2.Open</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.OpenCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File2.Read</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File2.SetPosition</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Size</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.UserWritable</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Writable</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File2.Write</Reference>
+        </References>
+    </UAObject>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.Close" BrowseName="Close">
+        <DisplayName>Close</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Close.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.Close" ValueRank="1" NodeId="ns=1;s=File2.Close.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.Close</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.GetPosition" BrowseName="GetPosition">
+        <DisplayName>GetPosition</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.GetPosition.InputArguments</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.GetPosition.OutputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.GetPosition" ValueRank="1" NodeId="ns=1;s=File2.GetPosition.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.GetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.GetPosition" ValueRank="1" NodeId="ns=1;s=File2.GetPosition.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.GetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Position</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=9</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.Open" BrowseName="Open">
+        <DisplayName>Open</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Open.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Open.OutputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.Open" ValueRank="1" NodeId="ns=1;s=File2.Open.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.Open</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Mode</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=3</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.Open" ValueRank="1" NodeId="ns=1;s=File2.Open.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.Open</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.OpenCount" BrowseName="OpenCount">
+        <DisplayName>OpenCount</DisplayName>
+        <Description>The current number of open file handles.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.Read" BrowseName="Read">
+        <DisplayName>Read</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Read.InputArguments</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Read.OutputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.Read" ValueRank="1" NodeId="ns=1;s=File2.Read.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.Read</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Length</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=6</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.Read" ValueRank="1" NodeId="ns=1;s=File2.Read.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.Read</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Data</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=15</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.SetPosition" BrowseName="SetPosition">
+        <DisplayName>SetPosition</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.SetPosition.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.SetPosition" ValueRank="1" NodeId="ns=1;s=File2.SetPosition.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.SetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Position</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=9</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="UInt64" ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.Size" BrowseName="Size">
+        <DisplayName>Size</DisplayName>
+        <Description>The size of the file in bytes.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.UserWritable" BrowseName="UserWritable">
+        <DisplayName>UserWritable</DisplayName>
+        <Description>Whether the file is writable by the current user.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.Writable" BrowseName="Writable">
+        <DisplayName>Writable</DisplayName>
+        <Description>Whether the file is writable.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File2" NodeId="ns=1;s=File2.Write" BrowseName="Write">
+        <DisplayName>Write</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File2.Write.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File2</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File2.Write" ValueRank="1" NodeId="ns=1;s=File2.Write.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File2.Write</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Data</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=15</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAObject NodeId="ns=1;s=ObjectTypes.File3" BrowseName="1:File3">
+        <DisplayName>File3</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=File3.Close</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=11575</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File3.GetPosition</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File3.Open</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.OpenCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File3.Read</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File3.SetPosition</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Size</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.UserWritable</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Writable</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=File3.Write</Reference>
+        </References>
+    </UAObject>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.Close" BrowseName="Close">
+        <DisplayName>Close</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Close.InputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.Close" ValueRank="1" NodeId="ns=1;s=File3.Close.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.Close</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.GetPosition" BrowseName="GetPosition">
+        <DisplayName>GetPosition</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.GetPosition.InputArguments</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.GetPosition.OutputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.GetPosition" ValueRank="1" NodeId="ns=1;s=File3.GetPosition.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.GetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.GetPosition" ValueRank="1" NodeId="ns=1;s=File3.GetPosition.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.GetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Position</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=9</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.Open" BrowseName="Open">
+        <DisplayName>Open</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Open.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Open.OutputArguments</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.Open" ValueRank="1" NodeId="ns=1;s=File3.Open.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.Open</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Mode</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=3</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.Open" ValueRank="1" NodeId="ns=1;s=File3.Open.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.Open</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.OpenCount" BrowseName="OpenCount">
+        <DisplayName>OpenCount</DisplayName>
+        <Description>The current number of open file handles.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.Read" BrowseName="Read">
+        <DisplayName>Read</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Read.InputArguments</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Read.OutputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.Read" ValueRank="1" NodeId="ns=1;s=File3.Read.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.Read</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Length</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=6</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.Read" ValueRank="1" NodeId="ns=1;s=File3.Read.OutputArguments" ArrayDimensions="1" BrowseName="OutputArguments">
+        <DisplayName>OutputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.Read</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Data</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=15</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.SetPosition" BrowseName="SetPosition">
+        <DisplayName>SetPosition</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.SetPosition.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.SetPosition" ValueRank="1" NodeId="ns=1;s=File3.SetPosition.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.SetPosition</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Position</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=9</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAVariable DataType="UInt64" ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.Size" BrowseName="Size">
+        <DisplayName>Size</DisplayName>
+        <Description>The size of the file in bytes.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.UserWritable" BrowseName="UserWritable">
+        <DisplayName>UserWritable</DisplayName>
+        <Description>Whether the file is writable by the current user.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.Writable" BrowseName="Writable">
+        <DisplayName>Writable</DisplayName>
+        <Description>Whether the file is writable.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+        </References>
+    </UAVariable>
+    <UAMethod ParentNodeId="ns=1;s=ObjectTypes.File3" NodeId="ns=1;s=File3.Write" BrowseName="Write">
+        <DisplayName>Write</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=File3.Write.InputArguments</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.File3</Reference>
+        </References>
+    </UAMethod>
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=File3.Write" ValueRank="1" NodeId="ns=1;s=File3.Write.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+        <DisplayName>InputArguments</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=File3.Write</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+        <Value>
+            <uax:ListOfExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>FileHandle</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=7</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+                <uax:ExtensionObject>
+                    <uax:TypeId>
+                        <uax:Identifier>i=297</uax:Identifier>
+                    </uax:TypeId>
+                    <uax:Body>
+                        <uax:Argument>
+                            <uax:Name>Data</uax:Name>
+                            <uax:DataType>
+                                <uax:Identifier>i=15</uax:Identifier>
+                            </uax:DataType>
+                            <uax:ValueRank>-1</uax:ValueRank>
+                            <uax:ArrayDimensions/>
+                            <uax:Description/>
+                        </uax:Argument>
+                    </uax:Body>
+                </uax:ExtensionObject>
+            </uax:ListOfExtensionObject>
+        </Value>
+    </UAVariable>
+    <UAObject NodeId="ns=1;s=ObjectType.Server1" BrowseName="1:Server1">
+        <DisplayName>Server1</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.Auditing</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.NamespaceArray</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerArray</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerRedundancy</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2004</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServiceLevel</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.VendorServerInfo</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectType.Server1" NodeId="ns=1;s=Server1.Auditing" BrowseName="Auditing" MinimumSamplingInterval="1000">
+        <DisplayName>Auditing</DisplayName>
+        <Description>A flag indicating whether the server is currently generating audit events.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectType.Server1" ValueRank="1" NodeId="ns=1;s=Server1.NamespaceArray" BrowseName="NamespaceArray" MinimumSamplingInterval="1000">
+        <DisplayName>NamespaceArray</DisplayName>
+        <Description>The list of namespace URIs used by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectType.Server1" ValueRank="1" NodeId="ns=1;s=Server1.ServerArray" BrowseName="ServerArray" MinimumSamplingInterval="1000">
+        <DisplayName>ServerArray</DisplayName>
+        <Description>The list of server URIs used by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectType.Server1" NodeId="ns=1;s=Server1.ServerCapabilities" BrowseName="ServerCapabilities">
+        <DisplayName>ServerCapabilities</DisplayName>
+        <Description>Describes capabilities supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerCapabilities.AggregateFunctions</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerCapabilities.LocaleIdArray</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerCapabilities.MaxBrowseContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerCapabilities.MaxHistoryContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerCapabilities.MaxQueryContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerCapabilities.MinSupportedSampleRate</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerCapabilities.ModellingRules</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2013</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerCapabilities.ServerProfileArray</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerCapabilities.SoftwareCertificates</Reference>
+        </References>
+    </UAObject>
+    <UAObject ParentNodeId="ns=1;s=Server1.ServerCapabilities" NodeId="ns=1;s=Server1.ServerCapabilities.AggregateFunctions" BrowseName="AggregateFunctions">
+        <DisplayName>AggregateFunctions</DisplayName>
+        <Description>A folder for the real time aggregates supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="LocaleId" ParentNodeId="ns=1;s=Server1.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=Server1.ServerCapabilities.LocaleIdArray" BrowseName="LocaleIdArray">
+        <DisplayName>LocaleIdArray</DisplayName>
+        <Description>A list of locales supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=Server1.ServerCapabilities" NodeId="ns=1;s=Server1.ServerCapabilities.MaxBrowseContinuationPoints" BrowseName="MaxBrowseContinuationPoints">
+        <DisplayName>MaxBrowseContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for Browse operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=Server1.ServerCapabilities" NodeId="ns=1;s=Server1.ServerCapabilities.MaxHistoryContinuationPoints" BrowseName="MaxHistoryContinuationPoints">
+        <DisplayName>MaxHistoryContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for ReadHistory operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=Server1.ServerCapabilities" NodeId="ns=1;s=Server1.ServerCapabilities.MaxQueryContinuationPoints" BrowseName="MaxQueryContinuationPoints">
+        <DisplayName>MaxQueryContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for Query operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Duration" ParentNodeId="ns=1;s=Server1.ServerCapabilities" NodeId="ns=1;s=Server1.ServerCapabilities.MinSupportedSampleRate" BrowseName="MinSupportedSampleRate">
+        <DisplayName>MinSupportedSampleRate</DisplayName>
+        <Description>The minimum sampling interval supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=Server1.ServerCapabilities" NodeId="ns=1;s=Server1.ServerCapabilities.ModellingRules" BrowseName="ModellingRules">
+        <DisplayName>ModellingRules</DisplayName>
+        <Description>A folder for the modelling rules supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=Server1.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=Server1.ServerCapabilities.ServerProfileArray" BrowseName="ServerProfileArray">
+        <DisplayName>ServerProfileArray</DisplayName>
+        <Description>A list of profiles supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SignedSoftwareCertificate" ParentNodeId="ns=1;s=Server1.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=Server1.ServerCapabilities.SoftwareCertificates" BrowseName="SoftwareCertificates">
+        <DisplayName>SoftwareCertificates</DisplayName>
+        <Description>The software certificates owned by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerCapabilities</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectType.Server1" NodeId="ns=1;s=Server1.ServerDiagnostics" BrowseName="ServerDiagnostics">
+        <DisplayName>ServerDiagnostics</DisplayName>
+        <Description>Reports diagnostics about the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerDiagnostics.EnabledFlag</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2020</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.SubscriptionDiagnosticsArray</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=Server1.ServerDiagnostics" NodeId="ns=1;s=Server1.ServerDiagnostics.EnabledFlag" BrowseName="EnabledFlag" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>EnabledFlag</DisplayName>
+        <Description>If TRUE the diagnostics collection is enabled.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerDiagnosticsSummaryDataType" ParentNodeId="ns=1;s=Server1.ServerDiagnostics" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" BrowseName="ServerDiagnosticsSummary">
+        <DisplayName>ServerDiagnosticsSummary</DisplayName>
+        <Description>A summary of server level diagnostics.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSubscriptionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSubscriptionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.PublishingIntervalCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedRequestsCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedRequestsCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2150</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.ServerViewCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionAbortCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionTimeoutCount</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSessionCount" BrowseName="CumulatedSessionCount">
+        <DisplayName>CumulatedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSubscriptionCount" BrowseName="CumulatedSubscriptionCount">
+        <DisplayName>CumulatedSubscriptionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSessionCount" BrowseName="CurrentSessionCount">
+        <DisplayName>CurrentSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSubscriptionCount" BrowseName="CurrentSubscriptionCount">
+        <DisplayName>CurrentSubscriptionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.PublishingIntervalCount" BrowseName="PublishingIntervalCount">
+        <DisplayName>PublishingIntervalCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedRequestsCount" BrowseName="RejectedRequestsCount">
+        <DisplayName>RejectedRequestsCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedSessionCount" BrowseName="RejectedSessionCount">
+        <DisplayName>RejectedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedRequestsCount" BrowseName="SecurityRejectedRequestsCount">
+        <DisplayName>SecurityRejectedRequestsCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedSessionCount" BrowseName="SecurityRejectedSessionCount">
+        <DisplayName>SecurityRejectedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.ServerViewCount" BrowseName="ServerViewCount">
+        <DisplayName>ServerViewCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionAbortCount" BrowseName="SessionAbortCount">
+        <DisplayName>SessionAbortCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionTimeoutCount" BrowseName="SessionTimeoutCount">
+        <DisplayName>SessionTimeoutCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=Server1.ServerDiagnostics" NodeId="ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary" BrowseName="SessionsDiagnosticsSummary">
+        <DisplayName>SessionsDiagnosticsSummary</DisplayName>
+        <Description>A summary of session level diagnostics.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionDiagnosticsArray</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2026</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionSecurityDiagnosticsArray</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="SessionDiagnosticsDataType" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary" ValueRank="1" NodeId="ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionDiagnosticsArray" BrowseName="SessionDiagnosticsArray">
+        <DisplayName>SessionDiagnosticsArray</DisplayName>
+        <Description>A list of diagnostics for each active session.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2196</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SessionSecurityDiagnosticsDataType" ParentNodeId="ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary" ValueRank="1" NodeId="ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionSecurityDiagnosticsArray" BrowseName="SessionSecurityDiagnosticsArray">
+        <DisplayName>SessionSecurityDiagnosticsArray</DisplayName>
+        <Description>A list of security related diagnostics for each active session.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2243</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SubscriptionDiagnosticsDataType" ParentNodeId="ns=1;s=Server1.ServerDiagnostics" ValueRank="1" NodeId="ns=1;s=Server1.ServerDiagnostics.SubscriptionDiagnosticsArray" BrowseName="SubscriptionDiagnosticsArray">
+        <DisplayName>SubscriptionDiagnosticsArray</DisplayName>
+        <Description>A list of diagnostics for each active subscription.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2171</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectType.Server1" NodeId="ns=1;s=Server1.ServerRedundancy" BrowseName="ServerRedundancy">
+        <DisplayName>ServerRedundancy</DisplayName>
+        <Description>Describes the redundancy capabilities of the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=Server1.ServerRedundancy.RedundancySupport</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2034</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="RedundancySupport" ParentNodeId="ns=1;s=Server1.ServerRedundancy" NodeId="ns=1;s=Server1.ServerRedundancy.RedundancySupport" BrowseName="RedundancySupport">
+        <DisplayName>RedundancySupport</DisplayName>
+        <Description>Indicates what style of redundancy is supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=Server1.ServerRedundancy</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerStatusDataType" ParentNodeId="ns=1;s=ObjectType.Server1" NodeId="ns=1;s=Server1.ServerStatus" BrowseName="ServerStatus" MinimumSamplingInterval="1000">
+        <DisplayName>ServerStatus</DisplayName>
+        <Description>The current status of the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.BuildInfo</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.CurrentTime</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.SecondsTillShutdown</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2138</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.ShutdownReason</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.StartTime</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.State</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="BuildInfo" ParentNodeId="ns=1;s=Server1.ServerStatus" NodeId="ns=1;s=Server1.ServerStatus.BuildInfo" BrowseName="BuildInfo">
+        <DisplayName>BuildInfo</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.BuildInfo.BuildDate</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=3051</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.BuildInfo.BuildNumber</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.BuildInfo.ManufacturerName</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.BuildInfo.ProductName</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.BuildInfo.ProductUri</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=Server1.ServerStatus.BuildInfo.SoftwareVersion</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=Server1.ServerStatus.BuildInfo.BuildDate" BrowseName="BuildDate" MinimumSamplingInterval="1000">
+        <DisplayName>BuildDate</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=Server1.ServerStatus.BuildInfo.BuildNumber" BrowseName="BuildNumber" MinimumSamplingInterval="1000">
+        <DisplayName>BuildNumber</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=Server1.ServerStatus.BuildInfo.ManufacturerName" BrowseName="ManufacturerName" MinimumSamplingInterval="1000">
+        <DisplayName>ManufacturerName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=Server1.ServerStatus.BuildInfo.ProductName" BrowseName="ProductName" MinimumSamplingInterval="1000">
+        <DisplayName>ProductName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=Server1.ServerStatus.BuildInfo.ProductUri" BrowseName="ProductUri" MinimumSamplingInterval="1000">
+        <DisplayName>ProductUri</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=Server1.ServerStatus.BuildInfo.SoftwareVersion" BrowseName="SoftwareVersion" MinimumSamplingInterval="1000">
+        <DisplayName>SoftwareVersion</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=Server1.ServerStatus" NodeId="ns=1;s=Server1.ServerStatus.CurrentTime" BrowseName="CurrentTime">
+        <DisplayName>CurrentTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=Server1.ServerStatus" NodeId="ns=1;s=Server1.ServerStatus.SecondsTillShutdown" BrowseName="SecondsTillShutdown">
+        <DisplayName>SecondsTillShutdown</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=Server1.ServerStatus" NodeId="ns=1;s=Server1.ServerStatus.ShutdownReason" BrowseName="ShutdownReason">
+        <DisplayName>ShutdownReason</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=Server1.ServerStatus" NodeId="ns=1;s=Server1.ServerStatus.StartTime" BrowseName="StartTime">
+        <DisplayName>StartTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerState" ParentNodeId="ns=1;s=Server1.ServerStatus" NodeId="ns=1;s=Server1.ServerStatus.State" BrowseName="State">
+        <DisplayName>State</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Byte" ParentNodeId="ns=1;s=ObjectType.Server1" NodeId="ns=1;s=Server1.ServiceLevel" BrowseName="ServiceLevel" MinimumSamplingInterval="1000">
+        <DisplayName>ServiceLevel</DisplayName>
+        <Description>A value indicating the level of service the server can provide. 255 indicates the best.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectType.Server1" NodeId="ns=1;s=Server1.VendorServerInfo" BrowseName="VendorServerInfo">
+        <DisplayName>VendorServerInfo</DisplayName>
+        <Description>Server information provided by the vendor.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=2033</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectType.Server1</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;s=ObjectTypes.Server2" BrowseName="1:Server2">
+        <DisplayName>Server2</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.Auditing</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.NamespaceArray</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerArray</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerRedundancy</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2004</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServiceLevel</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.VendorServerInfo</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.Server2" NodeId="ns=1;s=ObjectTypes.Server1.Auditing" BrowseName="Auditing" MinimumSamplingInterval="1000">
+        <DisplayName>Auditing</DisplayName>
+        <Description>A flag indicating whether the server is currently generating audit events.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server2" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.NamespaceArray" BrowseName="NamespaceArray" MinimumSamplingInterval="1000">
+        <DisplayName>NamespaceArray</DisplayName>
+        <Description>The list of namespace URIs used by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server2" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.ServerArray" BrowseName="ServerArray" MinimumSamplingInterval="1000">
+        <DisplayName>ServerArray</DisplayName>
+        <Description>The list of server URIs used by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server2" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" BrowseName="ServerCapabilities">
+        <DisplayName>ServerCapabilities</DisplayName>
+        <Description>Describes capabilities supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerCapabilities.AggregateFunctions</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerCapabilities.LocaleIdArray</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerCapabilities.MaxBrowseContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerCapabilities.MaxHistoryContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerCapabilities.MaxQueryContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerCapabilities.MinSupportedSampleRate</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerCapabilities.ModellingRules</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2013</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerCapabilities.ServerProfileArray</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerCapabilities.SoftwareCertificates</Reference>
+        </References>
+    </UAObject>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.AggregateFunctions" BrowseName="AggregateFunctions">
+        <DisplayName>AggregateFunctions</DisplayName>
+        <Description>A folder for the real time aggregates supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="LocaleId" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.LocaleIdArray" BrowseName="LocaleIdArray">
+        <DisplayName>LocaleIdArray</DisplayName>
+        <Description>A list of locales supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.MaxBrowseContinuationPoints" BrowseName="MaxBrowseContinuationPoints">
+        <DisplayName>MaxBrowseContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for Browse operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.MaxHistoryContinuationPoints" BrowseName="MaxHistoryContinuationPoints">
+        <DisplayName>MaxHistoryContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for ReadHistory operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.MaxQueryContinuationPoints" BrowseName="MaxQueryContinuationPoints">
+        <DisplayName>MaxQueryContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for Query operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Duration" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.MinSupportedSampleRate" BrowseName="MinSupportedSampleRate">
+        <DisplayName>MinSupportedSampleRate</DisplayName>
+        <Description>The minimum sampling interval supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.ModellingRules" BrowseName="ModellingRules">
+        <DisplayName>ModellingRules</DisplayName>
+        <Description>A folder for the modelling rules supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.ServerProfileArray" BrowseName="ServerProfileArray">
+        <DisplayName>ServerProfileArray</DisplayName>
+        <Description>A list of profiles supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SignedSoftwareCertificate" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.ServerCapabilities.SoftwareCertificates" BrowseName="SoftwareCertificates">
+        <DisplayName>SoftwareCertificates</DisplayName>
+        <Description>The software certificates owned by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerCapabilities</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server2" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics" BrowseName="ServerDiagnostics">
+        <DisplayName>ServerDiagnostics</DisplayName>
+        <Description>Reports diagnostics about the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.EnabledFlag</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2020</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SubscriptionDiagnosticsArray</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.EnabledFlag" BrowseName="EnabledFlag" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>EnabledFlag</DisplayName>
+        <Description>If TRUE the diagnostics collection is enabled.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerDiagnosticsSummaryDataType" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" BrowseName="ServerDiagnosticsSummary">
+        <DisplayName>ServerDiagnosticsSummary</DisplayName>
+        <Description>A summary of server level diagnostics.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSubscriptionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSubscriptionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.PublishingIntervalCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedRequestsCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedRequestsCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2150</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.ServerViewCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionAbortCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionTimeoutCount</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSessionCount" BrowseName="CumulatedSessionCount">
+        <DisplayName>CumulatedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSubscriptionCount" BrowseName="CumulatedSubscriptionCount">
+        <DisplayName>CumulatedSubscriptionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSessionCount" BrowseName="CurrentSessionCount">
+        <DisplayName>CurrentSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSubscriptionCount" BrowseName="CurrentSubscriptionCount">
+        <DisplayName>CurrentSubscriptionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.PublishingIntervalCount" BrowseName="PublishingIntervalCount">
+        <DisplayName>PublishingIntervalCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedRequestsCount" BrowseName="RejectedRequestsCount">
+        <DisplayName>RejectedRequestsCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.RejectedSessionCount" BrowseName="RejectedSessionCount">
+        <DisplayName>RejectedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedRequestsCount" BrowseName="SecurityRejectedRequestsCount">
+        <DisplayName>SecurityRejectedRequestsCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedSessionCount" BrowseName="SecurityRejectedSessionCount">
+        <DisplayName>SecurityRejectedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.ServerViewCount" BrowseName="ServerViewCount">
+        <DisplayName>ServerViewCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionAbortCount" BrowseName="SessionAbortCount">
+        <DisplayName>SessionAbortCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary.SessionTimeoutCount" BrowseName="SessionTimeoutCount">
+        <DisplayName>SessionTimeoutCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary" BrowseName="SessionsDiagnosticsSummary">
+        <DisplayName>SessionsDiagnosticsSummary</DisplayName>
+        <Description>A summary of session level diagnostics.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionDiagnosticsArray</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2026</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionSecurityDiagnosticsArray</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="SessionDiagnosticsDataType" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionDiagnosticsArray" BrowseName="SessionDiagnosticsArray">
+        <DisplayName>SessionDiagnosticsArray</DisplayName>
+        <Description>A list of diagnostics for each active session.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2196</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SessionSecurityDiagnosticsDataType" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary.SessionSecurityDiagnosticsArray" BrowseName="SessionSecurityDiagnosticsArray">
+        <DisplayName>SessionSecurityDiagnosticsArray</DisplayName>
+        <Description>A list of security related diagnostics for each active session.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2243</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SubscriptionDiagnosticsDataType" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server1.ServerDiagnostics.SubscriptionDiagnosticsArray" BrowseName="SubscriptionDiagnosticsArray">
+        <DisplayName>SubscriptionDiagnosticsArray</DisplayName>
+        <Description>A list of diagnostics for each active subscription.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2171</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server2" NodeId="ns=1;s=ObjectTypes.Server1.ServerRedundancy" BrowseName="ServerRedundancy">
+        <DisplayName>ServerRedundancy</DisplayName>
+        <Description>Describes the redundancy capabilities of the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server1.ServerRedundancy.RedundancySupport</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2034</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="RedundancySupport" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerRedundancy" NodeId="ns=1;s=ObjectTypes.Server1.ServerRedundancy.RedundancySupport" BrowseName="RedundancySupport">
+        <DisplayName>RedundancySupport</DisplayName>
+        <Description>Indicates what style of redundancy is supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerRedundancy</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerStatusDataType" ParentNodeId="ns=1;s=ObjectTypes.Server2" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus" BrowseName="ServerStatus" MinimumSamplingInterval="1000">
+        <DisplayName>ServerStatus</DisplayName>
+        <Description>The current status of the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.CurrentTime</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.SecondsTillShutdown</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2138</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.ShutdownReason</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.StartTime</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.State</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="BuildInfo" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo" BrowseName="BuildInfo">
+        <DisplayName>BuildInfo</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.BuildDate</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=3051</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.BuildNumber</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.ManufacturerName</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.ProductName</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.ProductUri</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.SoftwareVersion</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.BuildDate" BrowseName="BuildDate" MinimumSamplingInterval="1000">
+        <DisplayName>BuildDate</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.BuildNumber" BrowseName="BuildNumber" MinimumSamplingInterval="1000">
+        <DisplayName>BuildNumber</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.ManufacturerName" BrowseName="ManufacturerName" MinimumSamplingInterval="1000">
+        <DisplayName>ManufacturerName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.ProductName" BrowseName="ProductName" MinimumSamplingInterval="1000">
+        <DisplayName>ProductName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.ProductUri" BrowseName="ProductUri" MinimumSamplingInterval="1000">
+        <DisplayName>ProductUri</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo.SoftwareVersion" BrowseName="SoftwareVersion" MinimumSamplingInterval="1000">
+        <DisplayName>SoftwareVersion</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.CurrentTime" BrowseName="CurrentTime">
+        <DisplayName>CurrentTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.SecondsTillShutdown" BrowseName="SecondsTillShutdown">
+        <DisplayName>SecondsTillShutdown</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.ShutdownReason" BrowseName="ShutdownReason">
+        <DisplayName>ShutdownReason</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.StartTime" BrowseName="StartTime">
+        <DisplayName>StartTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerState" ParentNodeId="ns=1;s=ObjectTypes.Server1.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server1.ServerStatus.State" BrowseName="State">
+        <DisplayName>State</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server1.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Byte" ParentNodeId="ns=1;s=ObjectTypes.Server2" NodeId="ns=1;s=ObjectTypes.Server1.ServiceLevel" BrowseName="ServiceLevel" MinimumSamplingInterval="1000">
+        <DisplayName>ServiceLevel</DisplayName>
+        <Description>A value indicating the level of service the server can provide. 255 indicates the best.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server2" NodeId="ns=1;s=ObjectTypes.Server1.VendorServerInfo" BrowseName="VendorServerInfo">
+        <DisplayName>VendorServerInfo</DisplayName>
+        <Description>Server information provided by the vendor.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=2033</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server2</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;s=ObjectTypes.Server3" BrowseName="1:Server3">
+        <DisplayName>Server3</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.Auditing</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.NamespaceArray</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;s=ObjectTypes</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerArray</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerRedundancy</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2004</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServiceLevel</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.VendorServerInfo</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.Server3" NodeId="ns=1;s=ObjectTypes.Server3.Auditing" BrowseName="Auditing" MinimumSamplingInterval="1000">
+        <DisplayName>Auditing</DisplayName>
+        <Description>A flag indicating whether the server is currently generating audit events.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.NamespaceArray" BrowseName="NamespaceArray" MinimumSamplingInterval="1000">
+        <DisplayName>NamespaceArray</DisplayName>
+        <Description>The list of namespace URIs used by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.ServerArray" BrowseName="ServerArray" MinimumSamplingInterval="1000">
+        <DisplayName>ServerArray</DisplayName>
+        <Description>The list of server URIs used by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server3" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" BrowseName="ServerCapabilities">
+        <DisplayName>ServerCapabilities</DisplayName>
+        <Description>Describes capabilities supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerCapabilities.AggregateFunctions</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerCapabilities.LocaleIdArray</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerCapabilities.MaxBrowseContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerCapabilities.MaxHistoryContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerCapabilities.MaxQueryContinuationPoints</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerCapabilities.MinSupportedSampleRate</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerCapabilities.ModellingRules</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2013</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerCapabilities.ServerProfileArray</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerCapabilities.SoftwareCertificates</Reference>
+        </References>
+    </UAObject>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.AggregateFunctions" BrowseName="AggregateFunctions">
+        <DisplayName>AggregateFunctions</DisplayName>
+        <Description>A folder for the real time aggregates supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="LocaleId" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.LocaleIdArray" BrowseName="LocaleIdArray">
+        <DisplayName>LocaleIdArray</DisplayName>
+        <Description>A list of locales supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.MaxBrowseContinuationPoints" BrowseName="MaxBrowseContinuationPoints">
+        <DisplayName>MaxBrowseContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for Browse operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.MaxHistoryContinuationPoints" BrowseName="MaxHistoryContinuationPoints">
+        <DisplayName>MaxHistoryContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for ReadHistory operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt16" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.MaxQueryContinuationPoints" BrowseName="MaxQueryContinuationPoints">
+        <DisplayName>MaxQueryContinuationPoints</DisplayName>
+        <Description>The maximum number of continuation points for Query operations per session.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Duration" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.MinSupportedSampleRate" BrowseName="MinSupportedSampleRate">
+        <DisplayName>MinSupportedSampleRate</DisplayName>
+        <Description>The minimum sampling interval supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.ModellingRules" BrowseName="ModellingRules">
+        <DisplayName>ModellingRules</DisplayName>
+        <Description>A folder for the modelling rules supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.ServerProfileArray" BrowseName="ServerProfileArray">
+        <DisplayName>ServerProfileArray</DisplayName>
+        <Description>A list of profiles supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SignedSoftwareCertificate" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.ServerCapabilities.SoftwareCertificates" BrowseName="SoftwareCertificates">
+        <DisplayName>SoftwareCertificates</DisplayName>
+        <Description>The software certificates owned by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerCapabilities</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server3" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics" BrowseName="ServerDiagnostics">
+        <DisplayName>ServerDiagnostics</DisplayName>
+        <Description>Reports diagnostics about the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.EnabledFlag</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2020</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SubscriptionDiagnosticsArray</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.EnabledFlag" BrowseName="EnabledFlag" UserAccessLevel="3" AccessLevel="3">
+        <DisplayName>EnabledFlag</DisplayName>
+        <Description>If TRUE the diagnostics collection is enabled.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerDiagnosticsSummaryDataType" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" BrowseName="ServerDiagnosticsSummary">
+        <DisplayName>ServerDiagnosticsSummary</DisplayName>
+        <Description>A summary of server level diagnostics.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSubscriptionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSubscriptionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.PublishingIntervalCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.RejectedRequestsCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.RejectedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedRequestsCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedSessionCount</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2150</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.ServerViewCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SessionAbortCount</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SessionTimeoutCount</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSessionCount" BrowseName="CumulatedSessionCount">
+        <DisplayName>CumulatedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CumulatedSubscriptionCount" BrowseName="CumulatedSubscriptionCount">
+        <DisplayName>CumulatedSubscriptionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSessionCount" BrowseName="CurrentSessionCount">
+        <DisplayName>CurrentSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.CurrentSubscriptionCount" BrowseName="CurrentSubscriptionCount">
+        <DisplayName>CurrentSubscriptionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.PublishingIntervalCount" BrowseName="PublishingIntervalCount">
+        <DisplayName>PublishingIntervalCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.RejectedRequestsCount" BrowseName="RejectedRequestsCount">
+        <DisplayName>RejectedRequestsCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.RejectedSessionCount" BrowseName="RejectedSessionCount">
+        <DisplayName>RejectedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedRequestsCount" BrowseName="SecurityRejectedRequestsCount">
+        <DisplayName>SecurityRejectedRequestsCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SecurityRejectedSessionCount" BrowseName="SecurityRejectedSessionCount">
+        <DisplayName>SecurityRejectedSessionCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.ServerViewCount" BrowseName="ServerViewCount">
+        <DisplayName>ServerViewCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SessionAbortCount" BrowseName="SessionAbortCount">
+        <DisplayName>SessionAbortCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary.SessionTimeoutCount" BrowseName="SessionTimeoutCount">
+        <DisplayName>SessionTimeoutCount</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.ServerDiagnosticsSummary</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary" BrowseName="SessionsDiagnosticsSummary">
+        <DisplayName>SessionsDiagnosticsSummary</DisplayName>
+        <Description>A summary of session level diagnostics.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary.SessionDiagnosticsArray</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2026</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary.SessionSecurityDiagnosticsArray</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="SessionDiagnosticsDataType" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary.SessionDiagnosticsArray" BrowseName="SessionDiagnosticsArray">
+        <DisplayName>SessionDiagnosticsArray</DisplayName>
+        <Description>A list of diagnostics for each active session.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2196</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SessionSecurityDiagnosticsDataType" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary.SessionSecurityDiagnosticsArray" BrowseName="SessionSecurityDiagnosticsArray">
+        <DisplayName>SessionSecurityDiagnosticsArray</DisplayName>
+        <Description>A list of security related diagnostics for each active session.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SessionsDiagnosticsSummary</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2243</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="SubscriptionDiagnosticsDataType" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics" ValueRank="1" NodeId="ns=1;s=ObjectTypes.Server3.ServerDiagnostics.SubscriptionDiagnosticsArray" BrowseName="SubscriptionDiagnosticsArray">
+        <DisplayName>SubscriptionDiagnosticsArray</DisplayName>
+        <Description>A list of diagnostics for each active subscription.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerDiagnostics</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2171</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server3" NodeId="ns=1;s=ObjectTypes.Server3.ServerRedundancy" BrowseName="ServerRedundancy">
+        <DisplayName>ServerRedundancy</DisplayName>
+        <Description>Describes the redundancy capabilities of the server.</Description>
+        <References>
+            <Reference ReferenceType="HasProperty">ns=1;s=ObjectTypes.Server3.ServerRedundancy.RedundancySupport</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2034</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="RedundancySupport" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerRedundancy" NodeId="ns=1;s=ObjectTypes.Server3.ServerRedundancy.RedundancySupport" BrowseName="RedundancySupport">
+        <DisplayName>RedundancySupport</DisplayName>
+        <Description>Indicates what style of redundancy is supported by the server.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerRedundancy</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerStatusDataType" ParentNodeId="ns=1;s=ObjectTypes.Server3" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus" BrowseName="ServerStatus" MinimumSamplingInterval="1000">
+        <DisplayName>ServerStatus</DisplayName>
+        <Description>The current status of the server.</Description>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.CurrentTime</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.SecondsTillShutdown</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2138</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.ShutdownReason</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.StartTime</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.State</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="BuildInfo" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo" BrowseName="BuildInfo">
+        <DisplayName>BuildInfo</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.BuildDate</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=3051</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.BuildNumber</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.ManufacturerName</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.ProductName</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.ProductUri</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.SoftwareVersion</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.BuildDate" BrowseName="BuildDate" MinimumSamplingInterval="1000">
+        <DisplayName>BuildDate</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.BuildNumber" BrowseName="BuildNumber" MinimumSamplingInterval="1000">
+        <DisplayName>BuildNumber</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.ManufacturerName" BrowseName="ManufacturerName" MinimumSamplingInterval="1000">
+        <DisplayName>ManufacturerName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.ProductName" BrowseName="ProductName" MinimumSamplingInterval="1000">
+        <DisplayName>ProductName</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.ProductUri" BrowseName="ProductUri" MinimumSamplingInterval="1000">
+        <DisplayName>ProductUri</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="String" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo.SoftwareVersion" BrowseName="SoftwareVersion" MinimumSamplingInterval="1000">
+        <DisplayName>SoftwareVersion</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus.BuildInfo</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.CurrentTime" BrowseName="CurrentTime">
+        <DisplayName>CurrentTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.SecondsTillShutdown" BrowseName="SecondsTillShutdown">
+        <DisplayName>SecondsTillShutdown</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.ShutdownReason" BrowseName="ShutdownReason">
+        <DisplayName>ShutdownReason</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="UtcTime" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.StartTime" BrowseName="StartTime">
+        <DisplayName>StartTime</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="ServerState" ParentNodeId="ns=1;s=ObjectTypes.Server3.ServerStatus" NodeId="ns=1;s=ObjectTypes.Server3.ServerStatus.State" BrowseName="State">
+        <DisplayName>State</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3.ServerStatus</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Byte" ParentNodeId="ns=1;s=ObjectTypes.Server3" NodeId="ns=1;s=ObjectTypes.Server3.ServiceLevel" BrowseName="ServiceLevel" MinimumSamplingInterval="1000">
+        <DisplayName>ServiceLevel</DisplayName>
+        <Description>A value indicating the level of service the server can provide. 255 indicates the best.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+        </References>
+    </UAVariable>
+    <UAObject ParentNodeId="ns=1;s=ObjectTypes.Server3" NodeId="ns=1;s=ObjectTypes.Server3.VendorServerInfo" BrowseName="VendorServerInfo">
+        <DisplayName>VendorServerInfo</DisplayName>
+        <Description>Server information provided by the vendor.</Description>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=2033</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=ObjectTypes.Server3</Reference>
+        </References>
+    </UAObject>
+    <UAObject NodeId="ns=1;s=ObjectTypeFolder" BrowseName="1:ObjectTypesFolder">
+        <DisplayName>ObjectTypesFolder</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
             <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
         </References>
     </UAObject>
@@ -48,7 +2585,7 @@
             <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
             <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.createStateVariableType</Reference>
             <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.deleteStateVariableType</Reference>
-            <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.StateVariableType1</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.StateVariable1</Reference>
             <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.StateVariable2</Reference>
             <Reference ReferenceType="HasComponent">ns=1;s=VariableTypes.StateVariable3</Reference>
             <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
@@ -95,7 +2632,7 @@
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.deleteStateVariableType.InputArguments</Reference>
         </References>
     </UAMethod>
-    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=VariableTypes.deleteStateVariableType" ValueRank="1" NodeId="ns=1;s=VariableTypes.deleteStateVariableType.InputArguments" ArrayDimensions="2" BrowseName="InputArguments">
+    <UAVariable DataType="Argument" ParentNodeId="ns=1;s=VariableTypes.deleteStateVariableType" ValueRank="1" NodeId="ns=1;s=VariableTypes.deleteStateVariableType.InputArguments" ArrayDimensions="1" BrowseName="InputArguments">
         <DisplayName>InputArguments</DisplayName>
         <References>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.deleteStateVariableType</Reference>
@@ -119,65 +2656,49 @@
                         </uax:Argument>
                     </uax:Body>
                 </uax:ExtensionObject>
-                <uax:ExtensionObject>
-                    <uax:TypeId>
-                        <uax:Identifier>i=297</uax:Identifier>
-                    </uax:TypeId>
-                    <uax:Body>
-                        <uax:Argument>
-                            <uax:Name>NodeId2</uax:Name>
-                            <uax:DataType>
-                                <uax:Identifier>i=7</uax:Identifier>
-                            </uax:DataType>
-                            <uax:ValueRank>-1</uax:ValueRank>
-                            <uax:ArrayDimensions/>
-                            <uax:Description/>
-                        </uax:Argument>
-                    </uax:Body>
-                </uax:ExtensionObject>
             </uax:ListOfExtensionObject>
         </Value>
     </UAVariable>
-    <UAVariable DataType="LocalizedText" NodeId="ns=1;s=VariableTypes.StateVariableType1" BrowseName="1:StateVariable1" UserAccessLevel="3" AccessLevel="3">
+    <UAVariable DataType="LocalizedText" NodeId="ns=1;s=VariableTypes.StateVariable1" BrowseName="1:StateVariable1" UserAccessLevel="3" AccessLevel="3">
         <DisplayName>StateVariable1</DisplayName>
         <References>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.EffectiveDisplayName</Reference>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.Id</Reference>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.Name</Reference>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariableType1.Number</Reference>
-            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
             <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
         </References>
         <Value>
             <uax:LocalizedText/>
         </Value>
     </UAVariable>
-    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.EffectiveDisplayName" BrowseName="EffectiveDisplayName">
+    <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=VariableTypes.StateVariable1" NodeId="ns=1;s=VariableTypes.StateVariableType1.EffectiveDisplayName" BrowseName="EffectiveDisplayName">
         <DisplayName>EffectiveDisplayName</DisplayName>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable1</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
         </References>
     </UAVariable>
-    <UAVariable ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Id" BrowseName="Id">
+    <UAVariable ParentNodeId="ns=1;s=VariableTypes.StateVariable1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Id" BrowseName="Id">
         <DisplayName>Id</DisplayName>
         <References>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable1</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="QualifiedName" ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Name" BrowseName="Name">
+    <UAVariable DataType="QualifiedName" ParentNodeId="ns=1;s=VariableTypes.StateVariable1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Name" BrowseName="Name">
         <DisplayName>Name</DisplayName>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable1</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
         </References>
     </UAVariable>
-    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=VariableTypes.StateVariableType1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Number" BrowseName="Number">
+    <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=VariableTypes.StateVariable1" NodeId="ns=1;s=VariableTypes.StateVariableType1.Number" BrowseName="Number">
         <DisplayName>Number</DisplayName>
         <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable1</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
-            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariableType1</Reference>
         </References>
     </UAVariable>
     <UAVariable DataType="LocalizedText" NodeId="ns=1;s=VariableTypes.StateVariable2" BrowseName="1:StateVariable2" UserAccessLevel="3" AccessLevel="3">
@@ -187,8 +2708,8 @@
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable2.Id</Reference>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable2.Name</Reference>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable2.Number</Reference>
-            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
             <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
         </References>
         <Value>
             <uax:LocalizedText/>
@@ -197,8 +2718,8 @@
     <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.EffectiveDisplayName" BrowseName="EffectiveDisplayName">
         <DisplayName>EffectiveDisplayName</DisplayName>
         <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable2</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
     <UAVariable ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.Id" BrowseName="Id">
@@ -211,15 +2732,15 @@
     <UAVariable DataType="QualifiedName" ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.Name" BrowseName="Name">
         <DisplayName>Name</DisplayName>
         <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable2</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
     <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=VariableTypes.StateVariable2" NodeId="ns=1;s=VariableTypes.StateVariable2.Number" BrowseName="Number">
         <DisplayName>Number</DisplayName>
         <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable2</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
     <UAVariable DataType="LocalizedText" NodeId="ns=1;s=VariableTypes.StateVariable3" BrowseName="1:StateVariable3" UserAccessLevel="3" AccessLevel="3">
@@ -229,8 +2750,8 @@
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable3.Id</Reference>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable3.Name</Reference>
             <Reference ReferenceType="HasProperty">ns=1;s=VariableTypes.StateVariable3.Number</Reference>
-            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
             <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=VariableTypes</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2755</Reference>
         </References>
         <Value>
             <uax:LocalizedText/>
@@ -239,8 +2760,8 @@
     <UAVariable DataType="LocalizedText" ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.EffectiveDisplayName" BrowseName="EffectiveDisplayName">
         <DisplayName>EffectiveDisplayName</DisplayName>
         <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable3</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
     <UAVariable ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.Id" BrowseName="Id">
@@ -253,15 +2774,22 @@
     <UAVariable DataType="QualifiedName" ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.Name" BrowseName="Name">
         <DisplayName>Name</DisplayName>
         <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable3</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
     <UAVariable DataType="UInt32" ParentNodeId="ns=1;s=VariableTypes.StateVariable3" NodeId="ns=1;s=VariableTypes.StateVariable3.Number" BrowseName="Number">
         <DisplayName>Number</DisplayName>
         <References>
-            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
             <Reference ReferenceType="HasProperty" IsForward="false">ns=1;s=VariableTypes.StateVariable3</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
         </References>
     </UAVariable>
+    <UAObject NodeId="ns=1;s=VariableTypesFolder" BrowseName="1:VariableTypesFolder">
+        <DisplayName>VariableTypesFolder</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
+            <Reference ReferenceType="Organizes" IsForward="false">ns=1;i=5002</Reference>
+        </References>
+    </UAObject>
 </UANodeSet>
