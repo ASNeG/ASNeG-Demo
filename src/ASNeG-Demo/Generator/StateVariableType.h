@@ -59,7 +59,7 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		std::string namespaceName_;
-		uint32_t namespaceIndex_;
+		uint16_t namespaceIndex_;
 		ServerVariable effectiveDisplayName_;
 		ServerVariable id_;
 		ServerVariable name_;

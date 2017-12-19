@@ -36,6 +36,7 @@ namespace OpcUaServerApplicationDemo
 	, name_("Name")
 	, number_("Number")
 	{
+		variableTypeNamespace(namespaceName_);
 		variableType(OpcUaNodeId(2755));
 
 		serverVariables().registerServerVariable(&effectiveDisplayName_);
