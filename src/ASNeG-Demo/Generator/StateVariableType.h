@@ -44,18 +44,22 @@ namespace OpcUaServerApplicationDemo
 		BaseNodeClass::SPtr effectiveDisplayName(void);
 		bool setEffectiveDisplayName(const OpcUaDataValue& dataValue);
 		bool getEffectiveDisplayName(OpcUaDataValue& dataValue);
+		void setUpdateCallbackEffectiveDisplayName(Callback::SPtr& callback);
 
 		BaseNodeClass::SPtr id(void);
 		bool setId(const OpcUaDataValue& dataValue);
 		bool getId(OpcUaDataValue& dataValue);
+		void setUpdateCallbackId(Callback::SPtr& callback);
 
 		BaseNodeClass::SPtr name(void);
 		bool setName(const OpcUaDataValue& dataValue);
 		bool getName(OpcUaDataValue& dataValue);
+		void setUpdateCallbackName(Callback::SPtr& callback);
 
 		BaseNodeClass::SPtr number(void);
 		bool setNumber(const OpcUaDataValue& dataValue);
 		bool getNumber(OpcUaDataValue& dataValue);
+		void setUpdateCallbackNumber(Callback::SPtr& callback);
 
 	  private:
 		std::string namespaceName_;

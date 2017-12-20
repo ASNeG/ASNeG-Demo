@@ -78,6 +78,12 @@ namespace OpcUaServerApplicationDemo
 		return effectiveDisplayName_->getDataValue(dataValue);
 	}
 
+	void
+	StateVariableType::setUpdateCallbackEffectiveDisplayName(Callback::SPtr& callback)
+	{
+		effectiveDisplayName_->callback(callback);
+	}
+
 	BaseNodeClass::SPtr
 	StateVariableType::id(void)
 	{
@@ -94,6 +100,12 @@ namespace OpcUaServerApplicationDemo
 	StateVariableType::getId(OpcUaDataValue& dataValue)
 	{
 		return id_->getDataValue(dataValue);
+	}
+
+	void
+	StateVariableType::setUpdateCallbackId(Callback::SPtr& callback)
+	{
+		id_->callback(callback);
 	}
 
 	BaseNodeClass::SPtr
@@ -114,6 +126,12 @@ namespace OpcUaServerApplicationDemo
 		return name_->getDataValue(dataValue);
 	}
 
+	void
+	StateVariableType::setUpdateCallbackName(Callback::SPtr& callback)
+	{
+		name_->callback(callback);
+	}
+
 	BaseNodeClass::SPtr
 	StateVariableType::number(void)
 	{
@@ -130,6 +148,12 @@ namespace OpcUaServerApplicationDemo
 	StateVariableType::getNumber(OpcUaDataValue& dataValue)
 	{
 		return number_->getDataValue(dataValue);
+	}
+
+	void
+	StateVariableType::setUpdateCallbackNumber(Callback::SPtr& callback)
+	{
+		number_->callback(callback);
 	}
 
 }

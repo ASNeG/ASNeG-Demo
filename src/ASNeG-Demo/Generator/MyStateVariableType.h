@@ -31,9 +31,11 @@ namespace OpcUaServerApplicationDemo
 		virtual ~MyStateVariableType(void);
 
 		void updateValue(uint32_t attributeId, OpcUaDataValue* dataValue);
+		void updateNumber(uint32_t attributeId, OpcUaDataValue* dataValue);
 
 	  private:
 		Callback::SPtr callbackUpdateValue_;
+		Callback::SPtr callbackUpdateNumber_;
 	};
 
 }
