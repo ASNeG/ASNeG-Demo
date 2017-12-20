@@ -47,7 +47,7 @@ namespace OpcUaServerApplicationDemo
 	  private:
 		uint16_t namespaceIndex_;
 		std::string namespaceName_;
-		ServerVariable value_;
+		ServerVariable::SPtr value_;
 	};
 
 }

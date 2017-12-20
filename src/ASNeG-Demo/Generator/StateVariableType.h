@@ -60,10 +60,10 @@ namespace OpcUaServerApplicationDemo
 	  private:
 		std::string namespaceName_;
 		uint16_t namespaceIndex_;
-		ServerVariable effectiveDisplayName_;
-		ServerVariable id_;
-		ServerVariable name_;
-		ServerVariable number_;
+		ServerVariable::SPtr effectiveDisplayName_;
+		ServerVariable::SPtr id_;
+		ServerVariable::SPtr name_;
+		ServerVariable::SPtr number_;
 
 	};
 

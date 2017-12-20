@@ -31,18 +31,18 @@ namespace OpcUaServerApplicationDemo
 	: BaseDataVariableType()
 	, namespaceName_("http://opcfoundation.org/UA/")
 	, namespaceIndex_(0)
-	, effectiveDisplayName_("EffectiveDisplayName")
-	, id_("	Id")
-	, name_("Name")
-	, number_("Number")
+	, effectiveDisplayName_(constructSPtr<ServerVariable>("EffectiveDisplayName"))
+	, id_(constructSPtr<ServerVariable>("Id"))
+	, name_(constructSPtr<ServerVariable>("Name"))
+	, number_(constructSPtr<ServerVariable>("Number"))
 	{
 		variableTypeNamespace(namespaceName_);
 		variableType(OpcUaNodeId(2755));
 
-		serverVariables().registerServerVariable(&effectiveDisplayName_);
-		serverVariables().registerServerVariable(&id_);
-		serverVariables().registerServerVariable(&name_);
-		serverVariables().registerServerVariable(&number_);
+		serverVariables().registerServerVariable(effectiveDisplayName_);
+		serverVariables().registerServerVariable(id_);
+		serverVariables().registerServerVariable(name_);
+		serverVariables().registerServerVariable(number_);
 	}
 
 	StateVariableType::~StateVariableType(void)
@@ -53,83 +53,83 @@ namespace OpcUaServerApplicationDemo
 	StateVariableType::linkInstanceWithModel(const OpcUaNodeId& nodeId)
 	{
 		if (!getNamespaceIndexFromNamespaceName(namespaceName_, namespaceIndex_)) return false;
-		effectiveDisplayName_.addBrowsePath(nodeId, OpcUaQualifiedName("EffectiveDisplayName", namespaceIndex_));
-		id_.addBrowsePath(nodeId, OpcUaQualifiedName("Id", namespaceIndex_));
-		name_.addBrowsePath(nodeId, OpcUaQualifiedName("Name", namespaceIndex_));
-		number_.addBrowsePath(nodeId, OpcUaQualifiedName("Number", namespaceIndex_));
+		effectiveDisplayName_->addBrowsePath(nodeId, OpcUaQualifiedName("EffectiveDisplayName", namespaceIndex_));
+		id_->addBrowsePath(nodeId, OpcUaQualifiedName("Id", namespaceIndex_));
+		name_->addBrowsePath(nodeId, OpcUaQualifiedName("Name", namespaceIndex_));
+		number_->addBrowsePath(nodeId, OpcUaQualifiedName("Number", namespaceIndex_));
 		return BaseDataVariableType::linkInstanceWithModel(nodeId);
 	}
 
 	BaseNodeClass::SPtr
 	StateVariableType::effectiveDisplayName(void)
 	{
-		return effectiveDisplayName_.baseNode().lock();
+		return effectiveDisplayName_->baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setEffectiveDisplayName(const OpcUaDataValue& dataValue)
 	{
-		return effectiveDisplayName_.setDataValue(dataValue);
+		return effectiveDisplayName_->setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getEffectiveDisplayName(OpcUaDataValue& dataValue)
 	{
-		return effectiveDisplayName_.getDataValue(dataValue);
+		return effectiveDisplayName_->getDataValue(dataValue);
 	}
 
 	BaseNodeClass::SPtr
 	StateVariableType::id(void)
 	{
-		return id_.baseNode().lock();
+		return id_->baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setId(const OpcUaDataValue& dataValue)
 	{
-		return id_.setDataValue(dataValue);
+		return id_->setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getId(OpcUaDataValue& dataValue)
 	{
-		return id_.getDataValue(dataValue);
+		return id_->getDataValue(dataValue);
 	}
 
 	BaseNodeClass::SPtr
 	StateVariableType::name(void)
 	{
-		return name_.baseNode().lock();
+		return name_->baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setName(const OpcUaDataValue& dataValue)
 	{
-		return name_.setDataValue(dataValue);
+		return name_->setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getName(OpcUaDataValue& dataValue)
 	{
-		return name_.getDataValue(dataValue);
+		return name_->getDataValue(dataValue);
 	}
 
 	BaseNodeClass::SPtr
 	StateVariableType::number(void)
 	{
-		return number_.baseNode().lock();
+		return number_->baseNode().lock();
 	}
 
 	bool
 	StateVariableType::setNumber(const OpcUaDataValue& dataValue)
 	{
-		return number_.setDataValue(dataValue);
+		return number_->setDataValue(dataValue);
 	}
 
 	bool
 	StateVariableType::getNumber(OpcUaDataValue& dataValue)
 	{
-		return number_.getDataValue(dataValue);
+		return number_->getDataValue(dataValue);
 	}
 
 }
