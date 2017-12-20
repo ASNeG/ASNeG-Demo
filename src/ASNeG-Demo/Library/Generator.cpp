@@ -213,7 +213,7 @@ namespace OpcUaServerApplicationDemo
 		OpcUaDataValue::SPtr dataValue;
 		bool result;
 
-		StateVariableType stateVariable[10];
+		MyStateVariableType stateVariable[10];
 		for (uint32_t idx=0; idx<10; idx++) {
 
 			stateVariable[idx].applicationServiceIf(applicationServiceIf_);

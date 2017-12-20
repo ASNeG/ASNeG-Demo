@@ -36,13 +36,14 @@ namespace OpcUaServerApplicationDemo
 	{
 	  public:
 		BaseDataVariableType(void);
-		~BaseDataVariableType(void);
+		virtual ~BaseDataVariableType(void);
 
 		virtual bool linkInstanceWithModel(const OpcUaNodeId& nodeId);
 
 		BaseNodeClass::SPtr value(void);
 		bool setValue(const OpcUaDataValue& dataValue);
 		bool getValue(OpcUaDataValue& dataValue);
+		void setUpdateCallbackValue(Callback::SPtr& callback);
 
 	  private:
 		uint16_t namespaceIndex_;

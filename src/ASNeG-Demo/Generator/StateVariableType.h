@@ -37,7 +37,7 @@ namespace OpcUaServerApplicationDemo
 	{
 	  public:
 		StateVariableType(void);
-		~StateVariableType(void);
+		virtual ~StateVariableType(void);
 
 		virtual bool linkInstanceWithModel(const OpcUaNodeId& nodeId);
 

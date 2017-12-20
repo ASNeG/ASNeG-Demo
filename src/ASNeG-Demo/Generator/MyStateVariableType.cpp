@@ -21,11 +21,19 @@ namespace OpcUaServerApplicationDemo
 {
 
 	MyStateVariableType::MyStateVariableType(void)
+	: callbackUpdateValue_(constructSPtr<Callback>(boost::bind(&MyStateVariableType::updateValue, this, _1, _2)))
 	{
+		setUpdateCallbackValue(callbackUpdateValue_);
 	}
 
 	MyStateVariableType::~MyStateVariableType(void)
 	{
+	}
+
+	void
+	MyStateVariableType::updateValue(uint32_t attributeId, OpcUaDataValue* dataValue)
+	{
+		std::cout << "MyStateVariableType::updateValue: " << attributeId << " " << *dataValue << std::endl;
 	}
 
 }

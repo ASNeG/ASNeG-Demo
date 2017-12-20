@@ -68,4 +68,10 @@ namespace OpcUaServerApplicationDemo
 		return value_->getDataValue(dataValue);
 	}
 
+	void
+	BaseDataVariableType::setUpdateCallbackValue(Callback::SPtr& callback)
+	{
+		value_->callback(callback);
+	}
+
 }

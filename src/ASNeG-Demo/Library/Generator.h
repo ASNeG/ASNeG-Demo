@@ -23,7 +23,7 @@
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
-#include "ASNeG-Demo/Generator/StateVariableType.h"
+#include "ASNeG-Demo/Generator/MyStateVariableType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -50,9 +50,9 @@ namespace OpcUaServerApplicationDemo
 		ApplicationInfo* applicationInfo_;
 		uint32_t namespaceIndex_;
 
-		StateVariableType stateVariable1_;
-		StateVariableType stateVariable2_;
-		StateVariableType stateVariable3_;
+		MyStateVariableType stateVariable1_;
+		MyStateVariableType stateVariable2_;
+		MyStateVariableType stateVariable3_;
 	};
 
 }

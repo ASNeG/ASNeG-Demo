@@ -29,6 +29,11 @@ namespace OpcUaServerApplicationDemo
 	  public:
 		MyStateVariableType(void);
 		virtual ~MyStateVariableType(void);
+
+		void updateValue(uint32_t attributeId, OpcUaDataValue* dataValue);
+
+	  private:
+		Callback::SPtr callbackUpdateValue_;
 	};
 
 }
