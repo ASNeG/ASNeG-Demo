@@ -40,15 +40,10 @@ namespace OpcUaServerApplicationDemo
 
 		virtual bool linkInstanceWithModel(const OpcUaNodeId& nodeId);
 
-		BaseNodeClass::SPtr value(void);
-		bool setValue(const OpcUaDataValue& dataValue);
-		bool getValue(OpcUaDataValue& dataValue);
-		void setUpdateCallbackValue(Callback::SPtr& callback);
-
 	  private:
 		uint16_t namespaceIndex_;
 		std::string namespaceName_;
-		ServerVariable::SPtr value_;
+
 	};
 
 }
