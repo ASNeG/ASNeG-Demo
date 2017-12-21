@@ -15,11 +15,6 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
-#include "OpcUaStackCore/Base/os.h"
-#include "OpcUaStackCore/Base/Log.h"
-#include "OpcUaStackCore/Base/ConfigXml.h"
-#include "OpcUaStackCore/BuildInTypes/BuildInTypes.h"
-#include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Generator/StateVariableType.h"
 
 using namespace OpcUaStackCore;

@@ -18,11 +18,6 @@
 #ifndef __OpcUaServerApplicationDemo_StateVariableType_h__
 #define __OpcUaServerApplicationDemo_StateVariableType_h__
 
-#include "OpcUaStackCore/Utility/IOThread.h"
-#include "OpcUaStackCore/Application/ApplicationMethodContext.h"
-#include "OpcUaStackServer/Application/ApplicationIf.h"
-#include "OpcUaStackServer/Application/ApplicationInfo.h"
-#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/VariableType/ServerVariables.h"
 #include "ASNeG-Demo/Generator/BaseDataVariableType.h"
 
