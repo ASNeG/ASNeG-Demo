@@ -18,7 +18,9 @@
 #ifndef __OpcUaServerApplicationDemo_MyStateVariableType_h__
 #define __OpcUaServerApplicationDemo_MyStateVariableType_h__
 
-#include "ASNeG-Demo/Generator/StateVariableType.h"
+#include "OpcUaStackServer/StandardVariableType/StateVariableType.h"
+
+using namespace OpcUaStackServer;
 
 namespace OpcUaServerApplicationDemo
 {
