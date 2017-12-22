@@ -3,3 +3,4 @@ build_deb
 build_info
 build
 core
+*.log
