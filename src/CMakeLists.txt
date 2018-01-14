@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.9)
-project	(ASNeGDemo3)
+project	(ASNeGDemo)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # ----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # ----------------------------------------------------------------------------
 set(VERSION_MAJOR "3" CACHE STRING "major version")
 set(VERSION_MINOR "0" CACHE STRING "minor version")
-set(VERSION_PATCH "0" CACHE STRING "patch version")
+set(VERSION_PATCH "1" CACHE STRING "patch version")
 
 set(OPCUASTACK_VERSION_MAJOR "3" CACHE STRING "major version")
 set(OPCUASTACK_VERSION_MINOR "0" CACHE STRING "minor version")
