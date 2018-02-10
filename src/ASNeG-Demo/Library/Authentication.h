@@ -43,6 +43,11 @@ namespace OpcUaServerApplicationDemo
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
+
+		Callback authenticationCallback_;
+
+		bool registerAuthenticationCallback(void);
+		void authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext);
 	};
 
 }

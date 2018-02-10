@@ -17,6 +17,7 @@
 
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
+#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "ASNeG-Demo/Library/Authentication.h"
 
 namespace OpcUaServerApplicationDemo
@@ -26,6 +27,7 @@ namespace OpcUaServerApplicationDemo
 	: ioThread_(nullptr)
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
+	, authenticationCallback_(boost::bind(&Authentication::authenticationCallback, this, _1))
 	{
 	}
 
@@ -46,6 +48,11 @@ namespace OpcUaServerApplicationDemo
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
+		// register authentication callback
+		if (!registerAuthenticationCallback()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -55,6 +62,40 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "Authentication::shutdown");
 
 		return true;
+	}
+
+	bool
+	Authentication::registerAuthenticationCallback(void)
+	{
+		Log(Debug, "registern authenitcation callbacks");
+
+		ServiceTransactionRegisterForwardGlobal::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardGlobal>();
+		RegisterForwardGlobalRequest::SPtr req = trx->request();
+		RegisterForwardGlobalResponse::SPtr res = trx->response();
+
+		req->forwardGlobalSync()->authenticationService().setCallback(authenticationCallback_);
+
+	  	applicationServiceIf_->sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		Log(Error, "send authentication request error");
+	  		return false;
+	  	}
+
+	  	if (res->statusCode() != Success) {
+	  		Log(Debug, "authentication response error");
+  			return false;
+	  	}
+
+	  	return true;
+	}
+
+	void
+	Authentication::authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext)
+	{
+		Log(Debug, "Event::authenticationCallback");
+
+		std::cout << "Username=" << applicationAuthenitcationContext->userName_ << std::endl;
+		std::cout << "Password=" << applicationAuthenitcationContext->password_ << std::endl;
 	}
 
 }
