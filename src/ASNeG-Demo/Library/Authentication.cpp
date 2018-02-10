@@ -94,8 +94,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "Event::authenticationCallback");
 
-		std::cout << "Username=" << applicationAuthenitcationContext->userName_ << std::endl;
-		std::cout << "Password=" << applicationAuthenitcationContext->password_ << std::endl;
+		applicationAuthenitcationContext->statusCode_ = Success;
 	}
 
 }
