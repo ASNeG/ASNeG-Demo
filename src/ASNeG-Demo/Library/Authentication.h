@@ -48,6 +48,9 @@ namespace OpcUaServerApplicationDemo
 		Callback authenticationCallback_;
 		Callback autorizationCallback_;
 
+		uint32_t namespaceIndex_;
+
+		bool getNamespaceInfo(void);
 		bool registerAuthenticationCallback(void);
 		void authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext);
 		void autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext);

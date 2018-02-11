@@ -29,6 +29,7 @@ namespace OpcUaServerApplicationDemo
 	, applicationInfo_(nullptr)
 	, authenticationCallback_(boost::bind(&Authentication::authenticationCallback, this, _1))
 	, autorizationCallback_(boost::bind(&Authentication::autorizationCallback, this, _1))
+	, namespaceIndex_(0)
 	{
 	}
 
@@ -49,6 +50,11 @@ namespace OpcUaServerApplicationDemo
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
+		// read namespace array from opc ua server
+		if (!getNamespaceInfo()) {
+			//return false;
+		}
+
 		// register authentication callback
 		if (!registerAuthenticationCallback()) {
 			return false;
@@ -63,6 +69,41 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "Authentication::shutdown");
 
 		return true;
+	}
+
+	bool
+	Authentication::getNamespaceInfo(void)
+	{
+		Log(Debug, "get namespace info");
+
+		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
+		NamespaceInfoRequest::SPtr req = trx->request();
+		NamespaceInfoResponse::SPtr res = trx->response();
+
+		applicationServiceIf_->sendSync(trx);
+		if (trx->statusCode() != Success) {
+			Log(Error, "NamespaceInfoResponse error")
+			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+			return false;
+		}
+
+		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
+		for (
+		    it = res->index2NamespaceMap().begin();
+			it != res->index2NamespaceMap().end();
+			it++
+		)
+		{
+			if (it->second == "http://ASNeG-Demo.de/Authentication/") {
+				namespaceIndex_ = it->first;
+				return true;
+			}
+ 		}
+
+		Log(Error, "namespace not found in configuration")
+	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Authentication/");
+
+		return false;
 	}
 
 	bool
