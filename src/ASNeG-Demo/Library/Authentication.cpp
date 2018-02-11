@@ -28,6 +28,7 @@ namespace OpcUaServerApplicationDemo
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, authenticationCallback_(boost::bind(&Authentication::authenticationCallback, this, _1))
+	, autorizationCallback_(boost::bind(&Authentication::autorizationCallback, this, _1))
 	{
 	}
 
@@ -74,6 +75,7 @@ namespace OpcUaServerApplicationDemo
 		RegisterForwardGlobalResponse::SPtr res = trx->response();
 
 		req->forwardGlobalSync()->authenticationService().setCallback(authenticationCallback_);
+		req->forwardGlobalSync()->autorizationService().setCallback(autorizationCallback_);
 
 	  	applicationServiceIf_->sendSync(trx);
 	  	if (trx->statusCode() != Success) {
@@ -95,6 +97,14 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "Event::authenticationCallback");
 
 		applicationAuthenitcationContext->statusCode_ = Success;
+	}
+
+	void
+	Authentication::autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext)
+	{
+		Log(Debug, "Event::autorizationCallback");
+
+		applicationAutorizationContext->statusCode_ = Success;
 	}
 
 }
