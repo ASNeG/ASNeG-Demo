@@ -305,7 +305,77 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "Event::autorizationCallback");
 
-		applicationAutorizationContext->statusCode_ = Success;
+		if (applicationAutorizationContext->userContext_.get() == nullptr) {
+			applicationAutorizationContext->statusCode_ = Success;
+			return;
+		}
+
+		UserProfile::SPtr userProfile = boost::static_pointer_cast<UserProfile>(applicationAutorizationContext->userContext_);
+
+		std::set<OpcUaNodeId>::iterator it;
+		bool notAllowed = false;
+		switch (applicationAutorizationContext->serviceOperation_)
+		{
+			case Read:
+			{
+				it = userProfile->readNotAllowed().find(applicationAutorizationContext->nodeId_);
+				if (it != userProfile->readNotAllowed().end()) {
+					notAllowed = true;
+				}
+				break;
+			}
+			case Write:
+			{
+				it = userProfile->writeNotAllowed().find(applicationAutorizationContext->nodeId_);
+				if (it != userProfile->writeNotAllowed().end()) {
+					notAllowed = true;
+				}
+				break;
+			}
+			case HRead:
+			{
+				it = userProfile->historicalReadNotAllowed().find(applicationAutorizationContext->nodeId_);
+				if (it != userProfile->historicalReadNotAllowed().end()) {
+					notAllowed = true;
+				}
+				break;
+			}
+			case HWrite:
+			{
+				it = userProfile->historicalWriteNotAllowed().find(applicationAutorizationContext->nodeId_);
+				if (it != userProfile->historicalWriteNotAllowed().end()) {
+					notAllowed = true;
+				}
+				break;
+			}
+			case MonitoredItem:
+			{
+				it = userProfile->monitoredItemNotAllowed().find(applicationAutorizationContext->nodeId_);
+				if (it != userProfile->monitoredItemNotAllowed().end()) {
+					notAllowed = true;
+				}
+				break;
+			}
+			case EventItem:
+			{
+				it = userProfile->eventItemNotAllowed().find(applicationAutorizationContext->nodeId_);
+				if (it != userProfile->eventItemNotAllowed().end()) {
+					notAllowed = true;
+				}
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+
+		if (notAllowed) {
+			applicationAutorizationContext->statusCode_ = BadUserAccessDenied;
+		}
+		else {
+			applicationAutorizationContext->statusCode_ = Success;
+		}
 	}
 
 	bool
