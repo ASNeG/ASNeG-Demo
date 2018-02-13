@@ -17,6 +17,7 @@
 
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
+#include "OpcUaStackCore/ServiceSet/UserNameIdentityToken.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Authentication.h"
@@ -109,8 +110,12 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
-		// creatre node references and set variables to default
+		// create node references and set variables to default
 		if (!setValuesToDefault()) {
+			return false;
+		}
+
+		if (!createUserProfiles()) {
 			return false;
 		}
 
@@ -186,6 +191,26 @@ namespace OpcUaServerApplicationDemo
 	  	return true;
 	}
 
+	bool
+	Authentication::createUserProfiles(void)
+	{
+		UserProfile::SPtr userProfile = constructSPtr<UserProfile>();
+
+		userProfile->username("user1");
+		userProfile->password("password1");
+		userProfileMap_.insert(std::make_pair("user1", userProfile));
+
+		userProfile->username("user2");
+		userProfile->password("password2");
+		userProfileMap_.insert(std::make_pair("user2", userProfile));
+
+		userProfile->username("user3");
+		userProfile->password("password3");
+		userProfileMap_.insert(std::make_pair("user3", userProfile));
+
+		return true;
+	}
+
 	void
 	Authentication::authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext)
 	{
@@ -195,6 +220,35 @@ namespace OpcUaServerApplicationDemo
 			applicationAuthenitcationContext->statusCode_ = Success;
 		}
 		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_UserNameIdentityToken_Encoding_DefaultBinary) {
+
+			ExtensibleParameter::SPtr parameter = applicationAuthenitcationContext->parameter_;
+			UserNameIdentityToken::SPtr token = parameter->parameter<UserNameIdentityToken>(OpcUaNodeId(OpcUaId_UserNameIdentityToken_Encoding_DefaultBinary));
+
+			// find user profile
+			UserProfile::Map::iterator it;
+			it = userProfileMap_.find(token->userName());
+			if ( it == userProfileMap_.end()) {
+				applicationAuthenitcationContext->statusCode_ = BadUserAccessDenied;
+				return;
+			}
+			UserProfile::SPtr userProfile = it->second;
+
+			// get password
+			char* buf;
+		    int32_t bufLen;
+			token->password((OpcUaByte**)&buf, (OpcUaInt32*)&bufLen);
+			if (bufLen <= 0) {
+				applicationAuthenitcationContext->statusCode_ = BadUserAccessDenied;
+				return;
+			}
+			std::string password(buf, bufLen);
+
+			// check password
+			if (password != userProfile->password()) {
+				applicationAuthenitcationContext->statusCode_ = BadUserAccessDenied;
+				return;
+			}
+
 			applicationAuthenitcationContext->statusCode_ = Success;
 		}
 		else {

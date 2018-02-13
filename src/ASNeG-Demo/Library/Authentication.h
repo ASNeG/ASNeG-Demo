@@ -80,6 +80,7 @@ namespace OpcUaServerApplicationDemo
 
 		bool getNamespaceInfo(void);
 		bool registerAuthenticationCallback(void);
+		bool createUserProfiles(void);
 		void authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext);
 		void autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext);
 
