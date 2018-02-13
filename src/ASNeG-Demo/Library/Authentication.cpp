@@ -24,6 +24,54 @@
 namespace OpcUaServerApplicationDemo
 {
 
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	//
+	// User Profile
+	//
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	UserProfile::UserProfile(void)
+	: username_("")
+	, password_("")
+	{
+	}
+
+	UserProfile::~UserProfile(void)
+	{
+	}
+
+	void
+	UserProfile::username(const std::string& username)
+	{
+		username_ = username;
+	}
+
+	std::string&
+	UserProfile::username(void)
+	{
+		return username_;
+	}
+
+	void
+	UserProfile::password(const std::string& password)
+	{
+		password_= password;
+	}
+
+	std::string&
+	UserProfile::password(void)
+	{
+		return password_;
+	}
+
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	//
+	// Authentication
+	//
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	Authentication::Authentication(void)
 	: ioThread_(nullptr)
 	, applicationServiceIf_(nullptr)
@@ -143,7 +191,15 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "Event::authenticationCallback");
 
-		applicationAuthenitcationContext->statusCode_ = Success;
+		if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_AnonymousIdentityToken_Encoding_DefaultBinary) {
+			applicationAuthenitcationContext->statusCode_ = Success;
+		}
+		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_UserNameIdentityToken_Encoding_DefaultBinary) {
+			applicationAuthenitcationContext->statusCode_ = Success;
+		}
+		else {
+			applicationAuthenitcationContext->statusCode_ = BadIdentityTokenInvalid;
+		}
 	}
 
 	void

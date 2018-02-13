@@ -31,6 +31,26 @@ using namespace OpcUaStackServer;
 namespace OpcUaServerApplicationDemo
 {
 
+	class UserProfile
+	{
+	  public:
+		typedef boost::shared_ptr<UserProfile> SPtr;
+		typedef std::map<std::string, UserProfile::SPtr> Map;
+
+		UserProfile(void);
+		~UserProfile(void);
+
+		void username(const std::string& username);
+		std::string& username(void);
+		void password(const std::string& password);
+		std::string& password(void);
+
+	  private:
+		std::string username_;
+		std::string password_;
+	};
+
+
 	class Authentication
 	{
 	  public:
@@ -55,6 +75,8 @@ namespace OpcUaServerApplicationDemo
 		BaseNodeClass::WPtr value03_;
 		BaseNodeClass::WPtr value04_;
 		BaseNodeClass::WPtr value05_;
+
+		UserProfile::Map userProfileMap_;
 
 		bool getNamespaceInfo(void);
 		bool registerAuthenticationCallback(void);
