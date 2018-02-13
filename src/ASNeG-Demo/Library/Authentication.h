@@ -32,6 +32,7 @@ namespace OpcUaServerApplicationDemo
 {
 
 	class UserProfile
+	: public UserContext
 	{
 	  public:
 		typedef boost::shared_ptr<UserProfile> SPtr;
@@ -44,10 +45,23 @@ namespace OpcUaServerApplicationDemo
 		std::string& username(void);
 		void password(const std::string& password);
 		std::string& password(void);
+		std::set<OpcUaNodeId>& readNotAllowed(void);
+		std::set<OpcUaNodeId>& writeNotAllowed(void);
+		std::set<OpcUaNodeId>& historicalReadNotAllowed(void);
+		std::set<OpcUaNodeId>& historicalWriteNotAllowed(void);
+		std::set<OpcUaNodeId>& monitoredItemNotAllowed(void);
+		std::set<OpcUaNodeId>& eventItemNotAllowed(void);
 
 	  private:
 		std::string username_;
 		std::string password_;
+
+		std::set<OpcUaNodeId> readNotAllowed_;
+		std::set<OpcUaNodeId> writeNotAllowed_;
+		std::set<OpcUaNodeId> historicalReadNotAllowed_;
+		std::set<OpcUaNodeId> historicalWriteNotAllowed_;
+		std::set<OpcUaNodeId> monitoredItemNotAllowed_;
+		std::set<OpcUaNodeId> eventItemNotAllowed_;
 	};
 
 

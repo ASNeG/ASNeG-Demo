@@ -33,8 +33,15 @@ namespace OpcUaServerApplicationDemo
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
 	UserProfile::UserProfile(void)
-	: username_("")
+	: UserContext()
+	, username_("")
 	, password_("")
+	, readNotAllowed_()
+	, writeNotAllowed_()
+	, historicalReadNotAllowed_()
+	, historicalWriteNotAllowed_()
+	, monitoredItemNotAllowed_()
+	, eventItemNotAllowed_()
 	{
 	}
 
@@ -64,6 +71,42 @@ namespace OpcUaServerApplicationDemo
 	UserProfile::password(void)
 	{
 		return password_;
+	}
+
+	std::set<OpcUaNodeId>&
+	UserProfile::readNotAllowed(void)
+	{
+		return readNotAllowed_;
+	}
+
+	std::set<OpcUaNodeId>&
+	UserProfile::writeNotAllowed(void)
+	{
+		return writeNotAllowed_;
+	}
+
+	std::set<OpcUaNodeId>&
+	UserProfile::historicalReadNotAllowed(void)
+	{
+		return historicalReadNotAllowed_;
+	}
+
+	std::set<OpcUaNodeId>&
+	UserProfile::historicalWriteNotAllowed(void)
+	{
+		return historicalWriteNotAllowed_;
+	}
+
+	std::set<OpcUaNodeId>&
+	UserProfile::monitoredItemNotAllowed(void)
+	{
+		return monitoredItemNotAllowed_;
+	}
+
+	std::set<OpcUaNodeId>&
+	UserProfile::eventItemNotAllowed(void)
+	{
+		return eventItemNotAllowed_;
 	}
 
 	// ------------------------------------------------------------------------
@@ -249,6 +292,7 @@ namespace OpcUaServerApplicationDemo
 				return;
 			}
 
+			applicationAuthenitcationContext->userContext_ = userProfile;
 			applicationAuthenitcationContext->statusCode_ = Success;
 		}
 		else {
