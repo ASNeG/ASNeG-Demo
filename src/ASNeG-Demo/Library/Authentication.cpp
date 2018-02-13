@@ -251,6 +251,14 @@ namespace OpcUaServerApplicationDemo
 		userProfile->password("password3");
 		userProfileMap_.insert(std::make_pair("user3", userProfile));
 
+		userProfile->username("user4");
+		userProfile->password("password4");
+		userProfileMap_.insert(std::make_pair("user4", userProfile));
+
+		userProfile->username("user5");
+		userProfile->password("password5");
+		userProfileMap_.insert(std::make_pair("user5", userProfile));
+
 		return true;
 	}
 
