@@ -105,6 +105,7 @@
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.StructureExample.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Service.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Alarm.xml</NodeSetFile>
+    <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Auth.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/TestStatusCode.OpcUaNodeSet.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Event.OpcUaNodeSet.xml</NodeSetFile>
   </InformationModel>
