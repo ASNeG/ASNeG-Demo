@@ -18,6 +18,7 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
+#include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Authentication.h"
 
 namespace OpcUaServerApplicationDemo
@@ -52,11 +53,16 @@ namespace OpcUaServerApplicationDemo
 
 		// read namespace array from opc ua server
 		if (!getNamespaceInfo()) {
-			//return false;
+			return false;
 		}
 
 		// register authentication callback
 		if (!registerAuthenticationCallback()) {
+			return false;
+		}
+
+		// creatre node references and set variables to default
+		if (!setValuesToDefault()) {
 			return false;
 		}
 
@@ -94,14 +100,14 @@ namespace OpcUaServerApplicationDemo
 			it++
 		)
 		{
-			if (it->second == "http://ASNeG-Demo.de/Authentication/") {
+			if (it->second == "http://ASNeG-Demo.de/Auth/") {
 				namespaceIndex_ = it->first;
 				return true;
 			}
  		}
 
 		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Authentication/");
+	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Auth/");
 
 		return false;
 	}
@@ -146,6 +152,125 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "Event::autorizationCallback");
 
 		applicationAutorizationContext->statusCode_ = Success;
+	}
+
+	bool
+	Authentication::setValuesToDefault(void)
+	{
+		Log(Debug, "get references");
+
+		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
+		BaseNodeClass::SPtr baseNodeClass;
+		OpcUaDataValue dataValue;
+		OpcUaNodeId::SPtr nodeId;
+
+		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
+		GetNodeReferenceRequest::SPtr req = trx->request();
+		GetNodeReferenceResponse::SPtr res = trx->response();
+
+	  	req->nodes()->resize(5);
+	  	nodeId = constructSPtr<OpcUaNodeId>();
+	  	nodeId->set("Auth.Value01", namespaceIndex_);
+	  	req->nodes()->push_back(nodeId);
+	  	nodeId = constructSPtr<OpcUaNodeId>();
+	  	nodeId->set("Auth.Value02", namespaceIndex_);
+	  	req->nodes()->push_back(nodeId);
+	  	nodeId = constructSPtr<OpcUaNodeId>();
+	  	nodeId->set("Auth.Value03", namespaceIndex_);
+	  	req->nodes()->push_back(nodeId);
+	  	nodeId = constructSPtr<OpcUaNodeId>();
+	  	nodeId->set("Auth.Value04", namespaceIndex_);
+	  	req->nodes()->push_back(nodeId);
+	  	nodeId = constructSPtr<OpcUaNodeId>();
+	  	nodeId->set("Auth.Value05", namespaceIndex_);
+	  	req->nodes()->push_back(nodeId);
+
+	  	applicationServiceIf_->sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		Log(Error, "GetNodeReference error")
+	  		    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+	  		return false;
+	  	}
+		if (res->nodeReferenceArray().get() == nullptr) {
+			Log(Error, "GetNodeReference error");
+			return false;
+		}
+		if (res->nodeReferenceArray()->size() != req->nodes()->size()) {
+			Log(Error, "GetNodeReference size error");
+			return false;
+		}
+
+		if (!getRefFromResponse(res, 0, value01_)) return false;
+		if (!getRefFromResponse(res, 1, value02_)) return false;
+		if (!getRefFromResponse(res, 2, value03_)) return false;
+		if (!getRefFromResponse(res, 3, value04_)) return false;
+		if (!getRefFromResponse(res, 4, value05_)) return false;
+
+		baseNodeClass = value01_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue((double)1);
+		baseNodeClass->setValueSync(dataValue);
+
+		baseNodeClass = value02_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue((double)2);
+		baseNodeClass->setValueSync(dataValue);
+
+		baseNodeClass = value03_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue((double)3);
+		baseNodeClass->setValueSync(dataValue);
+
+		baseNodeClass = value04_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue((double)4);
+		baseNodeClass->setValueSync(dataValue);
+
+		baseNodeClass = value05_.lock();
+		if (baseNodeClass.get() == nullptr) return false;
+		dataValue.serverTimestamp(dateTime);
+		dataValue.sourceTimestamp(dateTime);
+		dataValue.statusCode(Success);
+		dataValue.variant()->setValue((double)5);
+		baseNodeClass->setValueSync(dataValue);
+
+		return true;
+	}
+
+	bool
+	Authentication::getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref)
+	{
+		NodeReference::SPtr nodeReference;
+		if (!res->nodeReferenceArray()->get(idx, nodeReference)) {
+			Log(Error, "reference result not exist in response")
+				.parameter("Idx", idx);
+			return false;
+		}
+
+		if (nodeReference->statusCode() != Success) {
+			Log(Error, "reference error in response")
+				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeReference->statusCode()))
+				.parameter("Idx", idx);
+			return false;
+		}
+
+  		NodeReferenceApplication::SPtr nodeReferenceApplication;
+  		nodeReferenceApplication = boost::static_pointer_cast<NodeReferenceApplication>(nodeReference);
+  		ref = nodeReferenceApplication->baseNodeClass();
+
+		return true;
 	}
 
 }

@@ -50,10 +50,19 @@ namespace OpcUaServerApplicationDemo
 
 		uint32_t namespaceIndex_;
 
+		BaseNodeClass::WPtr value01_;
+		BaseNodeClass::WPtr value02_;
+		BaseNodeClass::WPtr value03_;
+		BaseNodeClass::WPtr value04_;
+		BaseNodeClass::WPtr value05_;
+
 		bool getNamespaceInfo(void);
 		bool registerAuthenticationCallback(void);
 		void authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext);
 		void autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext);
+
+		bool setValuesToDefault(void);
+		bool getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref);
 	};
 
 }
