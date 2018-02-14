@@ -239,25 +239,65 @@ namespace OpcUaServerApplicationDemo
 	{
 		UserProfile::SPtr userProfile = constructSPtr<UserProfile>();
 
+		// user1 cannot read variables
 		userProfile->username("user1");
 		userProfile->password("password1");
+		userProfile->readNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
+		userProfile->readNotAllowed().insert(OpcUaNodeId("Auth.Value02", namespaceIndex_));
+		userProfile->readNotAllowed().insert(OpcUaNodeId("Auth.Value03", namespaceIndex_));
+		userProfile->readNotAllowed().insert(OpcUaNodeId("Auth.Value04", namespaceIndex_));
+		userProfile->readNotAllowed().insert(OpcUaNodeId("Auth.Value05", namespaceIndex_));
 		userProfileMap_.insert(std::make_pair("user1", userProfile));
 
+		// user2 can not write variables
 		userProfile->username("user2");
 		userProfile->password("password2");
+		userProfile->writeNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
+		userProfile->writeNotAllowed().insert(OpcUaNodeId("Auth.Value02", namespaceIndex_));
+		userProfile->writeNotAllowed().insert(OpcUaNodeId("Auth.Value03", namespaceIndex_));
+		userProfile->writeNotAllowed().insert(OpcUaNodeId("Auth.Value04", namespaceIndex_));
+		userProfile->writeNotAllowed().insert(OpcUaNodeId("Auth.Value05", namespaceIndex_));
 		userProfileMap_.insert(std::make_pair("user2", userProfile));
 
+		// user3 can not monitor variables
 		userProfile->username("user3");
 		userProfile->password("password3");
+		userProfile->monitoredItemNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
+		userProfile->monitoredItemNotAllowed().insert(OpcUaNodeId("Auth.Value02", namespaceIndex_));
+		userProfile->monitoredItemNotAllowed().insert(OpcUaNodeId("Auth.Value03", namespaceIndex_));
+		userProfile->monitoredItemNotAllowed().insert(OpcUaNodeId("Auth.Value04", namespaceIndex_));
+		userProfile->monitoredItemNotAllowed().insert(OpcUaNodeId("Auth.Value05", namespaceIndex_));
 		userProfileMap_.insert(std::make_pair("user3", userProfile));
 
+		// user4 cannot receive events from objects
 		userProfile->username("user4");
 		userProfile->password("password4");
+		userProfile->eventItemNotAllowed().insert(OpcUaNodeId("AuthObject01", namespaceIndex_));
+		userProfile->eventItemNotAllowed().insert(OpcUaNodeId("AuthObject02", namespaceIndex_));
+		userProfile->eventItemNotAllowed().insert(OpcUaNodeId("AuthObject03", namespaceIndex_));
+		userProfile->eventItemNotAllowed().insert(OpcUaNodeId("AuthObject04", namespaceIndex_));
+		userProfile->eventItemNotAllowed().insert(OpcUaNodeId("AuthObject05", namespaceIndex_));
 		userProfileMap_.insert(std::make_pair("user4", userProfile));
 
+		// user5 can not read historical values
 		userProfile->username("user5");
 		userProfile->password("password5");
+		userProfile->historicalReadNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
+		userProfile->historicalReadNotAllowed().insert(OpcUaNodeId("Auth.Value02", namespaceIndex_));
+		userProfile->historicalReadNotAllowed().insert(OpcUaNodeId("Auth.Value03", namespaceIndex_));
+		userProfile->historicalReadNotAllowed().insert(OpcUaNodeId("Auth.Value04", namespaceIndex_));
+		userProfile->historicalReadNotAllowed().insert(OpcUaNodeId("Auth.Value05", namespaceIndex_));
 		userProfileMap_.insert(std::make_pair("user5", userProfile));
+
+		// user6can not write historical values
+		userProfile->username("user6");
+		userProfile->password("password6");
+		userProfile->historicalWriteNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
+		userProfile->historicalWriteNotAllowed().insert(OpcUaNodeId("Auth.Value02", namespaceIndex_));
+		userProfile->historicalWriteNotAllowed().insert(OpcUaNodeId("Auth.Value03", namespaceIndex_));
+		userProfile->historicalWriteNotAllowed().insert(OpcUaNodeId("Auth.Value04", namespaceIndex_));
+		userProfile->historicalWriteNotAllowed().insert(OpcUaNodeId("Auth.Value05", namespaceIndex_));
+		userProfileMap_.insert(std::make_pair("user6", userProfile));
 
 		return true;
 	}
