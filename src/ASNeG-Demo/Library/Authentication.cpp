@@ -313,7 +313,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "Event::authenticationCallback");
 
-#if 1 // test
+#if 0 // test
 		applicationAuthenitcationContext->userContext_ = userProfileMap_.find("user3")->second;
 		applicationAuthenitcationContext->statusCode_ = Success;
 		return;
