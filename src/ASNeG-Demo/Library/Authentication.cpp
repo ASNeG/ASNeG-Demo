@@ -237,9 +237,10 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Authentication::createUserProfiles(void)
 	{
-		UserProfile::SPtr userProfile = constructSPtr<UserProfile>();
+		UserProfile::SPtr userProfile;
 
 		// user1 cannot read variables
+		userProfile = constructSPtr<UserProfile>();
 		userProfile->username("user1");
 		userProfile->password("password1");
 		userProfile->readNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
@@ -250,6 +251,7 @@ namespace OpcUaServerApplicationDemo
 		userProfileMap_.insert(std::make_pair("user1", userProfile));
 
 		// user2 can not write variables
+		userProfile = constructSPtr<UserProfile>();
 		userProfile->username("user2");
 		userProfile->password("password2");
 		userProfile->writeNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
@@ -260,6 +262,7 @@ namespace OpcUaServerApplicationDemo
 		userProfileMap_.insert(std::make_pair("user2", userProfile));
 
 		// user3 can not monitor variables
+		userProfile = constructSPtr<UserProfile>();
 		userProfile->username("user3");
 		userProfile->password("password3");
 		userProfile->monitoredItemNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
@@ -270,6 +273,7 @@ namespace OpcUaServerApplicationDemo
 		userProfileMap_.insert(std::make_pair("user3", userProfile));
 
 		// user4 cannot receive events from objects
+		userProfile = constructSPtr<UserProfile>();
 		userProfile->username("user4");
 		userProfile->password("password4");
 		userProfile->eventItemNotAllowed().insert(OpcUaNodeId("AuthObject01", namespaceIndex_));
@@ -280,6 +284,7 @@ namespace OpcUaServerApplicationDemo
 		userProfileMap_.insert(std::make_pair("user4", userProfile));
 
 		// user5 can not read historical values
+		userProfile = constructSPtr<UserProfile>();
 		userProfile->username("user5");
 		userProfile->password("password5");
 		userProfile->historicalReadNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
@@ -290,6 +295,7 @@ namespace OpcUaServerApplicationDemo
 		userProfileMap_.insert(std::make_pair("user5", userProfile));
 
 		// user6can not write historical values
+		userProfile = constructSPtr<UserProfile>();
 		userProfile->username("user6");
 		userProfile->password("password6");
 		userProfile->historicalWriteNotAllowed().insert(OpcUaNodeId("Auth.Value01", namespaceIndex_));
@@ -306,6 +312,12 @@ namespace OpcUaServerApplicationDemo
 	Authentication::authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext)
 	{
 		Log(Debug, "Event::authenticationCallback");
+
+#if 1 // test
+		applicationAuthenitcationContext->userContext_ = userProfileMap_.find("user3")->second;
+		applicationAuthenitcationContext->statusCode_ = Success;
+		return;
+#endif
 
 		if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_AnonymousIdentityToken_Encoding_DefaultBinary) {
 			applicationAuthenitcationContext->statusCode_ = Success;
@@ -359,6 +371,7 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		UserProfile::SPtr userProfile = boost::static_pointer_cast<UserProfile>(applicationAutorizationContext->userContext_);
+		std::cout << userProfile->username() << " " << applicationAutorizationContext->serviceOperation_ << std::endl;
 
 		std::set<OpcUaNodeId>::iterator it;
 		bool notAllowed = false;
@@ -366,6 +379,9 @@ namespace OpcUaServerApplicationDemo
 		{
 			case Read:
 			{
+				if (applicationAutorizationContext->attributeId_ != AttributeId_Value) {
+					break;
+				}
 				it = userProfile->readNotAllowed().find(applicationAutorizationContext->nodeId_);
 				if (it != userProfile->readNotAllowed().end()) {
 					notAllowed = true;
