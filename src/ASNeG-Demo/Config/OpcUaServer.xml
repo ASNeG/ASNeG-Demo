@@ -45,8 +45,16 @@
 	  <GatewayServerUri></GatewayServerUri>
 	  <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
 	  <UserTokenPolicy>
-	    <PolicyId>OpcUaStack</PolicyId>
+	    <PolicyId>OpcUaStack1</PolicyId>
 	    <TokenType>Anonymous</TokenType>
+	  </UserTokenPolicy>
+	  <UserTokenPolicy>
+	    <PolicyId>OpcUaStack2</PolicyId>
+	    <TokenType>Username</TokenType>
+	  </UserTokenPolicy>
+	  <UserTokenPolicy>
+	    <PolicyId>OpcUaStack3</PolicyId>
+	    <TokenType>IssuedToken</TokenType>
 	  </UserTokenPolicy>
 	  <TransportProfileUri>http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary</TransportProfileUri>
 	  <SecurityLevel>0</SecurityLevel>
