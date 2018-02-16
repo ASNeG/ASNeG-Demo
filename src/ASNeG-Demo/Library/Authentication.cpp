@@ -325,7 +325,7 @@ namespace OpcUaServerApplicationDemo
 		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_UserNameIdentityToken_Encoding_DefaultBinary) {
 
 			ExtensibleParameter::SPtr parameter = applicationAuthenitcationContext->parameter_;
-			UserNameIdentityToken::SPtr token = parameter->parameter<UserNameIdentityToken>(OpcUaNodeId(OpcUaId_UserNameIdentityToken_Encoding_DefaultBinary));
+			UserNameIdentityToken::SPtr token = parameter->parameter<UserNameIdentityToken>();
 
 			// find user profile
 			UserProfile::Map::iterator it;
@@ -371,7 +371,6 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		UserProfile::SPtr userProfile = boost::static_pointer_cast<UserProfile>(applicationAutorizationContext->userContext_);
-		std::cout << userProfile->username() << " " << applicationAutorizationContext->serviceOperation_ << std::endl;
 
 		std::set<OpcUaNodeId>::iterator it;
 		bool notAllowed = false;
