@@ -103,6 +103,11 @@
           <RejectListLocation>@CONF_DIR@/reject/cert/</RejectListLocation>
       </Folder>
       
+      <Files>
+          <ServerCertificateFile>@CONF_DIR@/own/certs/ASNeG-Demo.der</ServerCertificateFile>
+          <PrivateKeyFile>@CONF_DIR@/own/private/ASNeG-Demo.pem</PrivateKeyFile>
+      </Files>
+      
   </ServerCertificate>
   
   <Applications>
