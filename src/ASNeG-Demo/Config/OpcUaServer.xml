@@ -94,12 +94,16 @@
   </Endpoints>
 
   <ServerCertificate>
-      <CertificateTrustListLocation>@CONF_DIR@/trusted/certs/</CertificateTrustListLocation>
-      <CertificateRevocationListLocation>@CONF_DIR@/trusted/crl/</CertificateRevocationListLocation>
-      <IssuersCertificatesLocation>@CONF_DIR@/issuers/certs/</IssuersCertificatesLocation>
-      <IssuersRevocationListLocation>@CONF_DIR@/issuers/crl/</IssuersRevocationListLocation>
-      <RejectListLocation>@CONF_DIR@/reject/cert/</RejectListLocation>
-      <PrivateKeyLocation>@CONF_DIR@/private/</PrivateKeyLocation>
+      <!-- certificate and key folder -->
+      <Folder>
+          <CertificateTrustListLocation>@CONF_DIR@/trusted/certs/</CertificateTrustListLocation>
+          <CertificateRevocationListLocation>@CONF_DIR@/trusted/crl/</CertificateRevocationListLocation>
+          <IssuersCertificatesLocation>@CONF_DIR@/issuers/certs/</IssuersCertificatesLocation>
+          <IssuersRevocationListLocation>@CONF_DIR@/issuers/crl/</IssuersRevocationListLocation>
+          <RejectListLocation>@CONF_DIR@/reject/cert/</RejectListLocation>
+          <PrivateKeyLocation>@CONF_DIR@/private/</PrivateKeyLocation>
+      </Folder>
+      
   </ServerCertificate>
   
   <Applications>
