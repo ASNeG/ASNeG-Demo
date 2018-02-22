@@ -94,7 +94,8 @@
   </Endpoints>
 
   <ServerCertificate>
-      <!-- certificate and key folder -->
+  
+      <!-- certificate folder -->
       <Folder>
           <CertificateTrustListLocation>@CONF_DIR@/pki/trusted/certs/</CertificateTrustListLocation>
           <CertificateRevocationListLocation>@CONF_DIR@/pki/trusted/crl/</CertificateRevocationListLocation>
@@ -102,12 +103,14 @@
           <IssuersRevocationListLocation>@CONF_DIR@/pki/issuers/crl/</IssuersRevocationListLocation>
           <RejectListLocation>@CONF_DIR@/pki/reject/cert/</RejectListLocation>
       </Folder>
-      
+  
+  	  <!-- own certificate and key file -->
       <Files>
           <ServerCertificateFile>@CONF_DIR@/pki/own/certs/ASNeG-Demo.der</ServerCertificateFile>
           <PrivateKeyFile>@CONF_DIR@/pki/own/private/ASNeG-Demo.pem</PrivateKeyFile>
       </Files>
       
+      <!-- certificate settings -->
       <CertificateSettings>
           <GenerateCertificate>true</GenerateCertificate>
           
