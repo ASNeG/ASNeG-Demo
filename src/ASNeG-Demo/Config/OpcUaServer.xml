@@ -108,6 +108,23 @@
           <PrivateKeyFile>@CONF_DIR@/own/private/ASNeG-Demo.pem</PrivateKeyFile>
       </Files>
       
+      <CertificateSettings>
+          <GenerateCertificate>true</GenerateCertificate>
+          
+          <CommonName>ASNeG-Demo</CommonName>		
+          <DomainComponent>127.0.0.1</DomainComponent>	
+          <Organization>ASNeG</Organization>
+          <OrganizationUnit>OPC UA Service Department</OrganizationUnit>
+          <Locality>Neukirchen</Locality>
+          <State>Hessen</State>
+          <Country>DE</Country>
+          <YearsValidFor>5</YearsValidFor>
+          <KeyLength>2048</KeyLength>
+          <CertificateType>RsaSha256</CertificateType>
+          <IPAddress>127.0.0.1</IPAddress>
+          <DNSName>ASNeG.de</DNSName>
+      </CertificateSettings>
+      
   </ServerCertificate>
   
   <Applications>
