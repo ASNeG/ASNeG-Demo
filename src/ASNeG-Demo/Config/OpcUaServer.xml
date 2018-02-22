@@ -101,7 +101,6 @@
           <IssuersCertificatesLocation>@CONF_DIR@/issuers/certs/</IssuersCertificatesLocation>
           <IssuersRevocationListLocation>@CONF_DIR@/issuers/crl/</IssuersRevocationListLocation>
           <RejectListLocation>@CONF_DIR@/reject/cert/</RejectListLocation>
-          <PrivateKeyLocation>@CONF_DIR@/private/</PrivateKeyLocation>
       </Folder>
       
   </ServerCertificate>
