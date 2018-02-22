@@ -59,43 +59,10 @@
 	  <TransportProfileUri>http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary</TransportProfileUri>
 	  <SecurityLevel>0</SecurityLevel>
 	</EndpointDescription>
-
-	<!--
-    <EndpointDescription>
-	  <EndpointUrl>opc.tcp://0.0.0.0:4888/0.0.0.0</EndpointUrl>
-	  <ApplicationUri>urn:localhost:OpcUaServer::TestAppl</ApplicationUri>
-	  <ProductUri>urn:company:OpcUaServer</ProductUri>
-	  <ApplicationName>OpcUaServer</ApplicationName>
-	  <DiscoveryUrl>opc.tcp://localhost:4841/0.0.0.0</DiscoveryUrl>	
-	  <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
-	  <UserTokenPolicy>
-	    <PolicyId>OpcUaStack</PolicyId>
-		<TokenType>Anonymous</TokenType>
-	  </UserTokenPolicy>
-	  <TransportProfileUri>http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary</TransportProfileUri>
-	  <SecurityLevel>1</SecurityLevel>
-	</EndpointDescription>
-	
-    <EndpointDescription>
-	  <EndpointUrl>opc.tcp://0.0.0.0:4888/0.0.0.0</EndpointUrl>
-	  <ApplicationUri>urn:localhost:OpcUaServer::TestAppl</ApplicationUri>
-	  <ProductUri>urn:company:OpcUaServer</ProductUri>
-	  <ApplicationName>OpcUaServer</ApplicationName>
-	  <DiscoveryUrl>opc.tcp://localhost:4841/0.0.0.0</DiscoveryUrl>	
-	  <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
-	  <UserTokenPolicy>
-	    <PolicyId>OpcUaStack</PolicyId>
-		<TokenType>Anonymous</TokenType>
-	  </UserTokenPolicy>
-	  <TransportProfileUri>http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary</TransportProfileUri>
-	  <SecurityLevel>2</SecurityLevel>
-	</EndpointDescription>
-	-->
   </Endpoints>
 
   <ServerCertificate>
   
-      <!-- certificate folder -->
       <Folder>
           <CertificateTrustListLocation>@CONF_DIR@/pki/trusted/certs/</CertificateTrustListLocation>
           <CertificateRevocationListLocation>@CONF_DIR@/pki/trusted/crl/</CertificateRevocationListLocation>
@@ -104,13 +71,11 @@
           <RejectListLocation>@CONF_DIR@/pki/reject/cert/</RejectListLocation>
       </Folder>
   
-  	  <!-- own certificate and key file -->
       <Files>
           <ServerCertificateFile>@CONF_DIR@/pki/own/certs/ASNeG-Demo.der</ServerCertificateFile>
           <PrivateKeyFile>@CONF_DIR@/pki/own/private/ASNeG-Demo.pem</PrivateKeyFile>
       </Files>
       
-      <!-- certificate settings -->
       <CertificateSettings>
           <GenerateCertificate>true</GenerateCertificate>
           
