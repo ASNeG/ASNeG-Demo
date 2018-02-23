@@ -61,7 +61,7 @@
 	</EndpointDescription>
   </Endpoints>
 
-  <ServerCertificate>
+  <ApplicationCertificate>
   
       <Folder>
           <CertificateTrustListLocation>@CONF_DIR@/pki/trusted/certs/</CertificateTrustListLocation>
@@ -72,7 +72,7 @@
       </Folder>
   
       <Files>
-          <ServerCertificateFile>@CONF_DIR@/pki/own/certs/ASNeG-Demo.der</ServerCertificateFile>
+          <ApplicationCertificateFile>@CONF_DIR@/pki/own/certs/ASNeG-Demo.der</ApplicationCertificateFile>
           <PrivateKeyFile>@CONF_DIR@/pki/own/private/ASNeG-Demo.pem</PrivateKeyFile>
       </Files>
       
@@ -93,7 +93,7 @@
           <DNSName>ASNeG.de</DNSName>
       </CertificateSettings>
       
-  </ServerCertificate>
+  </ApplicationCertificate>
   
   <Applications>
     <Application>
