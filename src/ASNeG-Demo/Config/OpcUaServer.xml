@@ -68,7 +68,7 @@
           <CertificateRevocationListLocation>@CONF_DIR@/pki/trusted/crl/</CertificateRevocationListLocation>
           <IssuersCertificatesLocation>@CONF_DIR@/pki/issuers/certs/</IssuersCertificatesLocation>
           <IssuersRevocationListLocation>@CONF_DIR@/pki/issuers/crl/</IssuersRevocationListLocation>
-          <RejectListLocation>@CONF_DIR@/pki/reject/cert/</RejectListLocation>
+          <CertificateRejectListLocation>@CONF_DIR@/pki/reject/certs/</CertificateRejectListLocation>
       </Folder>
   
       <Files>
