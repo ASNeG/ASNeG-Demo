@@ -38,7 +38,7 @@
   <Endpoints>
     <EndpointDescription>
 	  <EndpointUrl>opc.tcp://0.0.0.0:8889</EndpointUrl>
-	  <ApplicationUri>urn:ASNeG:ASNeG-Demo</ApplicationUri>
+	  <ApplicationUri>urn:127.0.0.1:ASNeG:ASNeG-Demo</ApplicationUri>
 	  <ProductUri>urn:ASNeG:ASNeG-Demo</ProductUri>
 	  <ApplicationName>ASNeG-Demo</ApplicationName>
 	  <DiscoveryUrl>opc.tcp://0.0.0.0:8889</DiscoveryUrl>	
@@ -91,6 +91,7 @@
           <CertificateType>RsaSha256</CertificateType>
           <IPAddress>127.0.0.1</IPAddress>
           <DNSName>ASNeG.de</DNSName>
+          <EMail>info@ASNeG.de</EMail>
       </CertificateSettings>
       
   </ApplicationCertificate>
