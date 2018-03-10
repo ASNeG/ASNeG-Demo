@@ -184,11 +184,15 @@ namespace OpcUaServerApplicationDemo
 	void
 	HistoricalAccess::readHValue(ApplicationHReadContext* applicationHReadContext)
 	{
+		Log(Debug, "readHValue");
+		applicationHReadContext->statusCode_ = Success;
 	}
 
 	void
 	HistoricalAccess::readHEvent(ApplicationHReadEventContext* applicationHReadEventContext)
 	{
+		Log(Debug, "readHEvent");
+		applicationHReadEventContext->statusCode_ = Success;
 	}
 
 }

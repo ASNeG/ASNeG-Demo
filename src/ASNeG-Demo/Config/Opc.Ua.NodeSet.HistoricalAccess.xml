@@ -4,14 +4,18 @@
         <Uri>http:/ASNeG-Demo.de/HistoricalAccess/</Uri>
     </NamespaceUris>
     <Aliases>
+        <Alias Alias="Boolean">i=1</Alias>
+        <Alias Alias="Byte">i=3</Alias>
         <Alias Alias="Double">i=11</Alias>
         <Alias Alias="Organizes">i=35</Alias>
         <Alias Alias="HasTypeDefinition">i=40</Alias>
+        <Alias Alias="HasProperty">i=46</Alias>
         <Alias Alias="HasComponent">i=47</Alias>
+        <Alias Alias="HasHistoricalConfiguration">i=56</Alias>
     </Aliases>
     <Extensions>
         <Extension>
-            <ua:ModelInfo Tool="UaModeler" Hash="WZVYCk/Nh1nOebhs42RnTQ==" Version="1.5.2"/>
+            <ua:ModelInfo Tool="UaModeler" Hash="/yPcsk4bZ/Og35VSFmPQBA==" Version="1.5.2"/>
         </Extension>
     </Extensions>
     <UAObject NodeId="ns=1;i=5002" BrowseName="1:HistoricalAccess">
@@ -23,17 +27,73 @@
             <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
         </References>
     </UAObject>
-    <UAVariable DataType="Double" Historizing="true" NodeId="ns=1;s=DoubleValue" BrowseName="1:DoubleValue" UserAccessLevel="3" AccessLevel="3">
+    <UAVariable DataType="Double" NodeId="ns=1;s=DoubleValue" BrowseName="1:DoubleValue" UserAccessLevel="7" AccessLevel="7">
         <DisplayName>DoubleValue</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
             <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5002</Reference>
+            <Reference ReferenceType="HasHistoricalConfiguration">ns=1;i=5003</Reference>
         </References>
         <Value>
             <uax:Double>0</uax:Double>
         </Value>
     </UAVariable>
-    <UAObject NodeId="ns=1;s=EventObject" BrowseName="1:EventObject">
+    <UAObject SymbolicName="HAConfiguration" ParentNodeId="ns=1;s=DoubleValue" NodeId="ns=1;i=5003" BrowseName="HA Configuration">
+        <DisplayName>HAConfiguration</DisplayName>
+        <References>
+            <Reference ReferenceType="HasComponent">ns=1;i=5001</Reference>
+            <Reference ReferenceType="HasHistoricalConfiguration" IsForward="false">ns=1;s=DoubleValue</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=2318</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6006</Reference>
+        </References>
+    </UAObject>
+    <UAObject ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=5001" BrowseName="AggregateConfiguration">
+        <DisplayName>AggregateConfiguration</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=11187</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5003</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6002</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6003</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6004</Reference>
+            <Reference ReferenceType="HasProperty">ns=1;i=6005</Reference>
+        </References>
+    </UAObject>
+    <UAVariable DataType="Byte" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6002" BrowseName="PercentDataBad">
+        <DisplayName>PercentDataBad</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Byte" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6003" BrowseName="PercentDataGood">
+        <DisplayName>PercentDataGood</DisplayName>
+        <References>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6004" BrowseName="TreatUncertainAsBad">
+        <DisplayName>TreatUncertainAsBad</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=5001" NodeId="ns=1;i=6005" BrowseName="UseSlopedExtrapolation">
+        <DisplayName>UseSlopedExtrapolation</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5001</Reference>
+        </References>
+    </UAVariable>
+    <UAVariable DataType="Boolean" ParentNodeId="ns=1;i=5003" NodeId="ns=1;i=6006" BrowseName="Stepped">
+        <DisplayName>Stepped</DisplayName>
+        <References>
+            <Reference ReferenceType="HasTypeDefinition">i=68</Reference>
+            <Reference ReferenceType="HasProperty" IsForward="false">ns=1;i=5003</Reference>
+        </References>
+    </UAVariable>
+    <UAObject EventNotifier="13" NodeId="ns=1;s=EventObject" BrowseName="1:EventObject">
         <DisplayName>EventObject</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=58</Reference>
