@@ -11,22 +11,25 @@
     </Aliases>
     <Extensions>
         <Extension>
-            <ua:ModelInfo Tool="UaModeler" Hash="rJOMqhUjjWliyc+BVI+4LA==" Version="1.5.2"/>
+            <ua:ModelInfo Tool="UaModeler" Hash="JAvR8y7+9xfQJP5Hf2j8zA==" Version="1.5.2"/>
         </Extension>
     </Extensions>
     <UAObject NodeId="ns=1;i=5002" BrowseName="1:HistoricalAccess">
         <DisplayName>HistoricalAccess</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent">ns=1;i=6001</Reference>
+            <Reference ReferenceType="HasComponent">ns=1;s=DoubleValue</Reference>
             <Reference ReferenceType="HasTypeDefinition">i=61</Reference>
             <Reference ReferenceType="Organizes" IsForward="false">i=85</Reference>
         </References>
     </UAObject>
-    <UAVariable DataType="Double" NodeId="ns=1;i=6001" BrowseName="1:DoubleValue" UserAccessLevel="3" AccessLevel="3">
+    <UAVariable DataType="Double" NodeId="ns=1;s=DoubleValue" BrowseName="1:DoubleValue" UserAccessLevel="3" AccessLevel="3">
         <DisplayName>DoubleValue</DisplayName>
         <References>
             <Reference ReferenceType="HasTypeDefinition">i=63</Reference>
             <Reference ReferenceType="HasComponent" IsForward="false">ns=1;i=5002</Reference>
         </References>
+        <Value>
+            <uax:Double>0</uax:Double>
+        </Value>
     </UAVariable>
 </UANodeSet>
