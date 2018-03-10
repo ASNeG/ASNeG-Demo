@@ -35,6 +35,7 @@ namespace OpcUaServerApplicationDemo
 	, event_()
 	, alarm_()
 	, authentication_()
+	, historicalAccess_()
 	{
 	}
 
@@ -56,6 +57,7 @@ namespace OpcUaServerApplicationDemo
 		event_.startup(ioThread_, service(), applicationInfo());
 		alarm_.startup(ioThread_, service(), applicationInfo());
 		authentication_.startup(ioThread_, service(), applicationInfo());
+		historicalAccess_.startup(ioThread_, service(), applicationInfo());
 		return true;
 	}
 
@@ -64,6 +66,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "DemoLibrary::shutdown");
 
+		historicalAccess_.shutdown();
 		authentication_.shutdown();
 		alarm_.shutdown();
 		event_.shutdown();

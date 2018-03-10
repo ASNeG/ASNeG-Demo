@@ -17,9 +17,6 @@
 
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
-#include "OpcUaStackCore/ServiceSet/UserNameIdentityToken.h"
-#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
-#include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/HistoricalAccess.h"
 
 namespace OpcUaServerApplicationDemo

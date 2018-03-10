@@ -32,6 +32,7 @@
 #include "ASNeG-Demo/Library/Event.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 #include "ASNeG-Demo/Library/Authentication.h"
+#include "ASNeG-Demo/Library/HistoricalAccess.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -61,6 +62,7 @@ namespace OpcUaServerApplicationDemo
 		Event event_;
 		Alarm alarm_;
 		Authentication authentication_;
+		HistoricalAccess historicalAccess_;
 
 		IOThread ioThread_;
 	};
