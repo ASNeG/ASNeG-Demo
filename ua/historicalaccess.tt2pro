@@ -15,8 +15,6 @@ VARIABLES+= historicalaccess.ua: CreateStringNodeIds=false; DllExportPrefix=DA; 
 COLORS = ($MODELS)/Opc.Ua.NodeSet2.ua: #0000ff\
     historicalaccess.ua: #008000
 
-OUTPUTPATH = ../../
-
 GENERATE += historicalaccess.ua
 
 NODEACCESSINFOROLES += Administrator \

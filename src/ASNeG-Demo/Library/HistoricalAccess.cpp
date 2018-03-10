@@ -185,6 +185,22 @@ namespace OpcUaServerApplicationDemo
 	HistoricalAccess::readHValue(ApplicationHReadContext* applicationHReadContext)
 	{
 		Log(Debug, "readHValue");
+
+		// set example data
+		applicationHReadContext->dataValueArray_ = constructSPtr<OpcUaDataValueArray>();
+		applicationHReadContext->dataValueArray_->resize(10);
+		boost::posix_time::ptime time = boost::posix_time::microsec_clock::local_time();
+		for (uint32_t idx=0; idx<10; idx++) {
+			OpcUaDateTime dateTime(time - boost::posix_time::seconds(10+idx));
+
+			OpcUaDataValue::SPtr dataValue = constructSPtr<OpcUaDataValue>();
+			dataValue->variant()->variant((double)idx);
+			dataValue->statusCode(Success);
+			dataValue->sourceTimestamp(dateTime);
+			dataValue->serverTimestamp(dateTime);
+			applicationHReadContext->dataValueArray_->push_back(dataValue);
+		}
+
 		applicationHReadContext->statusCode_ = Success;
 	}
 
