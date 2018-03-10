@@ -21,6 +21,7 @@
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -39,9 +40,13 @@ namespace OpcUaServerApplicationDemo
 		bool shutdown(void);
 
 	  private:
+		bool getNamespaceInfo(void);
+
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
+
+		uint32_t namespaceIndex_;
 	};
 
 }
