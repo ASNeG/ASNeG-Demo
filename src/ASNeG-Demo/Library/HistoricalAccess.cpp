@@ -54,6 +54,16 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+		// register historical data access
+		if (!registerHADataCallback()) {
+			return false;
+		}
+
+		// register historical event access
+		if (!registerHAEventCallback()) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -105,6 +115,80 @@ namespace OpcUaServerApplicationDemo
 	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/HistoricalAccess/");
 
 		return false;
+	}
+
+	bool
+	HistoricalAccess::registerHADataCallback(void)
+	{
+		Log(Debug, "registerHADataCallback");
+
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
+	  	RegisterForwardNodeRequest::SPtr req = trx->request();
+	  	RegisterForwardNodeResponse::SPtr res = trx->response();
+
+	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>("DoubleValue", namespaceIndex_);
+	  	req->forwardNodeSync()->readHService().setCallback(boost::bind(&HistoricalAccess::readHValue, this, _1));
+	  	req->nodesToRegister()->resize(1);
+	  	req->nodesToRegister()->set(nodeId);
+
+	  	applicationServiceIf_->sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		Log(Error, "registerHADataCallback - transaction error");
+	  		return false;
+	  	}
+
+	  	for (uint32_t pos = 0; pos < res->statusCodeArray()->size(); pos++) {
+	  		OpcUaStatusCode statusCode;
+	  		res->statusCodeArray()->get(pos, statusCode);
+	  		if (statusCode != Success) {
+	  			Log(Error, "registerHADataCallback - response error");
+	  			return false;
+	  		}
+	  	}
+
+	    return true;
+	}
+
+	bool
+	HistoricalAccess::registerHAEventCallback(void)
+	{
+		Log(Debug, "registerHAEventCallback");
+
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
+	  	RegisterForwardNodeRequest::SPtr req = trx->request();
+	  	RegisterForwardNodeResponse::SPtr res = trx->response();
+
+	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>("EventObject", namespaceIndex_);
+	  	req->forwardNodeSync()->readHEService().setCallback(boost::bind(&HistoricalAccess::readHEvent, this, _1));
+	  	req->nodesToRegister()->resize(1);
+	  	req->nodesToRegister()->set(nodeId);
+
+	  	applicationServiceIf_->sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		Log(Error, "registerHAEventCallback - transaction error");
+	  		return false;
+	  	}
+
+	  	for (uint32_t pos = 0; pos < res->statusCodeArray()->size(); pos++) {
+	  		OpcUaStatusCode statusCode;
+	  		res->statusCodeArray()->get(pos, statusCode);
+	  		if (statusCode != Success) {
+	  			Log(Error, "registerHAEventCallback - response error");
+	  			return false;
+	  		}
+	  	}
+
+	    return true;
+	}
+
+	void
+	HistoricalAccess::readHValue(ApplicationHReadContext* applicationHReadContext)
+	{
+	}
+
+	void
+	HistoricalAccess::readHEvent(ApplicationHReadEventContext* applicationHReadEventContext)
+	{
 	}
 
 }

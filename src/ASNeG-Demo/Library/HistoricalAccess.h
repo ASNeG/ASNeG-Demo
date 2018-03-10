@@ -19,6 +19,8 @@
 #define __OpcUaServerApplicationDemo_HistoricalAccess_h__
 
 #include "OpcUaStackCore/Utility/IOThread.h"
+#include "OpcUaStackCore/Application/ApplicationHReadContext.h"
+#include "OpcUaStackCore/Application/ApplicationHReadEventContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
@@ -41,6 +43,11 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		bool getNamespaceInfo(void);
+		bool registerHADataCallback(void);
+		bool registerHAEventCallback(void);
+
+		void readHValue(ApplicationHReadContext* applicationHReadContext);
+		void readHEvent(ApplicationHReadEventContext* applicationHReadEventContext);
 
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
