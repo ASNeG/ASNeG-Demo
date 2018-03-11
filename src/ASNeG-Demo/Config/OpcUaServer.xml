@@ -37,7 +37,7 @@
   
   <Endpoints>
     <EndpointDescription>
-	  <EndpointUrl>opc.tcp://0.0.0.0:8889</EndpointUrl>
+	  <EndpointUrl>opc.tcp://127.0.0.1:8889</EndpointUrl>
 	  <ApplicationUri>urn:127.0.0.1:ASNeG:ASNeG-Demo</ApplicationUri>
 	  <ProductUri>urn:ASNeG:ASNeG-Demo</ProductUri>
 	  <ApplicationName>ASNeG-Demo</ApplicationName>
