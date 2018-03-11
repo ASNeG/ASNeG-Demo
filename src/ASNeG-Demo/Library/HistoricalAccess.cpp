@@ -236,6 +236,48 @@ namespace OpcUaServerApplicationDemo
 			variant->setValue((OpcUaUInt16)100);
 			baseEventType->severity(variant);
 
+			// generate event id
+			boost::posix_time::ptime time = boost::posix_time::microsec_clock::local_time();
+
+			OpcUaByteString byteString;
+			byteString.value((char*)&time, sizeof(boost::posix_time::ptime));
+
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue(byteString);
+
+			baseEventType->eventId(variant);
+
+
+			// set source node id if necessary
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue(OpcUaNodeId("EventObject", namespaceIndex_));
+			baseEventType->sourceNode(variant);
+
+			// set source name if necessary
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue("EventObject");
+			baseEventType->sourceName(variant);
+
+			// set time if necessary
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue(OpcUaDateTime(boost::posix_time::microsec_clock::local_time()));
+			baseEventType->time(variant);
+
+			// set receive time if necessary
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue(OpcUaDateTime(boost::posix_time::microsec_clock::local_time()));
+			baseEventType->receiveTime(variant);
+
+			// set message if necessary
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue(OpcUaLocalizedText("", "EventObject"));
+			baseEventType->message(variant);
+
+			// set severity if necessary
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue((OpcUaUInt16)100);
+			baseEventType->severity(variant);
+
 			//
 			// filter event
 			//
