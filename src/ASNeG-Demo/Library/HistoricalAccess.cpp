@@ -17,6 +17,8 @@
 
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
+#include "OpcUaStackCore/ServiceSet/EventField.h"
+#include "OpcUaStackCore/StandardEventType/BaseEventType.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/HistoricalAccess.h"
 
@@ -208,6 +210,75 @@ namespace OpcUaServerApplicationDemo
 	HistoricalAccess::readHEvent(ApplicationHReadEventContext* applicationHReadEventContext)
 	{
 		Log(Debug, "readHEvent");
+
+		// set example data
+		applicationHReadEventContext->eventFieldArray_ = constructSPtr<HistoryEventFieldListArray>();
+		applicationHReadEventContext->eventFieldArray_->resize(5);
+		for (uint32_t idx=0; idx<5; idx++) {
+
+			//
+			// create event
+			//
+			OpcUaVariant::SPtr variant;
+			BaseEventType::SPtr baseEventType = constructSPtr<BaseEventType>();
+			EventBase::SPtr eventBase = baseEventType;
+
+			// set message value
+			std::stringstream ss;
+
+			ss << "BaseEventType: Event message " << idx;
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue(OpcUaLocalizedText("de", ss.str()));
+			baseEventType->message(variant);
+
+			// set severity message
+			variant = constructSPtr<OpcUaVariant>();
+			variant->setValue((OpcUaUInt16)100);
+			baseEventType->severity(variant);
+
+			//
+			// filter event
+			//
+			EventFilter::SPtr eventFilter = applicationHReadEventContext->filter_;
+			HistoryEventFieldList::SPtr eventFieldList = constructSPtr<HistoryEventFieldList>();
+			eventFieldList->eventFields()->resize(eventFilter->selectClauses()->size());
+			applicationHReadEventContext->eventFieldArray_->push_back(eventFieldList);
+
+			for (uint32_t j=0; j<eventFilter->selectClauses()->size(); j++) {
+
+				// get simple attribute operand
+				SimpleAttributeOperand::SPtr simpleAttributeOperand;
+				eventFilter->selectClauses()->get(j, simpleAttributeOperand);
+
+				std::list<OpcUaQualifiedName::SPtr> browseNameList;
+				for (uint32_t j=0; j<simpleAttributeOperand->browsePath()->size(); j++) {
+					OpcUaQualifiedName::SPtr browseName;
+					simpleAttributeOperand->browsePath()->get(j, browseName);
+					browseNameList.push_back(browseName);
+				}
+
+				// get variant value from event
+				OpcUaVariant::SPtr value;
+				EventResult::Code resultCode = eventBase->get(
+					simpleAttributeOperand->typeId(),
+					browseNameList,
+					value
+				);
+
+				// insert variant into event field list
+				EventField::SPtr eventField;
+				eventField = constructSPtr<EventField>();
+				if (resultCode != EventResult::Success) {
+					value = constructSPtr<OpcUaVariant>();
+
+				}
+				else {
+				}
+				eventField->variant(value);
+				eventFieldList->eventFields()->push_back(eventField);
+			}
+		}
+
 		applicationHReadEventContext->statusCode_ = Success;
 	}
 
