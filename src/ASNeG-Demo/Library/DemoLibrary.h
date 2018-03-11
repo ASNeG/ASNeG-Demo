@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -32,6 +32,8 @@
 #include "ASNeG-Demo/Library/Event.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 #include "ASNeG-Demo/Library/Generator.h"
+#include "ASNeG-Demo/Library/Authentication.h"
+#include "ASNeG-Demo/Library/HistoricalAccess.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -61,6 +63,8 @@ namespace OpcUaServerApplicationDemo
 		Event event_;
 		Alarm alarm_;
 		Generator generator_;
+		Authentication authentication_;
+		HistoricalAccess historicalAccess_;
 
 		IOThread ioThread_;
 	};

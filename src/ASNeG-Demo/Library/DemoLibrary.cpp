@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -35,6 +35,8 @@ namespace OpcUaServerApplicationDemo
 	, event_()
 	, alarm_()
 	, generator_()
+	, authentication_()
+	, historicalAccess_()
 	{
 	}
 
@@ -56,6 +58,8 @@ namespace OpcUaServerApplicationDemo
 		event_.startup(ioThread_, service(), applicationInfo());
 		alarm_.startup(ioThread_, service(), applicationInfo());
 		generator_.startup(ioThread_, service(), applicationInfo());
+		authentication_.startup(ioThread_, service(), applicationInfo());
+		historicalAccess_.startup(ioThread_, service(), applicationInfo());
 		return true;
 	}
 
@@ -65,6 +69,8 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "DemoLibrary::shutdown");
 
 		generator_.shutdown();
+		historicalAccess_.shutdown();
+		authentication_.shutdown();
 		alarm_.shutdown();
 		event_.shutdown();
 		serviceFunction_.shutdown();

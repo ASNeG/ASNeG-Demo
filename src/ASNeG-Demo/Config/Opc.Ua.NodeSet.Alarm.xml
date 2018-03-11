@@ -38,6 +38,7 @@
     <UAObject NodeId="ns=1;s=AlarmObject" BrowseName="1:OffNormalAlarm">
         <DisplayName>OffNormalAlarm</DisplayName>
         <References>
+            <Reference ReferenceType="i=48" IsForward="false">i=2253</Reference>
             <Reference ReferenceType="HasComponent">ns=1;i=6008</Reference>
             <Reference ReferenceType="HasComponent">ns=1;i=7001</Reference>
             <Reference ReferenceType="HasComponent">ns=1;i=6002</Reference>
