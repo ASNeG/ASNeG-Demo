@@ -211,10 +211,12 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "readHEvent");
 
+		uint32_t numberEvents = 5;
+
 		// set example data
 		applicationHReadEventContext->eventFieldArray_ = constructSPtr<HistoryEventFieldListArray>();
-		applicationHReadEventContext->eventFieldArray_->resize(5);
-		for (uint32_t idx=0; idx<5; idx++) {
+		applicationHReadEventContext->eventFieldArray_->resize(numberEvents);
+		for (uint32_t idx=0; idx<numberEvents; idx++) {
 
 			//
 			// create event
