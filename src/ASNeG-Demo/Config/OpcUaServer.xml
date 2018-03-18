@@ -37,11 +37,11 @@
   
   <Endpoints>
     <EndpointDescription>
-	  <EndpointUrl>opc.tcp://127.0.0.1:8889</EndpointUrl>
-	  <ApplicationUri>urn:127.0.0.1:ASNeG:ASNeG-Demo</ApplicationUri>
+	  <EndpointUrl>opc.tcp://@HOSTNAME@:8889</EndpointUrl>
+	  <ApplicationUri>urn:@HOSTNAME@:ASNeG:ASNeG-Demo</ApplicationUri>
 	  <ProductUri>urn:ASNeG:ASNeG-Demo</ProductUri>
 	  <ApplicationName>ASNeG-Demo</ApplicationName>
-	  <DiscoveryUrl>opc.tcp://0.0.0.0:8889</DiscoveryUrl>	
+	  <DiscoveryUrl>opc.tcp://@HOSTNAME@:8889</DiscoveryUrl>	
 	  <GatewayServerUri></GatewayServerUri>
 	  <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
 	  <UserTokenPolicy>
@@ -62,6 +62,11 @@
 	  <SecurityLevel>0</SecurityLevel>
 	</EndpointDescription>
   </Endpoints>
+  
+  <ServerInfo>
+      <ServerUri>urn:@HOSTNAME@:ASNeG:ASNeG-Demo</ServerUri>
+      <ServerName>ASNeG-Demo@@HOSTNAME@</ServerName>
+  </ServerInfo>
 
   <ApplicationCertificate>
   
