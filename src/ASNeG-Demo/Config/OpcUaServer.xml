@@ -1,5 +1,5 @@
 <!--
-   Copyright 2015-2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -37,13 +37,31 @@
   
   <Endpoints>
     <EndpointDescription>
-	  <EndpointUrl>opc.tcp://@HOSTNAME@:8889</EndpointUrl>
-	  <ApplicationUri>urn:@HOSTNAME@:ASNeG:ASNeG-Demo</ApplicationUri>
+	  <EndpointUrl>opc.tcp://127.0.0.1:8889</EndpointUrl>
+	  <ApplicationUri>urn:127.0.0.1:ASNeG:ASNeG-Demo</ApplicationUri>
 	  <ProductUri>urn:ASNeG:ASNeG-Demo</ProductUri>
 	  <ApplicationName>ASNeG-Demo</ApplicationName>
-	  <DiscoveryUrl>opc.tcp://@HOSTNAME@:8889</DiscoveryUrl>	
+	  <DiscoveryUrl>opc.tcp://127.0.0.1:8889</DiscoveryUrl>	
 	  <GatewayServerUri></GatewayServerUri>
-	  <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
+	  <!-- <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri> -->
+	  
+	  <SecuritySetting>
+	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
+	    <MessageSecurityMode>None</MessageSecurityMode>
+	  </SecuritySetting>
+	  <SecuritySetting>
+	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15</SecurityPolicyUri>
+	    <MessageSecurityMode>SignAndEncrypt</MessageSecurityMode>
+	  </SecuritySetting>
+	  <SecuritySetting>
+	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256</SecurityPolicyUri>
+	    <MessageSecurityMode>SignAndEncrypt</MessageSecurityMode>
+	  </SecuritySetting>
+	  <SecuritySetting>
+	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256Sha256</SecurityPolicyUri>
+	    <MessageSecurityMode>SignAndEncrypt</MessageSecurityMode>
+	  </SecuritySetting>
+	  
 	  <UserTokenPolicy>
 	    <PolicyId>OpcUaStack1</PolicyId>
 	    <TokenType>Anonymous</TokenType>
