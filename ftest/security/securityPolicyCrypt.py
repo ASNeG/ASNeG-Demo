@@ -4,8 +4,8 @@ import unittest
 
 from opcua import Client
 
-import logging
-logging.basicConfig(format="%(levelname)s: %(message)s", level="DEBUG")
+#import logging
+#logging.basicConfig(format="%(levelname)s: %(message)s", level="DEBUG")
 
 class TestStringMethods(unittest.TestCase):
 
