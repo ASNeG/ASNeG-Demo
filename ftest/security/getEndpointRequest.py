@@ -7,7 +7,7 @@ from opcua import Client
 class TestStringMethods(unittest.TestCase):
 
     def test_get_endpointr(self):
-        client = Client("opc.tcp://127.0.0.1:8889")
+        client = Client("opc.tcp://" + os.environ['TEST_IP'] + ":" + os.environ['TEST_PORT'])
         client.connect()
         endpoints = client.get_endpoints()
         self.assertEqual(len(endpoints), 4)
