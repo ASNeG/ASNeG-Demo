@@ -11,6 +11,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_basic256(self):
         client = Client("opc.tcp://" + os.environ['TEST_IP'] + ":" + os.environ['TEST_PORT'])
+        client.application_uri = "urn:127.0.0.1:ASNeG:FTestClient"
         client.set_security_string("Basic128Rsa15,SignAndEncrypt,FTestClient.der,FTestClient.pem")
         client.connect()
         client.disconnect()
