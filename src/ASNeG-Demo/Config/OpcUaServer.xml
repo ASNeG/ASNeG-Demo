@@ -28,7 +28,7 @@
     <Log4cxxLogger>
     </Log4cxxLogger>
     
-    <SecureChannelLog>On</SecureChannelLog>
+    <SecureChannelLog>1</SecureChannelLog>
     
   </Logging>
   
