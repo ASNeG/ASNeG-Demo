@@ -28,6 +28,8 @@
     <Log4cxxLogger>
     </Log4cxxLogger>
     
+    <SecureChannelLog>On</SecureChannelLog>
+    
   </Logging>
   
   <DiscoveryServer>
