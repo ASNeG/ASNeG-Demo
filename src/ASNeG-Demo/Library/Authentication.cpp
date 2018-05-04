@@ -123,6 +123,7 @@ namespace OpcUaServerApplicationDemo
 	, applicationInfo_(nullptr)
 	, authenticationCallback_(boost::bind(&Authentication::authenticationCallback, this, _1))
 	, autorizationCallback_(boost::bind(&Authentication::autorizationCallback, this, _1))
+	, closeSessionCallback_(boost::bind(&Authentication::closeSessionCallback, this, _1))
 	, namespaceIndex_(0)
 	{
 	}
@@ -220,6 +221,7 @@ namespace OpcUaServerApplicationDemo
 
 		req->forwardGlobalSync()->authenticationService().setCallback(authenticationCallback_);
 		req->forwardGlobalSync()->autorizationService().setCallback(autorizationCallback_);
+		req->forwardGlobalSync()->closeSessionService().setCallback(closeSessionCallback_);
 
 	  	applicationServiceIf_->sendSync(trx);
 	  	if (trx->statusCode() != Success) {
@@ -361,6 +363,13 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	void
+	Authentication::closeSessionCallback(ApplicationCloseSessionContext* applicationCloseSessionContext)
+	{
+		// FIXME: todo
+		std::cout << "close session..." << std::endl;
+	}
+
+	void
 	Authentication::autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext)
 	{
 		Log(Debug, "Event::autorizationCallback");
@@ -429,7 +438,7 @@ namespace OpcUaServerApplicationDemo
 			}
 			case Method:
 			{
-				// all mnethods allowed in this example
+				// all methods allowed in this example
 				break;
 			}
 			default:

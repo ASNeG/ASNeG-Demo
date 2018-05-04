@@ -21,6 +21,7 @@
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationAuthenticationContext.h"
 #include "OpcUaStackCore/Application/ApplicationAutorizationContext.h"
+#include "OpcUaStackCore/Application/ApplicationCloseSessionContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
@@ -81,6 +82,7 @@ namespace OpcUaServerApplicationDemo
 
 		Callback authenticationCallback_;
 		Callback autorizationCallback_;
+		Callback closeSessionCallback_;
 
 		uint32_t namespaceIndex_;
 
@@ -96,6 +98,7 @@ namespace OpcUaServerApplicationDemo
 		bool registerAuthenticationCallback(void);
 		bool createUserProfiles(void);
 		void authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext);
+		void closeSessionCallback(ApplicationCloseSessionContext* applicationCloseSessionContext);
 		void autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext);
 
 		bool setValuesToDefault(void);
