@@ -18,6 +18,7 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/ServiceSet/UserNameIdentityToken.h"
+#include "OpcUaStackCore/Certificate/Certificate.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Authentication.h"
@@ -122,6 +123,7 @@ namespace OpcUaServerApplicationDemo
 	, applicationInfo_(nullptr)
 	, authenticationCallback_(boost::bind(&Authentication::authenticationCallback, this, _1))
 	, autorizationCallback_(boost::bind(&Authentication::autorizationCallback, this, _1))
+	, closeSessionCallback_(boost::bind(&Authentication::closeSessionCallback, this, _1))
 	, namespaceIndex_(0)
 	{
 	}
@@ -219,6 +221,7 @@ namespace OpcUaServerApplicationDemo
 
 		req->forwardGlobalSync()->authenticationService().setCallback(authenticationCallback_);
 		req->forwardGlobalSync()->autorizationService().setCallback(autorizationCallback_);
+		req->forwardGlobalSync()->closeSessionService().setCallback(closeSessionCallback_);
 
 	  	applicationServiceIf_->sendSync(trx);
 	  	if (trx->statusCode() != Success) {
@@ -311,13 +314,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Authentication::authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext)
 	{
-		Log(Debug, "Event::authenticationCallback");
+		Log(Debug, "Event::authenticationCallback")
+			.parameter("SessionId", applicationAuthenitcationContext->sessionId_);
 
-#if 0 // test
-		applicationAuthenitcationContext->userContext_ = userProfileMap_.find("user3")->second;
-		applicationAuthenitcationContext->statusCode_ = Success;
-		return;
-#endif
 
 		if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_AnonymousIdentityToken_Encoding_DefaultBinary) {
 			applicationAuthenitcationContext->statusCode_ = Success;
@@ -355,9 +354,19 @@ namespace OpcUaServerApplicationDemo
 			applicationAuthenitcationContext->userContext_ = userProfile;
 			applicationAuthenitcationContext->statusCode_ = Success;
 		}
+		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_X509IdentityToken_Encoding_DefaultBinary) {
+			applicationAuthenitcationContext->statusCode_ = Success;
+		}
 		else {
 			applicationAuthenitcationContext->statusCode_ = BadIdentityTokenInvalid;
 		}
+	}
+
+	void
+	Authentication::closeSessionCallback(ApplicationCloseSessionContext* applicationCloseSessionContext)
+	{
+		// FIXME: todo
+		std::cout << "close session..." << std::endl;
 	}
 
 	void
@@ -425,6 +434,11 @@ namespace OpcUaServerApplicationDemo
 				if (it != userProfile->eventItemNotAllowed().end()) {
 					notAllowed = true;
 				}
+				break;
+			}
+			case Method:
+			{
+				// all methods allowed in this example
 				break;
 			}
 			default:
