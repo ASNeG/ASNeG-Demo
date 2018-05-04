@@ -312,13 +312,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Authentication::authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext)
 	{
-		Log(Debug, "Event::authenticationCallback");
+		Log(Debug, "Event::authenticationCallback")
+			.parameter("SessionId", applicationAuthenitcationContext->sessionId_);
 
-#if 0 // test
-		applicationAuthenitcationContext->userContext_ = userProfileMap_.find("user3")->second;
-		applicationAuthenitcationContext->statusCode_ = Success;
-		return;
-#endif
 
 		if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_AnonymousIdentityToken_Encoding_DefaultBinary) {
 			applicationAuthenitcationContext->statusCode_ = Success;
