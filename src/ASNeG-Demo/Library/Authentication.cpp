@@ -427,6 +427,11 @@ namespace OpcUaServerApplicationDemo
 				}
 				break;
 			}
+			case Method:
+			{
+				// all mnethods allowed in this example
+				break;
+			}
 			default:
 			{
 				break;

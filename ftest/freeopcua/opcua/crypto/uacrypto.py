@@ -52,6 +52,8 @@ def sign_sha1(private_key, data):
 
 
 def verify_sha1(certificate, data, signature):
+    print("**************", len(data))
+    print("**************", len(signature))
     verifier = certificate.public_key().verifier(
         signature,
         padding.PKCS1v15(),
