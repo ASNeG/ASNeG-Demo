@@ -18,6 +18,7 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/ServiceSet/UserNameIdentityToken.h"
+#include "OpcUaStackCore/Certificate/Certificate.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/Authentication.h"
@@ -353,6 +354,9 @@ namespace OpcUaServerApplicationDemo
 			}
 
 			applicationAuthenitcationContext->userContext_ = userProfile;
+			applicationAuthenitcationContext->statusCode_ = Success;
+		}
+		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_X509IdentityToken_Encoding_DefaultBinary) {
 			applicationAuthenitcationContext->statusCode_ = Success;
 		}
 		else {

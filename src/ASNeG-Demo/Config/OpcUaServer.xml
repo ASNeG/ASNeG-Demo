@@ -78,6 +78,11 @@
 	    <TokenType>IssuedToken</TokenType>
 	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256</SecurityPolicyUri>
 	  </UserTokenPolicy>
+	  <UserTokenPolicy>
+	    <PolicyId>OpcUaStack3</PolicyId>
+	    <TokenType>Certificate</TokenType>
+	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256</SecurityPolicyUri>
+	  </UserTokenPolicy>
 	  <TransportProfileUri>http://opcfoundation.org/UA-Profile/Transport/uatcp-uasc-uabinary</TransportProfileUri>
 	  <SecurityLevel>0</SecurityLevel>
 	</EndpointDescription>
