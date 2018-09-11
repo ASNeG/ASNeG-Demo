@@ -27,6 +27,7 @@ namespace OpcUaServerApplicationDemo
 {
 
 	Discovery::Discovery(void)
+	: findServerCallback_(boost::bind(&Discovery::findServer, this, _1))
 	{
 	}
 
@@ -43,6 +44,20 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "Discovery::startup");
 
+    	// register discovery callbacks
+	  	ServiceTransactionRegisterForwardGlobal::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardGlobal>();
+	  	RegisterForwardGlobalRequest::SPtr req = trx->request();
+	  	RegisterForwardGlobalResponse::SPtr res = trx->response();
+
+	  	req->forwardGlobalSync()->findServersService().setCallback(findServerCallback_);
+
+	  	applicationServiceIf.sendSync(trx);
+	  	if (trx->statusCode() != Success) {
+	  		Log(Error, "register forward response error")
+	  		    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+	  		return false;
+	  	}
+
 		return true;
 	}
 
@@ -53,5 +68,78 @@ namespace OpcUaServerApplicationDemo
 
 		return true;
 	}
+
+    void
+    Discovery::findServer(ApplicationFindServerContext* applicationFindServerContext)
+    {
+       	Log(Debug, "find server request")
+    			.parameter("EndpointUrl", applicationFindServerContext->endpointUrl_)
+    			.parameter("LocaleIds", *applicationFindServerContext->localeIdArraySPtr_)
+    			.parameter("ServerUris", *applicationFindServerContext->serverUriArraySPtr_);
+
+       	ApplicationDescription::SPtr ad = constructSPtr<ApplicationDescription>();
+       	ad->applicationUri("opc.tcp://127.0.0.1:8889");
+
+       	applicationFindServerContext->servers_ = constructSPtr<ApplicationDescriptionArray>();
+       	applicationFindServerContext->servers_->resize(1);
+       	applicationFindServerContext->servers_->push_back(ad);
+
+       	applicationFindServerContext->statusCode_ = Success;
+
+#if 0
+        	// select server entries
+        	ApplicationDescription::Vec adVec;
+        	ServerEntry::Map::iterator it;
+        	for (it = serverEntryMap_.begin(); it != serverEntryMap_.end(); it++) {
+        		ServerEntry::SPtr serverEntry = it->second;
+
+        		// process filter
+        		bool filterResult = processFilter(
+        			serverEntry,
+        			applicationFindServerContext->endpointUrl_,
+        			applicationFindServerContext->localeIdArraySPtr_,
+        			applicationFindServerContext->serverUriArraySPtr_
+        		);
+        		if (!filterResult) {
+        			continue;
+        		}
+
+        		// create application description
+        		ApplicationDescription::SPtr ad = constructSPtr<ApplicationDescription>();
+        		ad->applicationUri(serverEntry->registeredServer().serverUri().value());
+        		ad->productUri(serverEntry->registeredServer().productUri().value());
+
+        		if (serverEntry->registeredServer().serverNames()->size() > 0) {
+        			OpcUaLocalizedText::SPtr serverName;
+        			serverEntry->registeredServer().serverNames()->get(0, serverName);
+        			ad->applicationName(*serverName);
+        		}
+
+        		ad->applicationType(serverEntry->registeredServer().serverType());
+        		ad->gatewayServerUri(serverEntry->registeredServer().gatewayServerUri().value());
+
+        		// discoveryProfileUri - todo
+
+        		if (serverEntry->registeredServer().discoveryUrls()->size() > 0) {
+        			serverEntry->registeredServer().discoveryUrls()->copyTo(*ad->discoveryUrls());
+        		}
+
+        		adVec.push_back(ad);
+        	}
+
+        	applicationFindServerContext->servers_ = constructSPtr<ApplicationDescriptionArray>();
+        	if (adVec.size() > 0) {
+        	    applicationFindServerContext->servers_->resize(adVec.size());
+
+        	    ApplicationDescription::Vec::iterator it;
+        	    for (it = adVec.begin(); it != adVec.end(); it++) {
+        	    	ApplicationDescription::SPtr ad = *it;
+        	    	applicationFindServerContext->servers_->push_back(ad);
+        	    }
+        	}
+
+        	applicationFindServerContext->statusCode_ = Success;
+#endif
+    }
 
 }

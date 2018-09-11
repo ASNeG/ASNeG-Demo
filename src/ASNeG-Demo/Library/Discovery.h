@@ -20,6 +20,8 @@
 
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
+#include "OpcUaStackCore/Application/ApplicationRegisterServerContext.h"
+#include "OpcUaStackCore/Application/ApplicationFindServerContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
@@ -39,7 +41,10 @@ namespace OpcUaServerApplicationDemo
 		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
 		bool shutdown(void);
 
+		void findServer(ApplicationFindServerContext* applicationFindServerContext);
+
 	  private:
+		Callback findServerCallback_;
 	};
 
 }
