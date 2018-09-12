@@ -65,8 +65,9 @@
 	  </SecuritySetting>
 	  
 	  <UserTokenPolicy>
-	    <PolicyId>OpcUaStack1</PolicyId>
+	    <PolicyId>anonymous</PolicyId>
 	    <TokenType>Anonymous</TokenType>
+	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
 	  </UserTokenPolicy>
 	  <UserTokenPolicy>
 	    <PolicyId>OpcUaStack2</PolicyId>
