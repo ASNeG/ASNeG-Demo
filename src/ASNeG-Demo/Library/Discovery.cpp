@@ -79,6 +79,7 @@ namespace OpcUaServerApplicationDemo
 
        	ApplicationDescription::SPtr ad = constructSPtr<ApplicationDescription>();
        	ad->applicationUri("opc.tcp://127.0.0.1:8889");
+       	ad->productUri("urn:ASNeG:ASNeG-Demo");
 
        	applicationFindServerContext->servers_ = constructSPtr<ApplicationDescriptionArray>();
        	applicationFindServerContext->servers_->resize(1);
