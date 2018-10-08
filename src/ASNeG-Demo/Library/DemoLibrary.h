@@ -34,6 +34,7 @@
 #include "ASNeG-Demo/Library/Generator.h"
 #include "ASNeG-Demo/Library/Authentication.h"
 #include "ASNeG-Demo/Library/HistoricalAccess.h"
+#include "ASNeG-Demo/Library/Discovery.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -65,6 +66,7 @@ namespace OpcUaServerApplicationDemo
 		Generator generator_;
 		Authentication authentication_;
 		HistoricalAccess historicalAccess_;
+		Discovery discovery_;
 
 		IOThread ioThread_;
 	};
