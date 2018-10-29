@@ -76,7 +76,7 @@ build_local()
     # build local
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	: ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/install}
+	: ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/.ASNeG}
 	set -x
 	cmake ../src \
             "${CMAKE_GENERATOR_LOCAL}" \
