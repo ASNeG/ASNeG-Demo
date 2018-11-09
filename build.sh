@@ -8,21 +8,26 @@
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 CMAKE_GENERATOR_LOCAL=-G"Eclipse CDT4 - Unix Makefiles"
-#OPCUASTACK_INSTALL_PREFIX=${HOME}/install
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 
 usage()
 {
-   echo "build.sh (info | local | deb | rpm | tst | clean)"
+  echo "build.sh --target(-t) TARGET [OPTIONS] ..."
+   echo "--target, -t: sets one of the folowing target:"
+   echo " info  - create version and dependency files"
+   echo " local - create local build and install in local directory defined in --install-prefix" 
+   echo " deb   - create deb package"
+   echo " rpm   - create rpm package"
+   echo " tst   - build unit application"
+   echo " clean - delete all build directories"
    echo ""
-   echo "  info  - create version and dependency files"
-   echo "  local - create local build and install in folder ${HOME}/install"
-   echo "  deb   - create deb package"
-   echo "  rpm   - create rpm package"
-   echo "  tst   - build unit application"
-   echo "  clean - delete all build directories"
+   echo "--stack-prefix, -s STACK_PREFIX:  set the path to directory"
+   echo "\twhere the OpcUaStack is installed (default: /)"
+   echo ""
+   echo "--install-prefix, -i INSTALL_PREFIX:  is the path to directory"
+   echo "\twhere the application should be installed (default: ${HOME}/.ASNeG)"
 
 }
 
@@ -76,11 +81,10 @@ build_local()
     # build local
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	: ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/.ASNeG}
 	set -x
 	cmake ../src \
-            "${CMAKE_GENERATOR_LOCAL}" \
-	    -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} 
+	    -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
+	    "${CMAKE_GENERATOR_LOCAL}" 
         RESULT=$?
 	set +x
 	if [ ${RESULT} -ne 0 ] ;
@@ -90,7 +94,8 @@ build_local()
 	fi
     else
         cmake .
-	RESULT=$?
+        RESULT=$?
+	set +x
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -99,8 +104,8 @@ build_local()
     fi
 
     # install local
-    make DESTDIR="${HOME}/install" install
-    RESULT=$? 
+    make DESTDIR="${INSTALL_PREFIX}" install
+    RESULT=$?
     if [ ${RESULT} -ne 0 ] ;
     then
         echo "make install error"
@@ -151,16 +156,15 @@ build_deb()
     # build package
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	: ${OPCUASTACK_INSTALL_PREFIX:=/}
 	cmake ../src \
-	    -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} \
+	    -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
 	    "${CMAKE_GENERATOR_LOCAL}" \
 	    "-DCPACK_BINARY_DEB=1" \
 	    "-DCPACK_BINARY_RPM=0" \
-	    "-DCPACK_BINARY_STGZ=0" \
-	    "-DCPACK_BINARY_TGZ=0" \
-	    "-DCPACK_BINARY_TZ=0" 
-        RESULT=$?
+            "-DCPACK_BINARY_STGZ=0" \
+            "-DCPACK_BINARY_TGZ=0" \
+            "-DCPACK_BINARY_TZ=0"
+	RESULT=$?
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -229,16 +233,15 @@ build_rpm()
     # build package
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	: ${OPCUASTACK_INSTALL_PREFIX:=/}
 	cmake ../src \
-	    -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} \
+	    -DOPCUASTACK_INSTALL_PREFIX=${STACK_PREFIX} \
 	    "${CMAKE_GENERATOR_LOCAL}" \
 	    "-DCPACK_BINARY_DEB=0" \
 	    "-DCPACK_BINARY_RPM=1" \
-  	    "-DCPACK_BINARY_STGZ=0" \
-	    "-DCPACK_BINARY_TGZ=0" \
-	    "-DCPACK_BINARY_TZ=0"
-        RESULT=$?
+            "-DCPACK_BINARY_STGZ=0" \
+            "-DCPACK_BINARY_TGZ=0" \
+            "-DCPACK_BINARY_TZ=0"
+        RESULT=$? 
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -246,7 +249,7 @@ build_rpm()
 	fi
     else
         cmake .
-        RESULT=$?
+        RESULT=$? 
 	if [ ${RESULT} -ne 0 ] ;
 	then
 	    echo "cmake error"
@@ -299,11 +302,9 @@ build_tst()
     # build tst
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-        : ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/install}
         cmake ../tst \
-            -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} \
-  	    "${CMAKE_GENERATOR_LOCAL}" \
-	    -DOPCUASTACK_INSTALL_PREFIX="${HOME}/install"
+            -DOPCUASTACK_INSTALL_PREFIX=${STACK_PREFIX} \
+  	    "${CMAKE_GENERATOR_LOCAL}"
         RESULT=$?
         if [ ${RESULT} -ne 0 ] ;
         then
@@ -318,6 +319,7 @@ build_tst()
             echo "cmake error"
             return ${RESULT}
         fi
+
     fi
 
     make 
@@ -327,7 +329,8 @@ build_tst()
         echo "make error"
         return ${RESULT}
     fi
-     return 0
+
+    return 0
 }
 
 
@@ -352,32 +355,61 @@ clean()
 #
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
-if [ $# -ne 1 ] ; 
+if [ $# -le 1 ] ; 
 then
     usage
     exit 1
 fi 
 
-if [ "$1" = "info" ] ;
+while [ $# -gt 0 ];
+do
+key="$1"
+
+INSTALL_PREFIX="${HOME}/.ASNeG"
+STACK_PREFIX="/"
+
+case $key in
+    -t|--target)
+    TARGET="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -i|--install-prefix)
+    INSTALL_PREFIX="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -s|--stack-prefix)
+    STACK_PREFIX="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    *)    # unknown option
+    shift # past argument
+    ;;
+esac
+done
+
+if [ "${TARGET}" = "info" ] ;
 then
     build_info
     exit $?
-elif [ "$1" = "clean" ] ;
+elif [ "${TARGET}" = "clean" ] ;
 then 
     clean 
-elif [ "$1" = "local" ] ;
+elif [ "${TARGET}" = "local" ] ;
 then 
     build_local
     exit $?
-elif [ "$1" = "deb" ] ;
+elif [ "${TARGET}" = "deb" ] ;
 then 
     build_deb 
     exit $?
-elif [ "$1" = "rpm" ] ;
+elif [ "${TARGET}" = "rpm" ] ;
 then 
     build_rpm
     exit $?
-elif [ "$1" = "tst" ] ;
+elif [ "${TARGET}" = "tst" ] ;
 then 
     build_tst
     exit $?
