@@ -8,7 +8,7 @@
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 CMAKE_GENERATOR_LOCAL=-G"Eclipse CDT4 - Unix Makefiles"
-#OPCUASTACK_INSTALL_PREFIX=${HOME}/install
+#OPCUASTACK_INSTALL_PREFIX=${HOME}/.ASNeG
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -18,7 +18,7 @@ usage()
    echo "build.sh (info | local | deb | rpm | tst | clean)"
    echo ""
    echo "  info  - create version and dependency files"
-   echo "  local - create local build and install in folder ${HOME}/install"
+   echo "  local - create local build and .ASNeG in folder ${HOME}/.ASNeG"
    echo "  deb   - create deb package"
    echo "  rpm   - create rpm package"
    echo "  tst   - build unit application"
@@ -53,7 +53,7 @@ build_info_clean()
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # 
-# build and install local
+# build and .ASNeG local
 #
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ build_local()
     # build local
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	: ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/install}
+	: ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/.ASNeG}
 	set -x
 	cmake ../src \
             "${CMAKE_GENERATOR_LOCAL}" \
@@ -98,12 +98,12 @@ build_local()
 	fi
     fi
 
-    # install local
-    make DESTDIR="${HOME}/install" install
+    # .ASNeG local
+    make DESTDIR="${HOME}/.ASNeG" install
     RESULT=$? 
     if [ ${RESULT} -ne 0 ] ;
     then
-        echo "make install error"
+        echo "make .ASNeG error"
         return ${RESULT}
     fi
 
@@ -299,11 +299,11 @@ build_tst()
     # build tst
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-        : ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/install}
+        : ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/.ASNeG}
         cmake ../tst \
             -DOPCUASTACK_INSTALL_PREFIX=${OPCUASTACK_INSTALL_PREFIX} \
   	    "${CMAKE_GENERATOR_LOCAL}" \
-	    -DOPCUASTACK_INSTALL_PREFIX="${HOME}/install"
+	    -DOPCUASTACK_INSTALL_PREFIX="${HOME}/.ASNeG"
         RESULT=$?
         if [ ${RESULT} -ne 0 ] ;
         then
