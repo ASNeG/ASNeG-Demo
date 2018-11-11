@@ -1,0 +1,17 @@
+FROM asneg/opcuastack:latest
+
+MAINTAINER Aleksey Timin <atimin@gmail.com>
+
+# Prepare workdir
+ADD / /tmp
+RUN mkdir /build
+WORKDIR /build
+
+# Build
+RUN cmake /tmp/src
+RUN make
+RUN make install
+
+# Start DEMO
+EXPOSE 8889 4840
+CMD ["OpcUaServer3", "/etc/OpcUaStack/ASNeG-Demo/OpcUaServer.xml"]
