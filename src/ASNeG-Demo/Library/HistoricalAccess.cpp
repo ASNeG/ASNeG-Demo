@@ -304,7 +304,7 @@ namespace OpcUaServerApplicationDemo
 				// get variant value from event
 				OpcUaVariant::SPtr value;
 				EventResult::Code resultCode = eventBase->get(
-					simpleAttributeOperand->typeId(),
+					simpleAttributeOperand->typeIdx(),
 					browseNameList,
 					value
 				);
