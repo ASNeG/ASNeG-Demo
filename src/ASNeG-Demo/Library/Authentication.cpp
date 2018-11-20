@@ -17,7 +17,7 @@
 
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
-#include "OpcUaStackCore/ServiceSet/UserNameIdentityToken.h"
+#include "OpcUaStackCore/StandardDataTypes/UserNameIdentityToken.h"
 #include "OpcUaStackCore/Certificate/Certificate.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
@@ -323,7 +323,7 @@ namespace OpcUaServerApplicationDemo
 		}
 		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_UserNameIdentityToken_Encoding_DefaultBinary) {
 
-			ExtensibleParameter::SPtr parameter = applicationAuthenitcationContext->parameter_;
+			OpcUaExtensibleParameter::SPtr parameter = applicationAuthenitcationContext->parameter_;
 			UserNameIdentityToken::SPtr token = parameter->parameter<UserNameIdentityToken>();
 
 			// find user profile
@@ -338,7 +338,7 @@ namespace OpcUaServerApplicationDemo
 			// get password
 			char* buf;
 		    int32_t bufLen;
-			token->password((OpcUaByte**)&buf, (OpcUaInt32*)&bufLen);
+			token->password().value((OpcUaByte**)&buf, (OpcUaInt32*)&bufLen);
 			if (bufLen <= 0) {
 				applicationAuthenitcationContext->statusCode_ = BadUserAccessDenied;
 				return;
