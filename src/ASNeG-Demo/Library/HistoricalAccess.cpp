@@ -283,16 +283,16 @@ namespace OpcUaServerApplicationDemo
 			//
 			// filter event
 			//
-			EventFilter::SPtr eventFilter = applicationHReadEventContext->filter_;
+			EventFilter& eventFilter = applicationHReadEventContext->filter_;
 			HistoryEventFieldList::SPtr eventFieldList = constructSPtr<HistoryEventFieldList>();
-			eventFieldList->eventFields().resize(eventFilter->selectClauses().size());
+			eventFieldList->eventFields().resize(eventFilter.selectClauses().size());
 			applicationHReadEventContext->eventFieldArray_->push_back(eventFieldList);
 
-			for (uint32_t j=0; j<eventFilter->selectClauses().size(); j++) {
+			for (uint32_t j=0; j<eventFilter.selectClauses().size(); j++) {
 
 				// get simple attribute operand
 				SimpleAttributeOperand::SPtr simpleAttributeOperand;
-				eventFilter->selectClauses().get(j, simpleAttributeOperand);
+				eventFilter.selectClauses().get(j, simpleAttributeOperand);
 
 				std::list<OpcUaQualifiedName::SPtr> browseNameList;
 				for (uint32_t j=0; j<simpleAttributeOperand->browsePath().size(); j++) {
