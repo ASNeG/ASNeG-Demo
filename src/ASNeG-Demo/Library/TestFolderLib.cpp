@@ -33,6 +33,7 @@ namespace OpcUaServerApplicationDemo
 	, writeCallback_(boost::bind(&TestFolderLib::writeValue, this, _1))
 	, writeLoopTimeCallback_(boost::bind(&TestFolderLib::writeLoopTimeValue, this, _1))
 	, valueMap_()
+	, valueVec_()
 	, ioThread_()
 	, slotTimerElement_()
 	{
@@ -135,15 +136,15 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::createValueMap(void)
 	{
+		OpcUaDateTime now(boost::posix_time::microsec_clock::universal_time());
 		OpcUaNodeId nodeId;
 		OpcUaDataValue::SPtr dataValue;
 
 		// SByte
-		nodeId.set(200, namespaceIndex_);
-		OpcUaSByte sByte(11);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(sByte);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(200, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaSByte)11, Success, now)
+		));
 
 		// SByteByteArray
 		nodeId.set(201, namespaceIndex_);
@@ -402,6 +403,11 @@ namespace OpcUaServerApplicationDemo
 			dataValue->variant()->pushBack(qualifiedName);
 		}
 		valueMap_.insert(std::make_pair(nodeId, dataValue));
+
+		// create vector of node identifier
+		for (auto it = valueMap_.begin(); it != valueMap_.end(); it++) {
+			valueVec_.push_back(it->first);
+		}
 
 		return true;
 	}
