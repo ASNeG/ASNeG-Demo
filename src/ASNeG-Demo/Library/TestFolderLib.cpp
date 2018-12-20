@@ -20,6 +20,7 @@
 #include "ASNeG-Demo/Library/TestFolderLib.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
 #include <iostream>
 
 namespace OpcUaServerApplicationDemo
@@ -479,42 +480,47 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::createNodeReferences(void)
 	{
-		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
-		GetNodeReferenceRequest::SPtr req = trx->request();
-		GetNodeReferenceResponse::SPtr res = trx->response();
-
-	  	uint32_t pos = 0;
-	  	ValueMap::iterator it;
-	  	req->nodes()->resize(valueMap_.size());
-	  	for (it = valueMap_.begin(); it != valueMap_.end(); it++) {
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
-	  		*nodeId = it->first;
-
-	  		req->nodes()->set(pos, nodeId);
-	  		pos++;
-	  	}
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
+		// read node references
+		GetNodeReference getNodeReference(valueVec_);
+		if (!getNodeReference.query(applicationServiceIf_)) {
 	  		std::cout << "response error" << std::endl;
 	  		return false;
-	  	}
+		}
 
-	  	for (pos = 0; pos < res->nodeReferenceArray()->size(); pos++) {
-	  		NodeReference::SPtr nodeReference;
-	  		res->nodeReferenceArray()->get(pos, nodeReference);
-	  		if (nodeReference->statusCode() != Success) {
+		// check and save node references
+		for (uint32_t idx = 0; idx < getNodeReference.nodeReferences().size(); idx++) {
+			if (getNodeReference.statuses()[idx] != Success) {
 	  			std::cout << "node reference error" << std::endl;
 	  			return false;
-	  		}
+			}
 
-	  		OpcUaNodeId::SPtr nodeId;
-	  		req->nodes()->get(pos, nodeId);
+			baseNodeClassWMap_.insert(std::make_pair(valueVec_[idx], getNodeReference.nodeReferences()[idx]));
+		}
 
-	  		NodeReferenceApplication::SPtr nodeReferenceApplication;
-	  		nodeReferenceApplication = boost::static_pointer_cast<NodeReferenceApplication>(nodeReference);
-	  		baseNodeClassWMap_.insert(std::make_pair(*nodeId, nodeReferenceApplication->baseNodeClass()));
-	  	}
+#if 0
+		// FIXME: todo
+		{
+			GetNodeReference getNodeReference(OpcUaNodeId(222,1));
+			if (!getNodeReference.query(applicationServiceIf_)) {
+		  		Log(Error, "response error");
+		  		return false;
+			}
+
+			if (getNodeReference.statuses()[0] != Success) {
+		  		Log(Error, "node reference error");
+		  		return false;
+			}
+
+			auto ptr = getNodeReference.nodeReferences()[0].lock();
+			if (!ptr) {
+		  		Log(Error, "node no longer exist");
+		  		return false;
+			}
+
+			OpcUaDataValue dataValue(OpcUaString("Hello, world!"));
+			ptr->setValueSync(dataValue);
+		}
+#endif
 
 		return true;
 	}
