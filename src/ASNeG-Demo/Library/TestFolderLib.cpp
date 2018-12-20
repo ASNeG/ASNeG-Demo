@@ -629,152 +629,159 @@ namespace OpcUaServerApplicationDemo
 		{
 			case OpcUaBuildInType_OpcUaSByte:
 			{
-				OpcUaSByte sByte = dataValue->variant()->get<OpcUaSByte>();
-				sByte++;
-				dataValue->variant()->set(sByte);
+				OpcUaSByte value;
+				dataValue->getValue(value);
+				value++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaByte: // 0 - 64
 			{
-				OpcUaByte byte = dataValue->variant()->get<OpcUaByte>();
-				byte += (64 * myPercent() * mySign());
-			    if (byte < 0) byte = 0;
-			    if (byte > 64) byte = 64;
-				dataValue->variant()->set(byte);
+				OpcUaByte value;
+				dataValue->getValue(value);
+				value += (64 * myPercent() * mySign());
+			    if (value < 0) value = 0;
+			    if (value > 64) value = 64;
+			    dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaInt16: // -50 - 100
 			{
-				OpcUaInt16 int16 = dataValue->variant()->get<OpcUaInt16>();
-				int16 += (150 * myPercent() * mySign());
-				if (int16 < -50) int16 = -50;
-				if (int16 > 100) int16 = 100;
-				dataValue->variant()->set(int16);
+				OpcUaInt16 value;
+				dataValue->getValue(value);
+				value += (150 * myPercent() * mySign());
+				if (value < -50) value = -50;
+				if (value > 100) value = 100;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaUInt16: // 0 - 100
 			{
-				OpcUaUInt16 uint16 = dataValue->variant()->get<OpcUaUInt16>();
-				uint16 += (100 * myPercent() * mySign());
-				if (uint16 < 0) uint16 = 0;
-				if (uint16 > 100) uint16 = 100;
-				dataValue->variant()->set(uint16);
+				OpcUaUInt16 value;
+				dataValue->getValue(value);
+				value += (100 * myPercent() * mySign());
+				if (value < 0) value = 0;
+				if (value > 100) value = 100;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaInt32: // 0 - 360
 			{
-				OpcUaInt32 int32 = dataValue->variant()->get<OpcUaInt32>();
-				int32 += (360 * myPercent() * mySign());
-				if (int32 < 0) int32 = 0;
-				if (int32 > 360) int32 = 360;
-				dataValue->variant()->set(int32);
+				OpcUaInt32 value;
+				dataValue->getValue(value);
+				value += (360 * myPercent() * mySign());
+				if (value < 0) value = 0;
+				if (value > 360) value = 360;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaUInt32: // 0 - 360
 			{
-				OpcUaUInt32 uint32 = dataValue->variant()->get<OpcUaUInt32>();
-				uint32 += (360 * myPercent() * mySign());
-				if (uint32 < 0) uint32 = 0;
-				if (uint32 > 360) uint32 = 360;
-				dataValue->variant()->set(uint32);
+				OpcUaUInt32 value;
+				dataValue->getValue(value);
+				value += (360 * myPercent() * mySign());
+				if (value < 0) value = 0;
+				if (value > 360) value = 360;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaInt64: // -1000 - 1000
 			{
-				OpcUaInt64 int64 = dataValue->variant()->get<OpcUaInt64>();
-				int64 += (2000 * myPercent() * mySign());
-				if (int64 < -1000) int64 = 1000;
-				if (int64 > 1000) int64 = 1000;
-				dataValue->variant()->set(int64);
+				OpcUaInt64 value;
+				dataValue->getValue(value);
+				value += (2000 * myPercent() * mySign());
+				if (value < -1000) value = 1000;
+				if (value > 1000) value = 1000;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaUInt64: // 0 -3000
 			{
-				OpcUaUInt64 uint64 = dataValue->variant()->get<OpcUaUInt64>();
-				uint64 += (3000 * myPercent() * mySign());
-				if (uint64 < 0) uint64 = 0;
-				if (uint64 > 3000) uint64 = 3000;
-				dataValue->variant()->set(uint64);
+				OpcUaUInt64 value;
+				dataValue->getValue(value);
+				value += (3000 * myPercent() * mySign());
+				if (value < 0) value = 0;
+				if (value > 3000) value = 3000;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaFloat: // 0 - 1000
 			{
-				OpcUaFloat floats = dataValue->variant()->get<OpcUaFloat>();
-				floats += (1000 * myPercent() * mySign());
-				if (floats < 0) floats = 0;
-				if (floats > 1000) floats = 1000;
-				dataValue->variant()->set(floats);
+				OpcUaFloat value;
+				dataValue->getValue(value);
+				value += (1000 * myPercent() * mySign());
+				if (value < 0) value = 0;
+				if (value > 1000) value = 1000;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaDouble: // 0 - 1000
 			{
-				OpcUaDouble doubles = dataValue->variant()->get<OpcUaDouble>();
-				doubles += (1000 * myPercent() * mySign());
-				if (doubles < 0) doubles = 0;
-				if (doubles > 1000) doubles = 1000;
-				dataValue->variant()->set(doubles);
+				OpcUaDouble value;
+				dataValue->getValue(value);
+				value += (1000 * myPercent() * mySign());
+				if (value < 0) value = 0;
+				if (value > 1000) value = 1000;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaBoolean:
 			{
-				OpcUaBoolean boolean = dataValue->variant()->get<OpcUaBoolean>();
-				if (boolean) boolean = false;
-				else boolean = true;
-				dataValue->variant()->set(boolean);
+				OpcUaBoolean value;
+				dataValue->getValue(value);
+				if (value) value = false;
+				else value = true;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaString:
 			{
-				OpcUaString::SPtr str = dataValue->variant()->getSPtr<OpcUaString>();
 				std::stringstream ss;
 				ss << "String" << rand();
-				str->value(ss.str());
-				dataValue->variant()->set(str);
+				OpcUaString value(ss.str());
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaByteString:
 			{
-				OpcUaByteString::SPtr bstr = dataValue->variant()->getSPtr<OpcUaByteString>();
 				std::stringstream ss;
 				ss << "String" << rand();
-				bstr->value(ss.str());
-				dataValue->variant()->set(bstr);
+				OpcUaByteString value(ss.str());
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaLocalizedText:
 			{
-				OpcUaLocalizedText::SPtr ltext = dataValue->variant()->getSPtr<OpcUaLocalizedText>();
 				std::stringstream ss;
 				ss << "String" << rand();
-				ltext->set("de", ss.str());
-				dataValue->variant()->set(ltext);
+				OpcUaLocalizedText value("de", ss.str());
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaDateTime:
 			{
 				OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-				dataValue->variant()->set(dateTime);
+				dataValue->setValue(dateTime);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaGuid:
 			{
-				OpcUaGuid::SPtr guid = dataValue->variant()->getSPtr<OpcUaGuid>();
-				guid->data1(guid->data1()+1);
-				dataValue->variant()->set(guid);
+				OpcUaGuid value;
+				dataValue->getValue(value);
+				value.data1(value.data1()+1);
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaNodeId:
 			{
-				OpcUaNodeId::SPtr nodeIdValue = dataValue->variant()->getSPtr<OpcUaNodeId>();
-				nodeIdValue->set(rand(),1);
-				dataValue->variant()->set(nodeIdValue);
+				OpcUaNodeId value(rand(),1);
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaQualifiedName:
 			{
-				OpcUaQualifiedName::SPtr qualifiedName = dataValue->variant()->getSPtr<OpcUaQualifiedName>();
-				qualifiedName->set("Name", rand());
-				dataValue->variant()->set(qualifiedName);
+				OpcUaQualifiedName value("Name", rand());
+				dataValue->setValue(value);
 				break;
 			}
 			default:
