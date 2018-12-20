@@ -497,31 +497,6 @@ namespace OpcUaServerApplicationDemo
 			baseNodeClassWMap_.insert(std::make_pair(valueVec_[idx], getNodeReference.nodeReferences()[idx]));
 		}
 
-#if 0
-		// FIXME: todo
-		{
-			GetNodeReference getNodeReference(OpcUaNodeId(222,1));
-			if (!getNodeReference.query(applicationServiceIf_)) {
-		  		Log(Error, "response error");
-		  		return false;
-			}
-
-			if (getNodeReference.statuses()[0] != Success) {
-		  		Log(Error, "node reference error");
-		  		return false;
-			}
-
-			auto ptr = getNodeReference.nodeReferences()[0].lock();
-			if (!ptr) {
-		  		Log(Error, "node no longer exist");
-		  		return false;
-			}
-
-			OpcUaDataValue dataValue(OpcUaString("Hello, world!"));
-			ptr->setValueSync(dataValue);
-		}
-#endif
-
 		return true;
 	}
 
@@ -605,33 +580,31 @@ namespace OpcUaServerApplicationDemo
 	void
 	TestFolderLib::timerLoop(void)
 	{
-	  	ValueMap::iterator it1;
-	  	for (it1 = valueMap_.begin(); it1 != valueMap_.end(); it1++) {
+	  	for (auto it1 : valueMap_) {
 
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
-	  		OpcUaDataValue::SPtr dataValue = it1->second;
-	  		*nodeId = it1->first;
+	  		auto nodeId = it1.first;
+	  		auto dataValue = it1.second;
 
-	  		//std::cout << "update " << *nodeId << std::endl;
-
-	  		BaseNodeClassWMap::iterator it2;
-	  		it2 = baseNodeClassWMap_.find(*nodeId);
+	  		// find pointer to node
+	  		auto it2 = baseNodeClassWMap_.find(nodeId);
 	  		if (it2 == baseNodeClassWMap_.end()) {
-	  			std::cout << "baseNodeClass not exist: " << *nodeId << std::endl;
-	  			continue;
-	  		}
-	  		BaseNodeClass::WPtr baseNodeClassWPtr = it2->second;
-	  		BaseNodeClass::SPtr baseNodeClass = baseNodeClassWPtr.lock();
-	  		if (baseNodeClass.get() == nullptr) {
-	  			std::cout << "baseNodeClass is deleted: " << *nodeId << std::endl;
+	  			std::cout << "baseNodeClass not exist: " << nodeId << std::endl;
 	  			continue;
 	  		}
 
+	  		// check if node already exist
+	  		auto baseNodeClass = it2->second.lock();
+	  		if (baseNodeClass.get() == nullptr) {
+	  			std::cout << "baseNodeClass is deleted: " << nodeId << std::endl;
+	  			continue;
+	  		}
+
+	  		// update node
 	  		if (dataValue->variant()->isArray()) {
-	  			updateArray(*nodeId, dataValue, baseNodeClass);
+	  			updateArray(nodeId, dataValue, baseNodeClass);
 	  		}
 	  		else {
-	  			updateSingle(*nodeId, dataValue, baseNodeClass);
+	  			updateSingle(nodeId, dataValue, baseNodeClass);
 	  		}
 	  	}
 	}
