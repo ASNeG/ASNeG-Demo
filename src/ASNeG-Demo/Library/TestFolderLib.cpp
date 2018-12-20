@@ -136,9 +136,12 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::createValueMap(void)
 	{
+		//
+		// The nodes identifier and their variables are stored in a map. Each variable
+		// in the map is assigned an inital variable.
+		//
+
 		OpcUaDateTime now(boost::posix_time::microsec_clock::universal_time());
-		OpcUaNodeId nodeId;
-		OpcUaDataValue::SPtr dataValue;
 
 		// SByte
 		valueMap_.insert(std::make_pair(
@@ -147,267 +150,259 @@ namespace OpcUaServerApplicationDemo
 		));
 
 		// SByteByteArray
-		nodeId.set(201, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaSByte)pos);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaSByte> sByteVec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(201, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(sByteVec, Success, now)
+		));
 
 		// Byte
-		nodeId.set(202, namespaceIndex_);
-		OpcUaByte byte(32);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(byte);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(202, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaByte)32, Success, now)
+		));
 
 		// ByteByteArray
-		nodeId.set(203, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaByte)pos);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaByte> byteVec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(203, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(byteVec, Success, now)
+		));
 
 		// Int16
-		nodeId.set(204, namespaceIndex_);
-		OpcUaInt16 int16(25);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(int16);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(204, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaInt16)25, Success, now)
+		));
 
 		// Int16Array
-		nodeId.set(205, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaInt16)(pos*2));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaInt16> int16Vec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(205, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(int16Vec, Success, now)
+		));
 
 		// UInt16
-		nodeId.set(206, namespaceIndex_);
-		OpcUaUInt16 uint16(50);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(uint16);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(206, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaUInt16)50, Success, now)
+		));
 
 		// UInt16Array
-		nodeId.set(207, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaUInt16)(pos*3));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaUInt16> uint16Vec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(207, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(uint16Vec, Success, now)
+		));
 
 		// Int32
-		nodeId.set(208, namespaceIndex_);
-		OpcUaInt32 int32(180);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(int32);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(208, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaInt32)180, Success, now)
+		));
 
 		// Int32Array
-		nodeId.set(209, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaInt32)(pos*4));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaInt32> int32Vec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(209, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(int32Vec, Success, now)
+		));
 
 		// UInt32
-		nodeId.set(210, namespaceIndex_);
-		OpcUaUInt32 uint32(180);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(uint32);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(210, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaUInt32)180, Success, now)
+		));
 
 		// UInt32Array
-		nodeId.set(211, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaUInt32)(pos*5));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaUInt32> uint32Vec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(211, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(uint32Vec, Success, now)
+		));
 
 		// Int64
-		nodeId.set(212, namespaceIndex_);
-		OpcUaInt64 int64(0);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(int64);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(212, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaInt64)0, Success, now)
+		));
 
 		// Int64Array
-		nodeId.set(213, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaInt64)(pos*6));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaInt64> int64Vec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(213, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(int64Vec, Success, now)
+		));
 
 		// UInt64
-		nodeId.set(214, namespaceIndex_);
-		OpcUaUInt64 uint64(1500);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(uint64);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(214, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaUInt64)1500, Success, now)
+		));
 
 		// UInt64Array
-		nodeId.set(215, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaUInt64)(pos*5));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaUInt64> uint64Vec = {0, 1, 2};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(215, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(uint64Vec, Success, now)
+		));
 
 		// Float
-		nodeId.set(216, namespaceIndex_);
-		OpcUaFloat floats(500);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(floats);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(216, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaFloat)500, Success, now)
+		));
 
 		// FloatArray
-		nodeId.set(217, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaFloat)(pos*6.7));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaFloat> floatVec = {0.0, 6.7, 10.1};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(217, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(floatVec, Success, now)
+		));
 
 		// Double
-		nodeId.set(218, namespaceIndex_);
-		OpcUaDouble doubles(500);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(doubles);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(218, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaDouble)500, Success, now)
+		));
 
 		// DoubleArray
-		nodeId.set(219, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaDouble)(pos*7.23));
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaDouble> doubleVec = {0.0, 6.7, 10.1};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(219, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(doubleVec, Success, now)
+		));
 
 		// Boolean
-		nodeId.set(220, namespaceIndex_);
-		OpcUaBoolean boolean(true);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(boolean);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(220, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>((OpcUaBoolean)true, Success, now)
+		));
 
 		// DoubleArray
-		nodeId.set(221, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) dataValue->variant()->pushBack((OpcUaBoolean)false);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaBoolean> booleanVec = {false, false, false};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(221, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(booleanVec, Success, now)
+		));
 
 		// String
-		nodeId.set(222, namespaceIndex_);
-		OpcUaString::SPtr str = constructSPtr<OpcUaString>();
-		dataValue->variant()->variant(str);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(222, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(OpcUaString("TestString"), Success, now)
+		));
 
 		// StringArray
-		nodeId.set(223, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaString::SPtr str = constructSPtr<OpcUaString>();
-			str->value("string");
-			dataValue->variant()->pushBack(str);
-		}
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaString::SPtr> stringVec = {
+			constructSPtr<OpcUaString>("TestString1"),
+			constructSPtr<OpcUaString>("TestString2"),
+			constructSPtr<OpcUaString>("TestString3")
+		};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(223, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(stringVec, Success, now)
+		));
 
 		// ByteString
-		nodeId.set(224, namespaceIndex_);
-		OpcUaByteString::SPtr bstr = constructSPtr<OpcUaByteString>();
-		bstr->value("string");
-		dataValue = createDataValue();
-		dataValue->variant()->variant(bstr);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(224, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(OpcUaByteString("TestByteString"), Success, now)
+		));
 
 		// ByteStringArray
-		nodeId.set(225, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaByteString::SPtr bstr = constructSPtr<OpcUaByteString>();
-			bstr->value("string");
-			dataValue->variant()->pushBack(bstr);
-		}
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaByteString::SPtr> byteStringVec = {
+			constructSPtr<OpcUaByteString>("TestByteString1"),
+			constructSPtr<OpcUaByteString>("TestByteString2"),
+			constructSPtr<OpcUaByteString>("TestByteString3")
+		};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(225, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(byteStringVec, Success, now)
+		));
 
 		// LocalizedText
-		nodeId.set(226, namespaceIndex_);
-		OpcUaLocalizedText::SPtr ltext = constructSPtr<OpcUaLocalizedText>();
-		ltext->set("de", "text");
-		dataValue = createDataValue();
-		dataValue->variant()->variant(ltext);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(226, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(OpcUaLocalizedText("de", "Text"), Success, now)
+		));
 
 		// LocalizedTextArray
-		nodeId.set(227, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaLocalizedText::SPtr bstr = constructSPtr<OpcUaLocalizedText>();
-			ltext->set("de", "text");
-			dataValue->variant()->pushBack(ltext);
-		}
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaLocalizedText::SPtr> localizedTextVec = {
+			constructSPtr<OpcUaLocalizedText>("de", "Test1"),
+			constructSPtr<OpcUaLocalizedText>("de", "Test2"),
+			constructSPtr<OpcUaLocalizedText>("de", "Test3")
+		};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(227, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(localizedTextVec, Success, now)
+		));
 
 		// DateTime
-		nodeId.set(228, namespaceIndex_);
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		dataValue = createDataValue();
-		dataValue->variant()->variant(dateTime);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(228, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(now, Success, now)
+		));
 
 		// DateTimeArray
-		nodeId.set(229, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-			dataValue->variant()->pushBack(dateTime);
-		}
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaDateTime> dateTimeVec = { now, now, now };
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(229, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(dateTimeVec, Success, now)
+		));
 
 		// GUID
-		nodeId.set(230, namespaceIndex_);
-		OpcUaGuid::SPtr guid = constructSPtr<OpcUaGuid>();
-		*guid = "12345678-9ABC-DEF0-1234-56789ABCDEF0";
-		dataValue = createDataValue();
-		dataValue->variant()->variant(guid);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(230, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(OpcUaGuid("12345678-9ABC-DEF0-1234-56789ABCDEF0"), Success, now)
+		));
 
-		// LocalizedTextArray
-		nodeId.set(231, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaGuid::SPtr guid = constructSPtr<OpcUaGuid>();
-			*guid = "12345678-9ABC-DEF0-1234-56789ABCDEF0";
-			dataValue->variant()->pushBack(guid);
-		}
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		// GuidArray
+		std::vector<OpcUaGuid::SPtr> guidVec = {
+			constructSPtr<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0"),
+			constructSPtr<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0"),
+			constructSPtr<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0")
+		};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(231, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(guidVec, Success, now)
+		));
 
 		// NodeId
-		nodeId.set(232, namespaceIndex_);
-		OpcUaNodeId::SPtr nodeIdValue = constructSPtr<OpcUaNodeId>();
-		nodeIdValue->set(1,1);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(nodeIdValue);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(232, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(OpcUaNodeId(1,1), Success, now)
+		));
 
 		// nodeIdArray
-		nodeId.set(233, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaNodeId::SPtr nodeIdValue = constructSPtr<OpcUaNodeId>();
-			nodeIdValue->set(pos, 1);
-			dataValue->variant()->pushBack(nodeIdValue);
-		}
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		std::vector<OpcUaNodeId::SPtr> nodeIdVec = {
+			constructSPtr<OpcUaNodeId>(1,1),
+			constructSPtr<OpcUaNodeId>(2,1),
+			constructSPtr<OpcUaNodeId>(3,1)
+		};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(233, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(nodeIdVec, Success, now)
+		));
 
 		// QualifiedName
-		nodeId.set(234, namespaceIndex_);
-		OpcUaQualifiedName::SPtr qualifiedName = constructSPtr<OpcUaQualifiedName>();
-		qualifiedName->set("Name", 1);
-		dataValue = createDataValue();
-		dataValue->variant()->variant(qualifiedName);
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(234, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(OpcUaQualifiedName("Name", 1), Success, now)
+		));
 
-		// QualifiedName
-		nodeId.set(235, namespaceIndex_);
-		dataValue = createDataValue();
-		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaQualifiedName::SPtr qualifiedName = constructSPtr<OpcUaQualifiedName>();
-			qualifiedName->set("Name", pos);
-			dataValue->variant()->pushBack(qualifiedName);
-		}
-		valueMap_.insert(std::make_pair(nodeId, dataValue));
+		// QualifiedNameArray
+		std::vector<OpcUaQualifiedName::SPtr> qualifiedNameVec = {
+			constructSPtr<OpcUaQualifiedName>("Name1", 1),
+			constructSPtr<OpcUaQualifiedName>("Name2", 1),
+			constructSPtr<OpcUaQualifiedName>("Name3", 1)
+		};
+		valueMap_.insert(std::make_pair(
+			OpcUaNodeId(235, namespaceIndex_),
+			constructSPtr<OpcUaDataValue>(qualifiedNameVec, Success, now)
+		));
 
 		// create vector of node identifier
-		for (auto it = valueMap_.begin(); it != valueMap_.end(); it++) {
-			valueVec_.push_back(it->first);
-		}
+		for (auto it : valueMap_) valueVec_.push_back(it.first);
 
 		return true;
 	}
@@ -424,8 +419,7 @@ namespace OpcUaServerApplicationDemo
 	  	req->nodesToRegister()->resize(valueMap_.size());
 
 	  	uint32_t pos = 0;
-	  	ValueMap::iterator it;
-	  	for (it = valueMap_.begin(); it != valueMap_.end(); it++) {
+	  	for (auto it = valueMap_.begin(); it != valueMap_.end(); it++) {
 	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
 	  		*nodeId = it->first;
 
