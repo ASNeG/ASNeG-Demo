@@ -805,170 +805,166 @@ namespace OpcUaServerApplicationDemo
 		{
 			case OpcUaBuildInType_OpcUaSByte:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaSByte sByte = dataValue->variant()->get<OpcUaSByte>(pos);
-					sByte++;
-					dataValue->variant()->set(pos, sByte);
-				}
+				std::vector<OpcUaSByte> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaByte:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaByte byte = dataValue->variant()->get<OpcUaByte>(pos);
-					byte++;
-					dataValue->variant()->set(pos, byte);
-				}
+				std::vector<OpcUaByte> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaInt16:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaInt16 int16 = dataValue->variant()->get<OpcUaInt16>(pos);
-					int16++;
-					dataValue->variant()->set(pos, int16);
-				}
+				std::vector<OpcUaInt16> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaUInt16:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaUInt16 uint16 = dataValue->variant()->get<OpcUaUInt16>(pos);
-					uint16++;
-					dataValue->variant()->set(pos, uint16);
-				}
+				std::vector<OpcUaUInt16> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaInt32:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaInt32 int32 = dataValue->variant()->get<OpcUaInt32>(pos);
-					int32++;
-					dataValue->variant()->set(pos, int32);
-				}
+				std::vector<OpcUaInt32> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaUInt32:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaUInt32 uint32 = dataValue->variant()->get<OpcUaUInt32>(pos);
-					uint32++;
-					dataValue->variant()->set(pos, uint32);
-				}
+				std::vector<OpcUaUInt32> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaInt64:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaInt64 int64 = dataValue->variant()->get<OpcUaInt64>(pos);
-					int64++;
-					dataValue->variant()->set(pos, int64);
-				}
+				std::vector<OpcUaInt64> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaUInt64:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaUInt64 uint64 = dataValue->variant()->get<OpcUaUInt64>(pos);
-					uint64++;
-					dataValue->variant()->set(pos, uint64);
-				}
+				std::vector<OpcUaUInt64> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v++;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaFloat:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaFloat floats = dataValue->variant()->get<OpcUaFloat>(pos);
-					floats += 3.354;
-					dataValue->variant()->set(pos, floats);
-				}
+				std::vector<OpcUaFloat> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v += 3.354;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaDouble:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaDouble doubles = dataValue->variant()->get<OpcUaDouble>(pos);
-					doubles += 33.354;
-					dataValue->variant()->set(pos, doubles);
-				}
+				std::vector<OpcUaDouble> value;
+				dataValue->getValue(value);
+				for (auto& v : value) v += 33.354;
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaBoolean:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaBoolean boolean = dataValue->variant()->get<OpcUaBoolean>(pos);
-					if (boolean) boolean = false;
-					else boolean = true;
-					dataValue->variant()->set(pos, boolean);
-				}
+				std::vector<OpcUaBoolean> value;
+				dataValue->getValue(value);
+				for (uint32_t idx=0; idx<value.size(); idx++) value[idx] = !value[idx];
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaString:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaString::SPtr str = dataValue->variant()->getSPtr<OpcUaString>(pos);
+				std::vector<OpcUaString::SPtr> value;
+				dataValue->getValue(value);
+				for (auto& v : value) {
 					std::stringstream ss;
 					ss << "String" << rand();
-					str->value(ss.str());
-					dataValue->variant()->set(pos, str);
+					*v = ss.str();
 				}
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaByteString:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaByteString::SPtr bstr = dataValue->variant()->getSPtr<OpcUaByteString>(pos);
+				std::vector<OpcUaByteString::SPtr> value;
+				dataValue->getValue(value);
+				for (auto& v : value) {
 					std::stringstream ss;
 					ss << "String" << rand();
-					bstr->value(ss.str());
-					dataValue->variant()->set(pos, bstr);
+					*v = ss.str();
 				}
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaLocalizedText:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaLocalizedText::SPtr ltext = dataValue->variant()->getSPtr<OpcUaLocalizedText>(pos);
+				std::vector<OpcUaLocalizedText::SPtr> value;
+				dataValue->getValue(value);
+				for (auto& v : value) {
 					std::stringstream ss;
 					ss << "String" << rand();
-					ltext->set("de", ss.str());
-					dataValue->variant()->set(pos, ltext);
+					v->set("de", ss.str());
 				}
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaDateTime:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-					dataValue->variant()->set(pos, dateTime);
+				std::vector<OpcUaDateTime> value;
+				dataValue->getValue(value);
+				for (auto& v : value) {
+					v.dateTime(boost::posix_time::microsec_clock::universal_time());
 				}
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaGuid:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaGuid::SPtr guid = dataValue->variant()->getSPtr<OpcUaGuid>(pos);
-					guid->data1(guid->data1()+1);
-					dataValue->variant()->set(pos, guid);
+				std::vector<OpcUaGuid::SPtr> value;
+				dataValue->getValue(value);
+				for (auto& v : value) {
+					v->data1(v->data1()+1);
 				}
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaNodeId:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaNodeId::SPtr nodeIdValue = dataValue->variant()->getSPtr<OpcUaNodeId>(pos);
-					nodeIdValue->set(rand(), 1);
-					dataValue->variant()->set(pos, nodeIdValue);
+				std::vector<OpcUaNodeId::SPtr> value;
+				dataValue->getValue(value);
+				for (auto& v : value) {
+					v->set(rand(), 1);
 				}
+				dataValue->setValue(value);
 				break;
 			}
 			case OpcUaBuildInType_OpcUaQualifiedName:
 			{
-				for (uint32_t pos = 0; pos < dataValue->variant()->variant().size(); pos++) {
-					OpcUaQualifiedName::SPtr qualifiedName = dataValue->variant()->getSPtr<OpcUaQualifiedName>(pos);
-					qualifiedName->set("Name", rand());
-					dataValue->variant()->set(pos, qualifiedName);
+				std::vector<OpcUaQualifiedName::SPtr> value;
+				dataValue->getValue(value);
+				for (auto& v : value) {
+					v->set("Name", rand());
 				}
+				dataValue->setValue(value);
 				break;
 			}
 			default:
