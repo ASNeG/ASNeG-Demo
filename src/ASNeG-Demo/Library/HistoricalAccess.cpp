@@ -17,7 +17,6 @@
 
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
-#include "OpcUaStackCore/ServiceSet/EventField.h"
 #include "OpcUaStackCore/StandardEventType/BaseEventType.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/HistoricalAccess.h"
@@ -310,15 +309,12 @@ namespace OpcUaServerApplicationDemo
 				);
 
 				// insert variant into event field list
-				EventField::SPtr eventField;
-				eventField = constructSPtr<EventField>();
 				if (resultCode != EventResult::Success) {
 					value = constructSPtr<OpcUaVariant>();
 
 				}
 				else {
 				}
-				eventField->variant(value);
 				eventFieldList->eventFields().push_back(value);
 			}
 		}
