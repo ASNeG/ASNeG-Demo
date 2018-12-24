@@ -8,7 +8,6 @@
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 CMAKE_GENERATOR_LOCAL=-G"Eclipse CDT4 - Unix Makefiles"
-#OPCUASTACK_INSTALL_PREFIX=${HOME}/.ASNeG
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -29,8 +28,11 @@ usage()
    echo ""
    echo "--install-prefix, -i INSTALL_PREFIX:  is the path to directory"
    echo "\twhere the application should be installed (default: ${HOME}/.ASNeG)"
-
+   echo "--jobs, -j JOB_COUNT: sets the number of the jobs of make"
+   echo ""
+   echo "--build-type, -B BUILD_TYPE:  set the build types (Debug | Release). By default, it is Debug type"
 }
+
 
 
 # -----------------------------------------------------------------------------
@@ -52,14 +54,15 @@ build_info()
 
 build_info_clean()
 {
-    rm -rf build_info
+    set -e
+    rm -rf build_info*
 }
 
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 # 
-# build and .ASNeG local
+# build and install local
 #
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -67,59 +70,63 @@ build_local()
 {
     echo "build local start"
 
-    # build local directory
-    if [ ! -d "build_local" ] ;
+    # check build directoriy
+    if [ ! -d "build_local_${BUILD_TYPE}" ] ;
     then
         BUILD_FIRST=1
-        rm -rf build_local
-        mkdir build_local
+        rm -rf build_local_${BUILD_TYPE}
+        mkdir build_local_${BUILD_TYPE}
+
     else
         BUILD_FIRST=0
     fi
-    cd build_local
-
+    cd build_local_${BUILD_TYPE}
 
     # build local
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	: ${OPCUASTACK_INSTALL_PREFIX:=${HOME}/.ASNeG}
-	set -x
-	cmake ../src \
-	    -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
-	    "${CMAKE_GENERATOR_LOCAL}" 
+        set -x
+        cmake ../src \
+              "${CMAKE_GENERATOR_LOCAL}" \
+              -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
+              -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" 
         RESULT=$?
-	set +x
-	if [ ${RESULT} -ne 0 ] ;
-	then
-	    echo "cmake error"
-	    return ${RESULT}
-	fi
+        set +x
+        if [ ${RESULT} -ne 0 ] ;
+        then
+            echo "cmake error"
+            return ${RESULT}
+        fi
     else
+        set -x
         cmake .
         RESULT=$?
-	set +x
-	if [ ${RESULT} -ne 0 ] ;
-	then
-	    echo "cmake error"
-	    return ${RESULT}
-	fi
+        set +x
+        if [ ${RESULT} -ne 0 ] ;
+        then
+            echo "cmake error"
+            return ${RESULT}
+        fi
+
     fi
 
     # install local
-    make DESTDIR="${INSTALL_PREFIX}" install
+    make DESTDIR="${INSTALL_PREFIX}" install -j"${JOBS}"
     RESULT=$?
     if [ ${RESULT} -ne 0 ] ;
     then
-        echo "make .ASNeG error"
+        echo "make install error"
         return ${RESULT}
     fi
 
     return 0
 }
 
+
 build_local_clean()
 {
-    rm -rf build_local
+    set -e
+    rm -rf build_local*
 }
 
 
@@ -143,46 +150,48 @@ build_deb()
         return -1
     fi
 
-    # build package directory
+    # check build directoriy
     if [ ! -d "build_deb" ] ;
     then
         BUILD_FIRST=1
-        rm -rf build_deb
-        mkdir build_deb
+        rm -rf build_deb_${BUILD_TYPE}
+        mkdir build_deb_${BUILD_TYPE}
     else
         BUILD_FIRST=0
     fi
-    cd build_deb
+    cd build_deb_${BUILD_TYPE}
 
 
     # build package
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	cmake ../src \
-	    -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
-	    "${CMAKE_GENERATOR_LOCAL}" \
-	    "-DCPACK_BINARY_DEB=1" \
-	    "-DCPACK_BINARY_RPM=0" \
-            "-DCPACK_BINARY_STGZ=0" \
-            "-DCPACK_BINARY_TGZ=0" \
-            "-DCPACK_BINARY_TZ=0"
-	RESULT=$?
-	if [ ${RESULT} -ne 0 ] ;
-	then
-	    echo "cmake error"
-	    return ${RESULT}
-	fi
+ 
+        cmake ../src \
+            "${CMAKE_GENERATOR_LOCAL}" \
+            -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
+            -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+            "-DCPACK_BINARY_DEB=1" \
+            "-DCPACK_BINARY_RPM=0" \
+	    "-DCPACK_BINARY_STGZ=0" \
+	    "-DCPACK_BINARY_TGZ=0" \
+	    "-DCPACK_BINARY_TZ=0" 
+        RESULT=$?
+        if [ ${RESULT} -ne 0 ] ;
+        then
+            echo "cmake error"
+            return ${RESULT}
+        fi
     else
         cmake .
-	RESULT=$?
-	if [ ${RESULT} -ne 0 ] ;
-	then
-	    echo "cmake error"
-	    return ${RESULT}
-	fi
+        RESULT=$?
+        if [ ${RESULT} -ne 0 ] ;
+        then
+            echo "cmake error"
+            return ${RESULT}
+        fi     
     fi
 
-    make package
+    make package -j"${JOBS}"
     RESULT=$?
     if [ ${RESULT} -ne 0 ] ;
     then
@@ -195,9 +204,9 @@ build_deb()
 
 build_deb_clean()
 {
-    rm -rf build_deb
+    set -e
+    rm -rf build_deb*
 }
-
 
 
 # -----------------------------------------------------------------------------
@@ -224,42 +233,42 @@ build_rpm()
     if [ ! -d "build_rpm" ] ;
     then
         BUILD_FIRST=1
-        rm -rf build_rpm
-        mkdir build_rpm
+        rm -rf build_rpm_${BUILD_TYPE}
+        mkdir build_rpm_${BUILD_TYPE}
     else
         BUILD_FIRST=0
     fi
-    cd build_rpm
-
+    cd build_rpm_${BUILD_TYPE}
 
     # build package
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
-	cmake ../src \
-	    -DOPCUASTACK_INSTALL_PREFIX=${STACK_PREFIX} \
-	    "${CMAKE_GENERATOR_LOCAL}" \
-	    "-DCPACK_BINARY_DEB=0" \
-	    "-DCPACK_BINARY_RPM=1" \
-            "-DCPACK_BINARY_STGZ=0" \
-            "-DCPACK_BINARY_TGZ=0" \
-            "-DCPACK_BINARY_TZ=0"
-        RESULT=$? 
-	if [ ${RESULT} -ne 0 ] ;
-	then
-	    echo "cmake error"
-	    return ${RESULT}
-	fi
+        cmake ../src \
+            "${CMAKE_GENERATOR_LOCAL}" \
+            -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+            -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
+            "-DCPACK_BINARY_DEB=0" \
+            "-DCPACK_BINARY_RPM=1" \
+  	    "-DCPACK_BINARY_STGZ=0" \
+     	    "-DCPACK_BINARY_TGZ=0" \
+	    "-DCPACK_BINARY_TZ=0"
+        RESULT=$?
+        if [ ${RESULT} -ne 0 ] ;
+        then
+            echo "cmake error"
+            return ${RESULT}
+        fi
     else
         cmake .
-        RESULT=$? 
-	if [ ${RESULT} -ne 0 ] ;
-	then
-	    echo "cmake error"
-	    return ${RESULT}
-	fi
+        RESULT=$?
+        if [ ${RESULT} -ne 0 ] ;
+        then
+            echo "cmake error"
+            return ${RESULT}
+        fi
     fi
 
-    make package
+    make package -j"${JOBS}"
     RESULT=$?
     if [ ${RESULT} -ne 0 ] ;
     then
@@ -273,15 +282,14 @@ build_rpm()
 
 build_rpm_clean()
 {
-    rm -rf build_rpm
+    set -e
+    rm -rf build_rpm*
 }
-
-
 
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 #
-# build unittest
+# build test
 #
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
@@ -293,27 +301,27 @@ build_tst()
     if [ ! -d "build_tst" ] ;
     then
         BUILD_FIRST=1
-        rm -rf build_tst
-        mkdir build_tst
+        rm -rf build_tst_${BUILD_TYPE}
+        mkdir build_tst_${BUILD_TYPE}
     else
         BUILD_FIRST=0
     fi
-    cd build_tst
-
+    cd build_tst_${BUILD_TYPE}
 
     # build tst
     if [ ${BUILD_FIRST} -eq 1 ] ;
     then
         cmake ../tst \
-            -DOPCUASTACK_INSTALL_PREFIX=${STACK_PREFIX} \
-  	    "${CMAKE_GENERATOR_LOCAL}"
+  	     "${CMAKE_GENERATOR_LOCAL}" \
+	     -DOPCUASTACK_INSTALL_PREFIX="${STACK_PREFIX}" \
+             -DCMAKE_BUILD_TYPE="${BUILD_TYPE}"
         RESULT=$?
         if [ ${RESULT} -ne 0 ] ;
         then
             echo "cmake error"
             return ${RESULT}
         fi
-    else 
+    else
         cmake .
         RESULT=$?
         if [ ${RESULT} -ne 0 ] ;
@@ -321,12 +329,11 @@ build_tst()
             echo "cmake error"
             return ${RESULT}
         fi
-
     fi
 
-    make 
+    make -j"${JOBS}"
     RESULT=$?
-    if [ ${RESULT} -ne 0 ] ;
+     if [ ${RESULT} -ne 0 ] ;
     then
         echo "make error"
         return ${RESULT}
@@ -336,9 +343,17 @@ build_tst()
 }
 
 
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#
+# cleanup
+#
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 build_tst_clean()
 {
-    rm -rf build_tst
+    set -e
+    rm -rf build_tst*
 }
 
 clean()
@@ -348,6 +363,7 @@ clean()
     build_deb_clean
     build_rpm_clean
     build_tst_clean
+    return 0
 }
 
 # -----------------------------------------------------------------------------
@@ -363,12 +379,15 @@ then
     exit 1
 fi 
 
-while [ $# -gt 0 ];
-do
-key="$1"
 
 INSTALL_PREFIX="${HOME}/.ASNeG"
 STACK_PREFIX="/"
+JOBS=1
+BUILD_TYPE="Debug"
+
+while [ $# -gt 0 ];
+do
+key="$1"
 
 case $key in
     -t|--target)
@@ -386,6 +405,16 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -j|--jobs)
+    JOBS="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -B|--build-type)
+    BUILD_TYPE="$2"
+    shift # past argument
+    shift # past value
+    ;;
     *)    # unknown option
     shift # past argument
     ;;
@@ -399,6 +428,7 @@ then
 elif [ "${TARGET}" = "clean" ] ;
 then 
     clean 
+    exit $?
 elif [ "${TARGET}" = "local" ] ;
 then 
     build_local
@@ -419,3 +449,9 @@ else
     usage
     exit 1
 fi
+if [ $# -le 1 ] ; 
+then
+    usage
+    exit 1
+fi 
+
