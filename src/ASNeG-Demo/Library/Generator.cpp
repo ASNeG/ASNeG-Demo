@@ -45,6 +45,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "Generator::startup");
 
+#if 0
 		ioThread_ = &ioThread;
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
@@ -64,6 +65,7 @@ namespace OpcUaServerApplicationDemo
 		if (!createAndConnectToVariableType()) {
 			return true;
 		}
+#endif
 
 		return true;
 	}
