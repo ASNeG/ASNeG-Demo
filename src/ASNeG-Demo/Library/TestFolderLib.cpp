@@ -497,7 +497,9 @@ namespace OpcUaServerApplicationDemo
 	  			return false;
 			}
 
-			baseNodeClassWMap_.insert(std::make_pair(valueVec_[idx], getNodeReference.nodeReferences()[idx]));
+			BaseNodeClass::WPtr baseNodeClass = getNodeReference.nodeReferences()[idx];
+			OpcUaNodeId nodeId = valueVec_[idx];
+			baseNodeClassWMap_.insert(std::make_pair(nodeId, baseNodeClass));
 		}
 
 		return true;

@@ -70,10 +70,10 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "DemoLibrary::shutdown");
 
-		generator_.shutdown();
 		discovery_.shutdown();
 		historicalAccess_.shutdown();
 		authentication_.shutdown();
+		generator_.shutdown();
 		alarm_.shutdown();
 		event_.shutdown();
 		serviceFunction_.shutdown();
