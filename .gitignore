@@ -1,6 +1,7 @@
-build_local
-build_deb
+build_local_*
+build_deb_*
 build_info
 build
+build_local_*
 core
 *.log
