@@ -194,11 +194,7 @@ namespace OpcUaServerApplicationDemo
 		for (uint32_t idx=0; idx<10; idx++) {
 			OpcUaDateTime dateTime(time - boost::posix_time::seconds(10+idx));
 
-			OpcUaDataValue::SPtr dataValue = constructSPtr<OpcUaDataValue>();
-			dataValue->variant()->variant((double)idx);
-			dataValue->statusCode(Success);
-			dataValue->sourceTimestamp(dateTime);
-			dataValue->serverTimestamp(dateTime);
+			OpcUaDataValue::SPtr dataValue = constructSPtr<OpcUaDataValue>((double)idx, Success, dateTime);
 			applicationHReadContext->dataValueArray_->push_back(dataValue);
 		}
 
