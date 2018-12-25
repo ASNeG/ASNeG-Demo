@@ -67,9 +67,11 @@ namespace OpcUaServerApplicationDemo
 		Callback writeCallback_;
 		Callback writeLoopTimeCallback_;
 
+		typedef std::vector<OpcUaNodeId> ValueVec;
 		typedef std::map<OpcUaNodeId,OpcUaDataValue::SPtr> ValueMap;
 		typedef std::map<OpcUaNodeId,BaseNodeClass::WPtr> BaseNodeClassWMap;
 		ValueMap valueMap_;
+		ValueVec valueVec_;
 		BaseNodeClassWMap baseNodeClassWMap_;
 
 		IOThread* ioThread_;
