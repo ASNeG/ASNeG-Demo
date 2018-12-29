@@ -31,8 +31,6 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::TestFolderLib(void)
 	: namespaceIndex_(0)
 	, loopTime_()
-	, readLoopTimeCallback_(boost::bind(&TestFolderLib::readLoopTimeValue, this, _1))
-	, writeLoopTimeCallback_(boost::bind(&TestFolderLib::writeLoopTimeValue, this, _1))
 	, valueMap_()
 	, valueVec_()
 	, ioThread_()
@@ -415,32 +413,14 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::registerLoopTimeCallbacks(void)
 	{
-	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set(3, namespaceIndex_);
-
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
-	  	RegisterForwardNodeRequest::SPtr req = trx->request();
-	  	RegisterForwardNodeResponse::SPtr res = trx->response();
-
-	  	req->forwardNodeSync()->readService().setCallback(readLoopTimeCallback_);
-	  	req->forwardNodeSync()->writeService().setCallback(writeLoopTimeCallback_);
-	  	req->nodesToRegister()->resize(1);
-	  	req->nodesToRegister()->set(0, nodeId);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  	  	return false;
-	  	}
-
-	  	OpcUaStatusCode statusCode;
-	  	res->statusCodeArray()->get(0, statusCode);
-	  	if (statusCode != Success) {
-	  	  	std::cout << "register value error" << std::endl;
-	  	  	return false;
-	  	}
-
-	  	return true;
+		RegisterForwardNode registerForwardNode(OpcUaNodeId(3, namespaceIndex_));
+		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readLoopTimeValue, this, _1));
+		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeLoopTimeValue, this, _1));
+		if (!registerForwardNode.query(applicationServiceIf_, true)) {
+			std::cout << "registerForwardNode response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	bool
