@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -21,6 +21,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
 #include <iostream>
 
 namespace OpcUaServerApplicationDemo
@@ -98,27 +99,18 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::getNamespaceInfo(void)
 	{
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
+		GetNamespaceInfo getNamespaceInfo;
 
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
 			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo.de/Test-Server-Lib/") {
-				namespaceIndex_ = it->first;
-			}
- 		}
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo.de/Test-Server-Lib/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http://ASNeG-Demo.de/Test-Server-Lib/" << std::endl;
+			return false;
+		}
 
 		return true;
 	}
