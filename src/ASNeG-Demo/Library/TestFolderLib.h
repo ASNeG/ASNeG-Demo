@@ -62,9 +62,7 @@ namespace OpcUaServerApplicationDemo
 
 		uint32_t namespaceIndex_;
 		OpcUaDataValue::SPtr loopTime_;
-		Callback readCallback_;
 		Callback readLoopTimeCallback_;
-		Callback writeCallback_;
 		Callback writeLoopTimeCallback_;
 
 		typedef std::vector<OpcUaNodeId> ValueVec;

@@ -22,6 +22,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardNode.h"
 #include <iostream>
 
 namespace OpcUaServerApplicationDemo
@@ -30,9 +31,7 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::TestFolderLib(void)
 	: namespaceIndex_(0)
 	, loopTime_()
-	, readCallback_(boost::bind(&TestFolderLib::readValue, this, _1))
 	, readLoopTimeCallback_(boost::bind(&TestFolderLib::readLoopTimeValue, this, _1))
-	, writeCallback_(boost::bind(&TestFolderLib::writeValue, this, _1))
 	, writeLoopTimeCallback_(boost::bind(&TestFolderLib::writeLoopTimeValue, this, _1))
 	, valueMap_()
 	, valueVec_()
@@ -403,38 +402,13 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::registerCallbacks(void)
 	{
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
-	  	RegisterForwardNodeRequest::SPtr req = trx->request();
-	  	RegisterForwardNodeResponse::SPtr res = trx->response();
-
-	  	req->forwardNodeSync()->readService().setCallback(readCallback_);
-	  	req->forwardNodeSync()->writeService().setCallback(writeCallback_);
-	  	req->nodesToRegister()->resize(valueMap_.size());
-
-	  	uint32_t pos = 0;
-	  	for (auto it = valueMap_.begin(); it != valueMap_.end(); it++) {
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
-	  		*nodeId = it->first;
-
-	  		req->nodesToRegister()->set(pos, nodeId);
-	  		pos++;
-	  	}
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  		return false;
-	  	}
-
-	  	for (pos = 0; pos < res->statusCodeArray()->size(); pos++) {
-	  		OpcUaStatusCode statusCode;
-	  		res->statusCodeArray()->get(pos, statusCode);
-	  		if (statusCode != Success) {
-	  			std::cout << "register value error" << std::endl;
-	  			return false;
-	  		}
-	  	}
-
+		RegisterForwardNode registerForwardNode(valueVec_);
+		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readValue, this, _1));
+		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeValue, this, _1));
+		if (!registerForwardNode.query(applicationServiceIf_, true)) {
+			std::cout << "registerForwardNode response error" << std::endl;
+			return false;
+		}
 	    return true;
 	}
 
@@ -495,6 +469,8 @@ namespace OpcUaServerApplicationDemo
 	void
 	TestFolderLib::readValue(ApplicationReadContext* applicationReadContext)
 	{
+		//std::cout << "read value ..." << applicationReadContext->nodeId_ << std::endl;
+
 	    ValueMap::iterator it;
 	    it = valueMap_.find(applicationReadContext->nodeId_);
 	    if (it == valueMap_.end()) {
