@@ -98,7 +98,6 @@ namespace OpcUaServerApplicationDemo
 		void autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext);
 
 		bool setValuesToDefault(void);
-		bool getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref);
 	};
 
 }

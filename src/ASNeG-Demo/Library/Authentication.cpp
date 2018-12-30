@@ -480,28 +480,4 @@ namespace OpcUaServerApplicationDemo
 		return true;
 	}
 
-	bool
-	Authentication::getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref)
-	{
-		NodeReference::SPtr nodeReference;
-		if (!res->nodeReferenceArray()->get(idx, nodeReference)) {
-			Log(Error, "reference result not exist in response")
-				.parameter("Idx", idx);
-			return false;
-		}
-
-		if (nodeReference->statusCode() != Success) {
-			Log(Error, "reference error in response")
-				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeReference->statusCode()))
-				.parameter("Idx", idx);
-			return false;
-		}
-
-  		NodeReferenceApplication::SPtr nodeReferenceApplication;
-  		nodeReferenceApplication = boost::static_pointer_cast<NodeReferenceApplication>(nodeReference);
-  		ref = nodeReferenceApplication->baseNodeClass();
-
-		return true;
-	}
-
 }
