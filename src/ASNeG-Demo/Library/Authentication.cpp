@@ -429,6 +429,8 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Authentication::setValuesToDefault(void)
 	{
+		BaseNodeClass::SPtr baseNodeClass;
+
 		Log(Debug, "get references");
 
 		// read node references
@@ -444,38 +446,25 @@ namespace OpcUaServerApplicationDemo
 	  		return false;
 		}
 
-		value01_ = getNodeReference.nodeReferences()[0];
-		value02_ = getNodeReference.nodeReferences()[1];
-		value03_ = getNodeReference.nodeReferences()[2];
-		value04_ = getNodeReference.nodeReferences()[3];
-		value05_ = getNodeReference.nodeReferences()[4];
-
-		BaseNodeClass::SPtr baseNodeClass;
-
-		baseNodeClass = value01_.lock();
+		baseNodeClass = getNodeReference.nodeReferences()[0].lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		OpcUaDataValue dataValue1((double)1);
-		baseNodeClass->setValueSync(dataValue1);
+		baseNodeClass->setValueSync(OpcUaDataValue((double)1));
 
-		baseNodeClass = value02_.lock();
+		baseNodeClass = getNodeReference.nodeReferences()[1].lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		OpcUaDataValue dataValue2((double)2);
-		baseNodeClass->setValueSync(dataValue2);
+		baseNodeClass->setValueSync(OpcUaDataValue((double)2));
 
-		baseNodeClass = value03_.lock();
+		baseNodeClass = getNodeReference.nodeReferences()[2].lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		OpcUaDataValue dataValue3((double)3);
-		baseNodeClass->setValueSync(dataValue3);
+		baseNodeClass->setValueSync(OpcUaDataValue((double)3));
 
-		baseNodeClass = value04_.lock();
+		baseNodeClass = getNodeReference.nodeReferences()[3].lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		OpcUaDataValue dataValue4((double)4);
-		baseNodeClass->setValueSync(dataValue4);
+		baseNodeClass->setValueSync(OpcUaDataValue((double)4));
 
-		baseNodeClass = value05_.lock();
+		baseNodeClass = getNodeReference.nodeReferences()[4].lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		OpcUaDataValue dataValue5((double)5);
-		baseNodeClass->setValueSync(dataValue5);
+		baseNodeClass->setValueSync(OpcUaDataValue((double)5));
 
 		return true;
 	}

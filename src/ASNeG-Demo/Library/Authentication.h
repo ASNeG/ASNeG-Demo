@@ -81,13 +81,6 @@ namespace OpcUaServerApplicationDemo
 		ApplicationInfo* applicationInfo_;
 
 		uint32_t namespaceIndex_;
-
-		BaseNodeClass::WPtr value01_;
-		BaseNodeClass::WPtr value02_;
-		BaseNodeClass::WPtr value03_;
-		BaseNodeClass::WPtr value04_;
-		BaseNodeClass::WPtr value05_;
-
 		UserProfile::Map userProfileMap_;
 
 		bool getNamespaceInfo(void);
