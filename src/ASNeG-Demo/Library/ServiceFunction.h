@@ -47,14 +47,8 @@ namespace OpcUaServerApplicationDemo
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
-
 		uint32_t namespaceIndex_;
 
-		typedef std::map<OpcUaNodeId,OpcUaDataValue::SPtr> ValueMap;
-		typedef std::map<OpcUaNodeId,BaseNodeClass::WPtr> BaseNodeClassWMap;
-		BaseNodeClassWMap baseNodeClassWMap_;
-
-		OpcUaNodeId reloadFunc_;
 	};
 
 }

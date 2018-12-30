@@ -33,7 +33,6 @@ namespace OpcUaServerApplicationDemo
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
-	, baseNodeClassWMap_()
 	{
 	}
 
@@ -60,8 +59,7 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		// register function callbacks
-		reloadFunc_.set(std::string("Service.Reload"), namespaceIndex_);
-		if (!registerCallbacks(OpcUaNodeId("Service", namespaceIndex_), reloadFunc_)) return false;
+		if (!registerCallbacks(OpcUaNodeId("Service", namespaceIndex_), OpcUaNodeId("Service.Reload", namespaceIndex_))) return false;
 
 		return true;
 	}
@@ -115,7 +113,7 @@ namespace OpcUaServerApplicationDemo
 			.parameter("MethodNodeId", applicationMethodContext->methodNodeId_);
 
 		// reload function
-		if (applicationMethodContext->methodNodeId_ == reloadFunc_) {
+		if (applicationMethodContext->methodNodeId_ == OpcUaNodeId("Service.Reload", namespaceIndex_)) {
 			applicationServiceIf_->reload();
 			applicationMethodContext->statusCode_ = Success;
 		}
