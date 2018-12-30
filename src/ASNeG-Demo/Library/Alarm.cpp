@@ -469,28 +469,6 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	bool
-	Alarm::getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId::SPtr& nodeId)
-	{
-		NodeIdResult::SPtr nodeIdResult;
-		if (!res->nodeIdResults()->get(idx, nodeIdResult)) {
-			Log(Error, "node id result not exist in response")
-				.parameter("Idx", idx);
-			return false;
-		}
-
-		if (nodeIdResult->statusCode() != Success) {
-			Log(Error, "node id result error in response")
-				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeIdResult->statusCode()))
-				.parameter("Idx", idx);
-			return false;
-		}
-
-		nodeId = constructSPtr<OpcUaNodeId>();
-		*nodeId = nodeIdResult->nodeId();
-		return true;
-	}
-
-	bool
 	Alarm::createNodeReferences(void)
 	{
 		Log(Debug, "get references");
