@@ -165,13 +165,11 @@ namespace OpcUaServerApplicationDemo
 		std::stringstream ss;
 		counter_++;
 		ss << "BaseEventType: Event message " << counter_;
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaLocalizedText("de", ss.str()));
+		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
 		baseEventType->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaUInt16)100);
+		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)100);
 		baseEventType->severity(variant);
 
 		// send event on node Event11
@@ -192,23 +190,19 @@ namespace OpcUaServerApplicationDemo
 		std::stringstream ss;
 		counter_++;
 		ss << "CustomerEventType: Event message " << counter_;
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaLocalizedText("de", ss.str()));
+		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
 		customerEventType->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaUInt16)100);
+		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)100);
 		customerEventType->severity(variant);
 
 		// set variable1
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaDouble)1234);
+		variant = constructSPtr<OpcUaVariant>((OpcUaDouble)1234);
 		customerEventType->variable1(variant);
 
 		// set variable2
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaDouble)5678);
+		variant = constructSPtr<OpcUaVariant>((OpcUaDouble)5678);
 		customerEventType->variable2(variant);
 
 		// send event on node Event12
@@ -229,13 +223,11 @@ namespace OpcUaServerApplicationDemo
 		std::stringstream ss;
 		counter_++;
 		ss << "BaseEventType: Event message " << counter_;
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaLocalizedText("de", ss.str()));
+		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
 		eventType->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaUInt16)100);
+		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)100);
 		eventType->severity(variant);
 
 		// send event on node Event21
