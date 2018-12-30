@@ -63,7 +63,6 @@ namespace OpcUaServerApplicationDemo
 		bool getNamespaceInfo(void);
 		bool getNodeIds(void);
 		bool createNodeReferences(void);
-		bool getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref);
 		bool registerCallbacks(void);
 		bool registerCallback(const OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback);
 		void acknowledge(ApplicationMethodContext* applicationMethodContext);

@@ -23,6 +23,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
 #include "OpcUaStackServer/ServiceSetApplication/BrowsePathToNodeId.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 using namespace OpcUaStackCore;
@@ -471,73 +472,29 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Alarm::createNodeReferences(void)
 	{
-		Log(Debug, "get references");
+		GetNodeReference getNodeReference({
+			ackedStateNodeId_, ackedStateIdNodeId_,
+			confirmedStateNodeId_, confirmedStateIdNodeId_,
+			activeStateNodeId_, activeStateIdNodeId_,
+			enabledStateNodeId_, enabledStateIdNodeId_,
+			commentNodeId_, commentSourceTimestampNodeId_
+		});
 
-		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
-		GetNodeReferenceRequest::SPtr req = trx->request();
-		GetNodeReferenceResponse::SPtr res = trx->response();
-
-	  	req->nodes()->resize(10);
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(ackedStateNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(ackedStateIdNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(confirmedStateNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(confirmedStateIdNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(activeStateNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(activeStateIdNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(enabledStateNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(enabledStateIdNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(commentNodeId_));
-	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(commentSourceTimestampNodeId_));
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		Log(Error, "GetNodeReference error")
-	  		    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNodeReference.query(applicationServiceIf_, true)) {
+	  		std::cout << "response error" << std::endl;
 	  		return false;
-	  	}
-		if (res->nodeReferenceArray().get() == nullptr) {
-			Log(Error, "GetNodeReference error");
-			return false;
-		}
-		if (res->nodeReferenceArray()->size() != req->nodes()->size()) {
-			Log(Error, "GetNodeReference size error");
-			return false;
 		}
 
-		if (!getRefFromResponse(res, 0, ackedState_)) return false;
-		if (!getRefFromResponse(res, 1, ackedStateId_)) return false;
-		if (!getRefFromResponse(res, 2, confirmedState_)) return false;
-		if (!getRefFromResponse(res, 3, confirmedStateId_)) return false;
-		if (!getRefFromResponse(res, 4, activeState_)) return false;
-		if (!getRefFromResponse(res, 5, activeStateId_)) return false;
-		if (!getRefFromResponse(res, 6, enabledState_)) return false;
-		if (!getRefFromResponse(res, 7, enabledStateId_)) return false;
-		if (!getRefFromResponse(res, 8, comment_)) return false;
-		if (!getRefFromResponse(res, 9, commentSourceTimestamp_)) return false;
-
-		return true;
-	}
-
-	bool
-	Alarm::getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref)
-	{
-		NodeReference::SPtr nodeReference;
-		if (!res->nodeReferenceArray()->get(idx, nodeReference)) {
-			Log(Error, "reference result not exist in response")
-				.parameter("Idx", idx);
-			return false;
-		}
-
-		if (nodeReference->statusCode() != Success) {
-			Log(Error, "reference error in response")
-				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeReference->statusCode()))
-				.parameter("Idx", idx);
-			return false;
-		}
-
-  		NodeReferenceApplication::SPtr nodeReferenceApplication;
-  		nodeReferenceApplication = boost::static_pointer_cast<NodeReferenceApplication>(nodeReference);
-  		ref = nodeReferenceApplication->baseNodeClass();
+		ackedState_ = getNodeReference.nodeReferences()[0];
+		ackedStateId_ = getNodeReference.nodeReferences()[1];
+		confirmedState_ = getNodeReference.nodeReferences()[2];
+		confirmedStateId_ = getNodeReference.nodeReferences()[3];
+		activeState_ = getNodeReference.nodeReferences()[4];
+		activeStateId_ = getNodeReference.nodeReferences()[5];
+		enabledState_ = getNodeReference.nodeReferences()[6];
+		enabledStateId_ = getNodeReference.nodeReferences()[7];
+		comment_ = getNodeReference.nodeReferences()[8];
+		commentSourceTimestamp_ = getNodeReference.nodeReferences()[9];
 
 		return true;
 	}
