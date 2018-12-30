@@ -1,5 +1,5 @@
 /*
-   Copyright 2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -25,6 +25,9 @@
 #include "OpcUaStackCore/Utility/Environment.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardGlobal.h"
+#include "OpcUaStackServer/ServiceSetApplication/FireEvent.h"
 #include "ASNeG-Demo/Library/Event.h"
 #include "ASNeG-Demo/CustomerEventType/CustomerEventType.h"
 
@@ -189,10 +192,6 @@ namespace OpcUaServerApplicationDemo
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
 
-		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
-		FireEventRequest::SPtr req = trx->request();
-		FireEventResponse::SPtr res = trx->response();
-
 		// set message value
 		std::stringstream ss;
 		counter_++;
@@ -207,13 +206,9 @@ namespace OpcUaServerApplicationDemo
 		baseEventType->severity(variant);
 
 		// send event on node Event11
-		req->nodeId().set("Event11", namespaceIndex_);
-		eventBase = baseEventType;
-		req->eventBase(eventBase);
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			  std::cout << "event response error" << std::endl;
+		FireEvent fireEvent(OpcUaNodeId("Event11", namespaceIndex_), baseEventType);
+		if (!fireEvent.fireEvent(applicationServiceIf_)) {
+			std::cout << "event response error" << std::endl;
 		}
 	}
 
@@ -223,10 +218,6 @@ namespace OpcUaServerApplicationDemo
 		CustomerEventType::SPtr customerEventType = constructSPtr<CustomerEventType>();
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
-
-		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
-		FireEventRequest::SPtr req = trx->request();
-		FireEventResponse::SPtr res = trx->response();
 
 		// set message value
 		std::stringstream ss;
@@ -252,13 +243,9 @@ namespace OpcUaServerApplicationDemo
 		customerEventType->variable2(variant);
 
 		// send event on node Event12
-		req->nodeId().set("Event12", namespaceIndex_);
-		eventBase = customerEventType;
-		req->eventBase(eventBase);
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			  std::cout << "event response error" << std::endl;
+		FireEvent fireEvent(OpcUaNodeId("Event12", namespaceIndex_), customerEventType);
+		if (!fireEvent.fireEvent(applicationServiceIf_)) {
+			std::cout << "event response error" << std::endl;
 		}
 	}
 
@@ -268,10 +255,6 @@ namespace OpcUaServerApplicationDemo
 		BaseEventType::SPtr eventType = constructSPtr<AlarmConditionType>();
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
-
-		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
-		FireEventRequest::SPtr req = trx->request();
-		FireEventResponse::SPtr res = trx->response();
 
 		// set message value
 		std::stringstream ss;
@@ -286,14 +269,10 @@ namespace OpcUaServerApplicationDemo
 		variant->setValue((OpcUaUInt16)100);
 		eventType->severity(variant);
 
-		// send event on node Event11
-		req->nodeId().set("Event21", namespaceIndex_);
-		eventBase = eventType;
-		req->eventBase(eventBase);
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			  std::cout << "event response error" << std::endl;
+		// send event on node Event21
+		FireEvent fireEvent(OpcUaNodeId("Event21", namespaceIndex_), eventType);
+		if (!fireEvent.fireEvent(applicationServiceIf_)) {
+			std::cout << "event response error" << std::endl;
 		}
 	}
 
