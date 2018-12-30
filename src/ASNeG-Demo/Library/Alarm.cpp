@@ -24,6 +24,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
 #include "OpcUaStackServer/ServiceSetApplication/BrowsePathToNodeId.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardMethod.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 using namespace OpcUaStackCore;
@@ -520,26 +521,13 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Alarm::registerCallback(const OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback)
 	{
-	  	ServiceTransactionRegisterForwardMethod::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardMethod>();
-	  	RegisterForwardMethodRequest::SPtr req = trx->request();
-	  	RegisterForwardMethodResponse::SPtr res = trx->response();
-
-	  	req->forwardMethodSync()->methodService().setCallback(*callback);
-	  	req->objectNodeId(*const_cast<OpcUaNodeId*>(&objectNodeId));
-	  	req->methodNodeId(methodNodeId);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  		return false;
-	  	}
-
-	  	if (res->statusCode() != Success) {
-  			std::cout << "register value error" << std::endl;
-  			return false;
-	  	}
-
-		return true;
+		RegisterForwardMethod registerForwardMethod(objectNodeId, methodNodeId);
+		registerForwardMethod.setMethodCallback(*callback);
+		if (!registerForwardMethod.query(applicationServiceIf_)) {
+			std::cout << "registerForwardNode response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	void
