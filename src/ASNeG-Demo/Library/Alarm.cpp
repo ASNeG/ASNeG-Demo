@@ -1,5 +1,5 @@
 /*
-   Copyright 2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -21,6 +21,8 @@
 #include "OpcUaStackCore/BuildInTypes/BuildInTypes.h"
 #include "OpcUaStackCore/StandardEventType/OffNormalAlarmType.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/BrowsePathToNodeId.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 using namespace OpcUaStackCore;
@@ -403,101 +405,65 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Alarm::getNamespaceInfo(void)
 	{
-		Log(Debug, "get namespace info");
+		GetNamespaceInfo getNamespaceInfo;
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "NamespaceInfoResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
+			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo.de/Alarm/") {
-				namespaceIndex_ = it->first;
-				return true;
-			}
- 		}
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo.de/Alarm/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http://ASNeG-Demo.de/Alarm/" << std::endl;
+			return false;
+		}
 
-		Log(Error, "namespace not found in opc ua information model")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Alarm/");
-
-		return false;
+		return true;
 	}
 
 	bool
 	Alarm::getNodeIds(void)
 	{
-		Log(Debug, "get node ids");
+		BrowsePathToNodeId browsePathToNodeId({
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("AckedState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ConfirmedState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ConfirmedState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ActiveState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("EnabledState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("EnabledState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Comment")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Comment"), OpcUaQualifiedName("SourceTimestamp")),
 
-		ServiceTransactionBrowsePathToNodeId::SPtr trx = constructSPtr<ServiceTransactionBrowsePathToNodeId>();
-		BrowsePathToNodeIdRequest::SPtr req = trx->request();
-		BrowsePathToNodeIdResponse::SPtr res = trx->response();
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Acknowledge")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Confirm")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("AddComment")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Enable")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Disable")),
+		});
 
-		BrowseName::SPtr browseName;
-		OpcUaQualifiedName::SPtr pathElement;
-		rootNodeId_ = constructSPtr<OpcUaNodeId>();
-		rootNodeId_->set("AlarmObject", namespaceIndex_);
-
-		req->browseNameArray()->resize(15);
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ConfirmedState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ConfirmedState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("EnabledState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("EnabledState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Comment"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Comment"), OpcUaQualifiedName("SourceTimestamp"));
-
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Acknowledge"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Confirm"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AddComment"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Enable"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Disable"));
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "BrowsePathToNodeIdResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
-			return false;
-		}
-		if (res->nodeIdResults().get() == nullptr) {
-			Log(Error, "BrowsePathToNodeIdResponse error");
-			return false;
-		}
-		if (res->nodeIdResults()->size() != req->browseNameArray()->size()) {
-			Log(Error, "BrowsePathToNodeIdResponse size error");
+		if (!browsePathToNodeId.query(applicationServiceIf_, true)) {
+			std::cout << "browse path to node id error" << std::endl;
 			return false;
 		}
 
-		if (!getNodeIdFromResponse(res, 0, ackedStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 1, ackedStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 2, confirmedStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 3, confirmedStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 4, activeStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 5, activeStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 6, enabledStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 7, enabledStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 8, commentNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 9, commentSourceTimestampNodeId_)) return false;
+		ackedStateNodeId_ = browsePathToNodeId.nodes()[0];
+		ackedStateIdNodeId_ = browsePathToNodeId.nodes()[1];
+		confirmedStateNodeId_ = browsePathToNodeId.nodes()[2];
+		confirmedStateIdNodeId_ = browsePathToNodeId.nodes()[3];
+		activeStateNodeId_ = browsePathToNodeId.nodes()[4];
+		activeStateIdNodeId_ = browsePathToNodeId.nodes()[5];
+		enabledStateNodeId_ = browsePathToNodeId.nodes()[6];
+		enabledStateIdNodeId_ = browsePathToNodeId.nodes()[7];
+		commentNodeId_ = browsePathToNodeId.nodes()[8];
+		commentSourceTimestampNodeId_ = browsePathToNodeId.nodes()[9];
 
-		if (!getNodeIdFromResponse(res, 10, acknowlegeNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 11, confirmNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 12, addCommentNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 13, enabledNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 14, disableNodeId_)) return false;
+		acknowlegeNodeId_ = browsePathToNodeId.nodes()[10];
+		confirmNodeId_ = browsePathToNodeId.nodes()[11];
+		addCommentNodeId_ = browsePathToNodeId.nodes()[12];
+		enabledNodeId_ = browsePathToNodeId.nodes()[13];
+		disableNodeId_ = browsePathToNodeId.nodes()[14];
 
 		return true;
 	}
@@ -534,16 +500,16 @@ namespace OpcUaServerApplicationDemo
 		GetNodeReferenceResponse::SPtr res = trx->response();
 
 	  	req->nodes()->resize(10);
-	  	req->nodes()->push_back(ackedStateNodeId_);
-	  	req->nodes()->push_back(ackedStateIdNodeId_);
-	  	req->nodes()->push_back(confirmedStateNodeId_);
-	  	req->nodes()->push_back(confirmedStateIdNodeId_);
-	  	req->nodes()->push_back(activeStateNodeId_);
-	  	req->nodes()->push_back(activeStateIdNodeId_);
-	  	req->nodes()->push_back(enabledStateNodeId_);
-	  	req->nodes()->push_back(enabledStateIdNodeId_);
-	  	req->nodes()->push_back(commentNodeId_);
-	  	req->nodes()->push_back(commentSourceTimestampNodeId_);
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(ackedStateNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(ackedStateIdNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(confirmedStateNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(confirmedStateIdNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(activeStateNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(activeStateIdNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(enabledStateNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(enabledStateIdNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(commentNodeId_));
+	  	req->nodes()->push_back(constructSPtr<OpcUaNodeId>(commentSourceTimestampNodeId_));
 
 	  	applicationServiceIf_->sendSync(trx);
 	  	if (trx->statusCode() != Success) {
@@ -606,25 +572,25 @@ namespace OpcUaServerApplicationDemo
 		OpcUaNodeId contionRefresh(3875);
 		OpcUaNodeId offNormalAlarmType(2782);
 
-		if (!registerCallback(*rootNodeId_, *acknowlegeNodeId_, &acknowledgeCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, acknowlegeNodeId, &acknowledgeCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, *confirmNodeId_, &confirmCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, confirmNodeId, &confirmCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, *enabledNodeId_, &enabledCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, *disableNodeId_, &disableCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId_, &acknowledgeCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId, &acknowledgeCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId_, &confirmCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId, &confirmCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), enabledNodeId_, &enabledCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), disableNodeId_, &disableCallback_)) return false;
 		if (!registerCallback(offNormalAlarmType, contionRefresh, &conditionRefreshCallback_)) return false;
 		return true;
 	}
 
 	bool
-	Alarm::registerCallback(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback)
+	Alarm::registerCallback(const OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback)
 	{
 	  	ServiceTransactionRegisterForwardMethod::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardMethod>();
 	  	RegisterForwardMethodRequest::SPtr req = trx->request();
 	  	RegisterForwardMethodResponse::SPtr res = trx->response();
 
 	  	req->forwardMethodSync()->methodService().setCallback(*callback);
-	  	req->objectNodeId(objectNodeId);
+	  	req->objectNodeId(*const_cast<OpcUaNodeId*>(&objectNodeId));
 	  	req->methodNodeId(methodNodeId);
 
 	  	applicationServiceIf_->sendSync(trx);
@@ -733,7 +699,7 @@ namespace OpcUaServerApplicationDemo
 
 		// set condition identifier
 		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(*rootNodeId_);
+		variant->setValue(OpcUaNodeId("AlarmObject", namespaceIndex_));
 		event->setAlarmConditionType(variant);
 
 		// set event id
@@ -807,7 +773,8 @@ namespace OpcUaServerApplicationDemo
 		event->severity(variant);
 
 		// send event on alarm node
-		req->nodeId(*rootNodeId_);
+		OpcUaNodeId x("AlarmObject", namespaceIndex_);
+		req->nodeId(x);
 		eventBase = event;
 		req->eventBase(eventBase);
 

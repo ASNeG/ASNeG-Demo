@@ -35,6 +35,8 @@ namespace OpcUaServerApplicationDemo
 	, valueVec_()
 	, ioThread_()
 	, slotTimerElement_()
+	, applicationServiceIf_(nullptr)
+	, applicationInfo_(nullptr)
 	{
 		Log(Debug, "TestFolderLib::TestFolderLib");
 	}

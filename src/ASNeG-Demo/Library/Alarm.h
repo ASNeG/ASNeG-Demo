@@ -1,5 +1,5 @@
 /*
-   Copyright 2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -66,7 +66,7 @@ namespace OpcUaServerApplicationDemo
 		bool createNodeReferences(void);
 		bool getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref);
 		bool registerCallbacks(void);
-		bool registerCallback(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback);
+		bool registerCallback(const OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback);
 		void acknowledge(ApplicationMethodContext* applicationMethodContext);
 		void confirm(ApplicationMethodContext* applicationMethodContext);
 		void enabled(ApplicationMethodContext* applicationMethodContext);
@@ -86,23 +86,23 @@ namespace OpcUaServerApplicationDemo
 		//
 		// node ids
 		//
-		OpcUaNodeId::SPtr rootNodeId_;
-		OpcUaNodeId::SPtr ackedStateNodeId_;
-		OpcUaNodeId::SPtr ackedStateIdNodeId_;
-		OpcUaNodeId::SPtr confirmedStateNodeId_;
-		OpcUaNodeId::SPtr confirmedStateIdNodeId_;
-		OpcUaNodeId::SPtr activeStateNodeId_;
-		OpcUaNodeId::SPtr activeStateIdNodeId_;
-		OpcUaNodeId::SPtr enabledStateNodeId_;
-		OpcUaNodeId::SPtr enabledStateIdNodeId_;
-		OpcUaNodeId::SPtr commentNodeId_;
-		OpcUaNodeId::SPtr commentSourceTimestampNodeId_;
+		OpcUaNodeId rootNodeId_;
+		OpcUaNodeId ackedStateNodeId_;
+		OpcUaNodeId ackedStateIdNodeId_;
+		OpcUaNodeId confirmedStateNodeId_;
+		OpcUaNodeId confirmedStateIdNodeId_;
+		OpcUaNodeId activeStateNodeId_;
+		OpcUaNodeId activeStateIdNodeId_;
+		OpcUaNodeId enabledStateNodeId_;
+		OpcUaNodeId enabledStateIdNodeId_;
+		OpcUaNodeId commentNodeId_;
+		OpcUaNodeId commentSourceTimestampNodeId_;
 
-		OpcUaNodeId::SPtr acknowlegeNodeId_;
-		OpcUaNodeId::SPtr confirmNodeId_;
-		OpcUaNodeId::SPtr addCommentNodeId_;
-		OpcUaNodeId::SPtr enabledNodeId_;
-		OpcUaNodeId::SPtr disableNodeId_;
+		OpcUaNodeId acknowlegeNodeId_;
+		OpcUaNodeId confirmNodeId_;
+		OpcUaNodeId addCommentNodeId_;
+		OpcUaNodeId enabledNodeId_;
+		OpcUaNodeId disableNodeId_;
 
 		//
 		// base node class references
