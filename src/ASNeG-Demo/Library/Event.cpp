@@ -119,36 +119,20 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Event::getNamespaceInfo(void)
 	{
-		Log(Debug, "get namespace info");
+		GetNamespaceInfo getNamespaceInfo;
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "NamespaceInfoResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
+			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo.de/Event/") {
-				namespaceIndex_ = it->first;
-				return true;
-			}
- 		}
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo.de/Event/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http://ASNeG-Demo.de/Event/" << std::endl;
+			return false;
+		}
 
-		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Event/");
-
-		return false;
+		return true;
 	}
 
 	void
