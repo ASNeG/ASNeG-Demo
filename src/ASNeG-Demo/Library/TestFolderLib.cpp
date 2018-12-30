@@ -30,16 +30,13 @@ namespace OpcUaServerApplicationDemo
 
 	TestFolderLib::TestFolderLib(void)
 	: namespaceIndex_(0)
-	, loopTime_()
+	, loopTime_(0)
 	, valueMap_()
 	, valueVec_()
 	, ioThread_()
 	, slotTimerElement_()
 	{
 		Log(Debug, "TestFolderLib::TestFolderLib");
-
-		loopTime_ = createDataValue();
-		loopTime_->variant()->variant((uint32_t)0);
 	}
 
 	TestFolderLib::~TestFolderLib(void)
@@ -110,17 +107,6 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		return true;
-	}
-
-	OpcUaDataValue::SPtr
-	TestFolderLib::createDataValue(void)
-	{
-		OpcUaDataValue::SPtr dataValue;
-		dataValue = constructSPtr<OpcUaDataValue>();
-		dataValue->statusCode(Success);
-		dataValue->sourceTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
-		dataValue->serverTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
-		return dataValue;
 	}
 
 	bool
@@ -464,10 +450,8 @@ namespace OpcUaServerApplicationDemo
 	void
 	TestFolderLib::readLoopTimeValue(ApplicationReadContext* applicationReadContext)
 	{
-		//std::cout << "read loop time value ..." << applicationReadContext->nodeId_ << std::endl;
-
 		applicationReadContext->statusCode_ = Success;
-		loopTime_->copyTo(applicationReadContext->dataValue_);
+		applicationReadContext->dataValue_ = OpcUaDataValue(loopTime_);
 	}
 
 	void
@@ -498,7 +482,7 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		applicationWriteContext->statusCode_ = Success;
-		applicationWriteContext->dataValue_.copyTo(*loopTime_);
+		applicationWriteContext->dataValue_.getValue(loopTime_);
 
 		if (slotTimerElement_.get() != nullptr) {
 			ioThread_->slotTimer()->stop(slotTimerElement_);
@@ -516,8 +500,7 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::startTimerLoop(void)
 	{
 		// TimerInterval
-		OpcUaUInt32 loopTime(1111);
-		loopTime_->variant()->variant(loopTime);
+		loopTime_ = 1111;
 
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
 		slotTimerElement_->callback().reset(boost::bind(&TestFolderLib::timerLoop, this));
