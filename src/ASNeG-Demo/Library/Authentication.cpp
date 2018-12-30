@@ -21,6 +21,8 @@
 #include "OpcUaStackCore/Certificate/Certificate.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardGlobal.h"
 #include "ASNeG-Demo/Library/Authentication.h"
 
 namespace OpcUaServerApplicationDemo
@@ -121,9 +123,6 @@ namespace OpcUaServerApplicationDemo
 	: ioThread_(nullptr)
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
-	, authenticationCallback_(boost::bind(&Authentication::authenticationCallback, this, _1))
-	, autorizationCallback_(boost::bind(&Authentication::autorizationCallback, this, _1))
-	, closeSessionCallback_(boost::bind(&Authentication::closeSessionCallback, this, _1))
 	, namespaceIndex_(0)
 	{
 	}
@@ -178,63 +177,34 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Authentication::getNamespaceInfo(void)
 	{
-		Log(Debug, "get namespace info");
+		GetNamespaceInfo getNamespaceInfo;
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "NamespaceInfoResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
+			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo.de/Auth/") {
-				namespaceIndex_ = it->first;
-				return true;
-			}
- 		}
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo.de/Auth/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http://ASNeG-Demo.de/Auth/" << std::endl;
+			return false;
+		}
 
-		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Auth/");
-
-		return false;
+		return true;
 	}
 
 	bool
 	Authentication::registerAuthenticationCallback(void)
 	{
-		Log(Debug, "registern authenitcation callbacks");
-
-		ServiceTransactionRegisterForwardGlobal::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardGlobal>();
-		RegisterForwardGlobalRequest::SPtr req = trx->request();
-		RegisterForwardGlobalResponse::SPtr res = trx->response();
-
-		req->forwardGlobalSync()->authenticationService().setCallback(authenticationCallback_);
-		req->forwardGlobalSync()->autorizationService().setCallback(autorizationCallback_);
-		req->forwardGlobalSync()->closeSessionService().setCallback(closeSessionCallback_);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		Log(Error, "send authentication request error");
-	  		return false;
-	  	}
-
-	  	if (res->statusCode() != Success) {
-	  		Log(Debug, "authentication response error");
-  			return false;
-	  	}
-
-	  	return true;
+		RegisterForwardGlobal registerForwardGlobal;
+		registerForwardGlobal.setAuthenticationCallback(boost::bind(&Authentication::authenticationCallback, this, _1));
+		registerForwardGlobal.setAutorizationCallback(boost::bind(&Authentication::autorizationCallback, this, _1));
+		registerForwardGlobal.setCloseSessionCallback(boost::bind(&Authentication::closeSessionCallback, this, _1));
+		if (!registerForwardGlobal.query(applicationServiceIf_)) {
+			std::cout << "registerForwardGlobal response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	bool

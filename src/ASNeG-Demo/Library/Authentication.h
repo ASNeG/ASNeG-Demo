@@ -80,10 +80,6 @@ namespace OpcUaServerApplicationDemo
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
 
-		Callback authenticationCallback_;
-		Callback autorizationCallback_;
-		Callback closeSessionCallback_;
-
 		uint32_t namespaceIndex_;
 
 		BaseNodeClass::WPtr value01_;
