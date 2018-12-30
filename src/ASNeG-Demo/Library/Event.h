@@ -61,9 +61,6 @@ namespace OpcUaServerApplicationDemo
 
 		uint32_t namespaceIndex_;
 		uint32_t counter_;
-
-		Callback eventItemStartCallback_;
-		Callback eventItemStopCallback_;
 	};
 
 }

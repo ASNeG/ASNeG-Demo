@@ -40,8 +40,6 @@ namespace OpcUaServerApplicationDemo
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
 	, counter_(0)
-	, eventItemStartCallback_(boost::bind(&Event::eventItemStartCallback, this, _1))
-	, eventItemStopCallback_(boost::bind(&Event::eventItemStopCallback, this, _1))
 	{
 	}
 
@@ -108,27 +106,14 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Event::registerEventCallbacks(void)
 	{
-		Log(Debug, "registern event callbacks");
-
-		ServiceTransactionRegisterForwardGlobal::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardGlobal>();
-		RegisterForwardGlobalRequest::SPtr req = trx->request();
-		RegisterForwardGlobalResponse::SPtr res = trx->response();
-
-		req->forwardGlobalSync()->eventItemStartService().setCallback(eventItemStartCallback_);
-		req->forwardGlobalSync()->eventItemStopService().setCallback(eventItemStopCallback_);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  		return false;
-	  	}
-
-	  	if (res->statusCode() != Success) {
-  			std::cout << "register event callbacks error" << std::endl;
-  			return false;
-	  	}
-
-	  	return true;
+		RegisterForwardGlobal registerForwardGlobal;
+		registerForwardGlobal.setEventItemStartCallback(boost::bind(&Event::eventItemStartCallback, this, _1));
+		registerForwardGlobal.setEventItemStopCallback(boost::bind(&Event::eventItemStopCallback, this, _1));
+		if (!registerForwardGlobal.query(applicationServiceIf_)) {
+			std::cout << "registerForwardGlobal response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	bool
