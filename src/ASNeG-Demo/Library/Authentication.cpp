@@ -23,6 +23,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
 #include "OpcUaStackServer/ServiceSetApplication/RegisterForwardGlobal.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
 #include "ASNeG-Demo/Library/Authentication.h"
 
 namespace OpcUaServerApplicationDemo
@@ -430,92 +431,51 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "get references");
 
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-		OpcUaNodeId::SPtr nodeId;
-
-		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
-		GetNodeReferenceRequest::SPtr req = trx->request();
-		GetNodeReferenceResponse::SPtr res = trx->response();
-
-	  	req->nodes()->resize(5);
-	  	nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set("Auth.Value01", namespaceIndex_);
-	  	req->nodes()->push_back(nodeId);
-	  	nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set("Auth.Value02", namespaceIndex_);
-	  	req->nodes()->push_back(nodeId);
-	  	nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set("Auth.Value03", namespaceIndex_);
-	  	req->nodes()->push_back(nodeId);
-	  	nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set("Auth.Value04", namespaceIndex_);
-	  	req->nodes()->push_back(nodeId);
-	  	nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set("Auth.Value05", namespaceIndex_);
-	  	req->nodes()->push_back(nodeId);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		Log(Error, "GetNodeReference error")
-	  		    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		// read node references
+		GetNodeReference getNodeReference({
+			OpcUaNodeId("Auth.Value01", namespaceIndex_),
+			OpcUaNodeId("Auth.Value02", namespaceIndex_),
+			OpcUaNodeId("Auth.Value03", namespaceIndex_),
+			OpcUaNodeId("Auth.Value04", namespaceIndex_),
+			OpcUaNodeId("Auth.Value05", namespaceIndex_),
+		});
+		if (!getNodeReference.query(applicationServiceIf_, true)) {
+	  		std::cout << "response error" << std::endl;
 	  		return false;
-	  	}
-		if (res->nodeReferenceArray().get() == nullptr) {
-			Log(Error, "GetNodeReference error");
-			return false;
-		}
-		if (res->nodeReferenceArray()->size() != req->nodes()->size()) {
-			Log(Error, "GetNodeReference size error");
-			return false;
 		}
 
-		if (!getRefFromResponse(res, 0, value01_)) return false;
-		if (!getRefFromResponse(res, 1, value02_)) return false;
-		if (!getRefFromResponse(res, 2, value03_)) return false;
-		if (!getRefFromResponse(res, 3, value04_)) return false;
-		if (!getRefFromResponse(res, 4, value05_)) return false;
+		value01_ = getNodeReference.nodeReferences()[0];
+		value02_ = getNodeReference.nodeReferences()[1];
+		value03_ = getNodeReference.nodeReferences()[2];
+		value04_ = getNodeReference.nodeReferences()[3];
+		value05_ = getNodeReference.nodeReferences()[4];
+
+		BaseNodeClass::SPtr baseNodeClass;
 
 		baseNodeClass = value01_.lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue((double)1);
-		baseNodeClass->setValueSync(dataValue);
+		OpcUaDataValue dataValue1((double)1);
+		baseNodeClass->setValueSync(dataValue1);
 
 		baseNodeClass = value02_.lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue((double)2);
-		baseNodeClass->setValueSync(dataValue);
+		OpcUaDataValue dataValue2((double)2);
+		baseNodeClass->setValueSync(dataValue2);
 
 		baseNodeClass = value03_.lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue((double)3);
-		baseNodeClass->setValueSync(dataValue);
+		OpcUaDataValue dataValue3((double)3);
+		baseNodeClass->setValueSync(dataValue3);
 
 		baseNodeClass = value04_.lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue((double)4);
-		baseNodeClass->setValueSync(dataValue);
+		OpcUaDataValue dataValue4((double)4);
+		baseNodeClass->setValueSync(dataValue4);
 
 		baseNodeClass = value05_.lock();
 		if (baseNodeClass.get() == nullptr) return false;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue((double)5);
-		baseNodeClass->setValueSync(dataValue);
+		OpcUaDataValue dataValue5((double)5);
+		baseNodeClass->setValueSync(dataValue5);
 
 		return true;
 	}
