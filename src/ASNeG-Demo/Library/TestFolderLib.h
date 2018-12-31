@@ -51,7 +51,6 @@ namespace OpcUaServerApplicationDemo
 		void updateSingle(const OpcUaNodeId& nodeId, const OpcUaDataValue::SPtr dataValue, const BaseNodeClass::SPtr baseNodeClass);
 		void updateArray(const OpcUaNodeId& nodeId, const OpcUaDataValue::SPtr dataValue, const BaseNodeClass::SPtr baseNodeClass);
 
-		OpcUaDataValue::SPtr createDataValue(void);
 		bool createValueMap(void);
 		bool registerCallbacks(void);
 		bool registerLoopTimeCallbacks(void);
@@ -61,11 +60,7 @@ namespace OpcUaServerApplicationDemo
 		void timerLoop(void);
 
 		uint32_t namespaceIndex_;
-		OpcUaDataValue::SPtr loopTime_;
-		Callback readCallback_;
-		Callback readLoopTimeCallback_;
-		Callback writeCallback_;
-		Callback writeLoopTimeCallback_;
+		uint32_t loopTime_;
 
 		typedef std::vector<OpcUaNodeId> ValueVec;
 		typedef std::map<OpcUaNodeId,OpcUaDataValue::SPtr> ValueMap;

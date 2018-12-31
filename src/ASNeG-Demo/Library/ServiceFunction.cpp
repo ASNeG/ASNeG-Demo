@@ -1,5 +1,5 @@
 /*
-   Copyright 2016-2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -21,6 +21,8 @@
 #include "OpcUaStackCore/Utility/Environment.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardMethod.h"
 #include "ASNeG-Demo/Library/ServiceFunction.h"
 
 namespace OpcUaServerApplicationDemo
@@ -31,8 +33,6 @@ namespace OpcUaServerApplicationDemo
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
-	, baseNodeClassWMap_()
-	, methodCallback_(boost::bind(&ServiceFunction::method, this, _1))
 	{
 	}
 
@@ -59,11 +59,7 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		// register function callbacks
-		OpcUaNodeId object("Service", namespaceIndex_);
-		OpcUaNodeId method;
-
-		method.set("Service.Reload", namespaceIndex_);
-		if (!registerCallbacks(object, method)) return false;
+		if (!registerCallbacks(OpcUaNodeId("Service", namespaceIndex_), OpcUaNodeId("Service.Reload", namespaceIndex_))) return false;
 
 		return true;
 	}
@@ -79,65 +75,34 @@ namespace OpcUaServerApplicationDemo
 	bool
 	ServiceFunction::getNamespaceInfo(void)
 	{
-		Log(Debug, "get namespace info");
+		GetNamespaceInfo getNamespaceInfo;
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "NamespaceInfoResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
+			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo/Service/") {
-				namespaceIndex_ = it->first;
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo/Service/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http://ASNeG-Demo/Service/" << std::endl;
+			return false;
+		}
 
-				reloadFunc_.set(std::string("Service.Reload"), namespaceIndex_);
-				return true;
-			}
- 		}
-
-		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Service/");
-
-		return false;
+		return true;
 	}
 
 	bool
-	ServiceFunction::registerCallbacks(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId)
+	ServiceFunction::registerCallbacks(const OpcUaNodeId& objectNodeId, const OpcUaNodeId& methodNodeId)
 	{
 		Log(Debug, "register method callbacks");
 
-	  	ServiceTransactionRegisterForwardMethod::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardMethod>();
-	  	RegisterForwardMethodRequest::SPtr req = trx->request();
-	  	RegisterForwardMethodResponse::SPtr res = trx->response();
-
-	  	req->forwardMethodSync()->methodService().setCallback(methodCallback_);
-	  	req->objectNodeId(objectNodeId);
-	  	req->methodNodeId(methodNodeId);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  		return false;
-	  	}
-
-	  	if (res->statusCode() != Success) {
-  			std::cout << "register value error" << std::endl;
-  			return false;
-	  	}
-
-		return true;
+		RegisterForwardMethod registerForwardMethod(objectNodeId, methodNodeId);
+		registerForwardMethod.setMethodCallback(boost::bind(&ServiceFunction::method, this, _1));
+		if (!registerForwardMethod.query(applicationServiceIf_)) {
+			std::cout << "registerForwardNode response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	void
@@ -148,7 +113,7 @@ namespace OpcUaServerApplicationDemo
 			.parameter("MethodNodeId", applicationMethodContext->methodNodeId_);
 
 		// reload function
-		if (applicationMethodContext->methodNodeId_ == reloadFunc_) {
+		if (applicationMethodContext->methodNodeId_ == OpcUaNodeId("Service.Reload", namespaceIndex_)) {
 			applicationServiceIf_->reload();
 			applicationMethodContext->statusCode_ = Success;
 		}

@@ -35,6 +35,7 @@
 #include "ASNeG-Demo/Library/Authentication.h"
 #include "ASNeG-Demo/Library/HistoricalAccess.h"
 #include "ASNeG-Demo/Library/Discovery.h"
+#include "ASNeG-Demo/Library/CreateDeleteNode.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -67,6 +68,7 @@ namespace OpcUaServerApplicationDemo
 		Authentication authentication_;
 		HistoricalAccess historicalAccess_;
 		Discovery discovery_;
+		CreateDeleteNode createDeleteNode_;
 
 		IOThread ioThread_;
 	};

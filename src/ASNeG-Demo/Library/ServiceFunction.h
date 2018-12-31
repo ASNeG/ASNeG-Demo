@@ -41,22 +41,14 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		bool getNamespaceInfo(void);
-		bool registerCallbacks(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId);
+		bool registerCallbacks(const OpcUaNodeId& objectNodeId, const OpcUaNodeId& methodNodeId);
 		void method(ApplicationMethodContext* applicationMethodContext);
 
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
-
 		uint32_t namespaceIndex_;
 
-		typedef std::map<OpcUaNodeId,OpcUaDataValue::SPtr> ValueMap;
-		typedef std::map<OpcUaNodeId,BaseNodeClass::WPtr> BaseNodeClassWMap;
-		BaseNodeClassWMap baseNodeClassWMap_;
-
-		Callback methodCallback_;
-
-		OpcUaNodeId reloadFunc_;
 	};
 
 }

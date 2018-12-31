@@ -38,6 +38,7 @@ namespace OpcUaServerApplicationDemo
 	, authentication_()
 	, historicalAccess_()
 	, discovery_()
+	, createDeleteNode_()
 	{
 	}
 
@@ -62,6 +63,7 @@ namespace OpcUaServerApplicationDemo
 		authentication_.startup(ioThread_, service(), applicationInfo());
 		historicalAccess_.startup(ioThread_, service(), applicationInfo());
 		discovery_.startup(ioThread_, service(), applicationInfo());
+		createDeleteNode_.startup(ioThread_, service(), applicationInfo());
 		return true;
 	}
 
@@ -70,6 +72,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "DemoLibrary::shutdown");
 
+		createDeleteNode_.shutdown();
 		discovery_.shutdown();
 		historicalAccess_.shutdown();
 		authentication_.shutdown();
