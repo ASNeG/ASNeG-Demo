@@ -25,6 +25,7 @@
 #include "OpcUaStackServer/ServiceSetApplication/BrowsePathToNodeId.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
 #include "OpcUaStackServer/ServiceSetApplication/RegisterForwardMethod.h"
+#include "OpcUaStackServer/ServiceSetApplication/FireEvent.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 using namespace OpcUaStackCore;
@@ -112,16 +113,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::ackedState(const OpcUaLocalizedText& ackedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = ackedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(ackedState);
+		OpcUaDataValue dataValue(ackedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -129,14 +123,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::ackedState(void)
 	{
 		OpcUaLocalizedText ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = ackedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedState_.lock();
 		if (baseNodeClass.get() == nullptr) return ackedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(ackedState);
+		dataValue.getValue(ackedState);
 
 		return ackedState;
 	}
@@ -144,16 +137,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::ackedState_Id(bool ackedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = ackedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(ackedState);
+		OpcUaDataValue dataValue((OpcUaBoolean)ackedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -161,14 +147,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::ackedState_Id(void)
 	{
 		OpcUaBoolean ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = ackedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return ackedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(ackedState);
+		dataValue.getValue(ackedState);
 
 		return ackedState;
 	}
@@ -176,16 +161,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::confirmedState(const OpcUaLocalizedText& confirmedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = confirmedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(confirmedState);
+		OpcUaDataValue dataValue(confirmedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -193,14 +171,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::confirmedState(void)
 	{
 		OpcUaLocalizedText confirmedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = confirmedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedState_.lock();
 		if (baseNodeClass.get() == nullptr) return confirmedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(confirmedState);
+		dataValue.getValue(confirmedState);
 
 		return confirmedState;
 	}
@@ -208,16 +185,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::confirmedState_Id(bool confirmedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = confirmedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(confirmedState);
+		OpcUaDataValue dataValue((OpcUaBoolean)confirmedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -225,14 +195,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::confirmedState_Id(void)
 	{
 		OpcUaBoolean confirmedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = confirmedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return confirmedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(confirmedState);
+		dataValue.getValue(confirmedState);
 
 		return confirmedState;
 	}
@@ -240,16 +209,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::activeState(const OpcUaLocalizedText& activeState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = activeState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(activeState);
+		OpcUaDataValue dataValue(activeState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -257,14 +219,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::activeState(void)
 	{
 		OpcUaLocalizedText activeState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = activeState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeState_.lock();
 		if (baseNodeClass.get() == nullptr) return activeState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(activeState);
+		dataValue.getValue(activeState);
 
 		return activeState;
 	}
@@ -272,16 +233,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::activeState_Id(bool activeState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = activeStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(activeState);
+		OpcUaDataValue dataValue((OpcUaBoolean)activeState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -289,14 +243,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::activeState_Id(void)
 	{
 		OpcUaBoolean activeState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = activeStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return activeState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(activeState);
+		dataValue.getValue(activeState);
 
 		return activeState;
 	}
@@ -304,16 +257,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::enabledState(const OpcUaLocalizedText& enabledState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = enabledState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(enabledState);
+		OpcUaDataValue dataValue(enabledState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -321,10 +267,9 @@ namespace OpcUaServerApplicationDemo
 	Alarm::enabledState(void)
 	{
 		OpcUaLocalizedText enabledState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = enabledState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledState_.lock();
 		if (baseNodeClass.get() == nullptr) return enabledState;
 
 		baseNodeClass->getValueSync(dataValue);
@@ -336,16 +281,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::enabledState_Id(bool enabledState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = enabledStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(enabledState);
+		OpcUaDataValue dataValue((OpcUaBoolean)enabledState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -353,14 +291,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::enabledState_Id(void)
 	{
 		OpcUaBoolean enabledState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = enabledStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return enabledState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(enabledState);
+		dataValue.getValue(enabledState);
 
 		return enabledState;
 	}
@@ -368,16 +305,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::comment(const OpcUaLocalizedText& comment)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = comment_.lock();
+		BaseNodeClass::SPtr baseNodeClass = comment_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(comment);
+		OpcUaDataValue dataValue(comment);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -385,14 +315,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::comment(void)
 	{
 		OpcUaLocalizedText comment("", "");
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = comment_.lock();
+		BaseNodeClass::SPtr baseNodeClass = comment_.lock();
 		if (baseNodeClass.get() == nullptr) return comment;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(comment);
+		dataValue.getValue(comment);
 
 		return comment;
 	}
@@ -616,48 +545,36 @@ namespace OpcUaServerApplicationDemo
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
 
-		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
-		FireEventRequest::SPtr req = trx->request();
-		FireEventResponse::SPtr res = trx->response();
-
 		// set condition identifier
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaNodeId("AlarmObject", namespaceIndex_));
+		variant = constructSPtr<OpcUaVariant>(OpcUaNodeId("AlarmObject", namespaceIndex_));
 		event->setAlarmConditionType(variant);
 
 		// set event id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaByteString("0123456789012345")); // FIXME:
+		variant = constructSPtr<OpcUaVariant>(OpcUaByteString("0123456789012345"));
 		event->eventId(variant);
 
 		// set condition name
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaString("OffNormalAlarm")); // FIXME:
+		variant = constructSPtr<OpcUaVariant>(OpcUaString("OffNormalAlarm"));
 		event->conditionName(variant);
 
 		// set branch id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaNodeId()); // FIXME:
+		variant = constructSPtr<OpcUaVariant>(OpcUaNodeId()); // FIXME:
 		event->branchId(variant);
 
 		// set active state
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(activeState());
+		variant = constructSPtr<OpcUaVariant>(activeState());
 		event->activeState(variant);
 
 		// set active state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(activeState_Id());
+		variant = constructSPtr<OpcUaVariant>(activeState_Id());
 		event->activeState_Id(variant);
 
 		// set acked state
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(ackedState());
+		variant = constructSPtr<OpcUaVariant>(ackedState());
 		event->ackedState(variant);
 
 		// set acked state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(ackedState_Id());
+		variant = constructSPtr<OpcUaVariant>(ackedState_Id());
 		event->ackedState_Id(variant);
 
 		// set confirm state
@@ -666,18 +583,15 @@ namespace OpcUaServerApplicationDemo
 		event->confirmedState(variant);
 
 		// set confirm state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(confirmedState_Id());
+		variant = constructSPtr<OpcUaVariant>(confirmedState_Id());
 		event->confirmedState_Id(variant);
 
 		// set enabled state
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(enabledState());
+		variant = constructSPtr<OpcUaVariant>(enabledState());
 		event->enabledState(variant);
 
 		// set enabled state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(enabledState_Id());
+		variant = constructSPtr<OpcUaVariant>(enabledState_Id());
 		event->enabledState_Id(variant);
 
 		// set retain
@@ -686,25 +600,17 @@ namespace OpcUaServerApplicationDemo
 		event->retain(variant);
 
 		// set message value
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaLocalizedText("en", eventMessage.c_str()));
+		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("en", eventMessage.c_str()));
 		event->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaUInt16)500);
+		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)500);
 		event->severity(variant);
 
 		// send event on alarm node
-		OpcUaNodeId x("AlarmObject", namespaceIndex_);
-		req->nodeId(x);
-		eventBase = event;
-		req->eventBase(eventBase);
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Debug, "event response error")
-				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		FireEvent fireEvent(OpcUaNodeId("AlarmObject", namespaceIndex_), event);
+		if (!fireEvent.fireEvent(applicationServiceIf_)) {
+			std::cout << "event response error" << std::endl;
 		}
 	}
 
