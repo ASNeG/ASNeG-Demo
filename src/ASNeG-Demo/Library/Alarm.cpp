@@ -1,5 +1,5 @@
 /*
-   Copyright 2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -21,6 +21,11 @@
 #include "OpcUaStackCore/BuildInTypes/BuildInTypes.h"
 #include "OpcUaStackCore/StandardEventType/OffNormalAlarmType.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/BrowsePathToNodeId.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardMethod.h"
+#include "OpcUaStackServer/ServiceSetApplication/FireEvent.h"
 #include "ASNeG-Demo/Library/Alarm.h"
 
 using namespace OpcUaStackCore;
@@ -108,16 +113,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::ackedState(const OpcUaLocalizedText& ackedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = ackedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(ackedState);
+		OpcUaDataValue dataValue(ackedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -125,14 +123,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::ackedState(void)
 	{
 		OpcUaLocalizedText ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = ackedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedState_.lock();
 		if (baseNodeClass.get() == nullptr) return ackedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(ackedState);
+		dataValue.getValue(ackedState);
 
 		return ackedState;
 	}
@@ -140,16 +137,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::ackedState_Id(bool ackedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = ackedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(ackedState);
+		OpcUaDataValue dataValue((OpcUaBoolean)ackedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -157,14 +147,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::ackedState_Id(void)
 	{
 		OpcUaBoolean ackedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = ackedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = ackedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return ackedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(ackedState);
+		dataValue.getValue(ackedState);
 
 		return ackedState;
 	}
@@ -172,16 +161,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::confirmedState(const OpcUaLocalizedText& confirmedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = confirmedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(confirmedState);
+		OpcUaDataValue dataValue(confirmedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -189,14 +171,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::confirmedState(void)
 	{
 		OpcUaLocalizedText confirmedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = confirmedState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedState_.lock();
 		if (baseNodeClass.get() == nullptr) return confirmedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(confirmedState);
+		dataValue.getValue(confirmedState);
 
 		return confirmedState;
 	}
@@ -204,16 +185,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::confirmedState_Id(bool confirmedState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = confirmedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(confirmedState);
+		OpcUaDataValue dataValue((OpcUaBoolean)confirmedState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -221,14 +195,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::confirmedState_Id(void)
 	{
 		OpcUaBoolean confirmedState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = confirmedStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = confirmedStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return confirmedState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(confirmedState);
+		dataValue.getValue(confirmedState);
 
 		return confirmedState;
 	}
@@ -236,16 +209,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::activeState(const OpcUaLocalizedText& activeState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = activeState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(activeState);
+		OpcUaDataValue dataValue(activeState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -253,14 +219,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::activeState(void)
 	{
 		OpcUaLocalizedText activeState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = activeState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeState_.lock();
 		if (baseNodeClass.get() == nullptr) return activeState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(activeState);
+		dataValue.getValue(activeState);
 
 		return activeState;
 	}
@@ -268,16 +233,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::activeState_Id(bool activeState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = activeStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(activeState);
+		OpcUaDataValue dataValue((OpcUaBoolean)activeState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -285,14 +243,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::activeState_Id(void)
 	{
 		OpcUaBoolean activeState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = activeStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = activeStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return activeState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(activeState);
+		dataValue.getValue(activeState);
 
 		return activeState;
 	}
@@ -300,16 +257,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::enabledState(const OpcUaLocalizedText& enabledState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = enabledState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledState_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(enabledState);
+		OpcUaDataValue dataValue(enabledState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -317,10 +267,9 @@ namespace OpcUaServerApplicationDemo
 	Alarm::enabledState(void)
 	{
 		OpcUaLocalizedText enabledState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = enabledState_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledState_.lock();
 		if (baseNodeClass.get() == nullptr) return enabledState;
 
 		baseNodeClass->getValueSync(dataValue);
@@ -332,16 +281,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::enabledState_Id(bool enabledState)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = enabledStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(enabledState);
+		OpcUaDataValue dataValue((OpcUaBoolean)enabledState);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -349,14 +291,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::enabledState_Id(void)
 	{
 		OpcUaBoolean enabledState;
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = enabledStateId_.lock();
+		BaseNodeClass::SPtr baseNodeClass = enabledStateId_.lock();
 		if (baseNodeClass.get() == nullptr) return enabledState;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(enabledState);
+		dataValue.getValue(enabledState);
 
 		return enabledState;
 	}
@@ -364,16 +305,9 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::comment(const OpcUaLocalizedText& comment)
 	{
-		OpcUaDateTime dateTime(boost::posix_time::microsec_clock::universal_time());
-		BaseNodeClass::SPtr baseNodeClass;
-		OpcUaDataValue dataValue;
-
-		baseNodeClass = comment_.lock();
+		BaseNodeClass::SPtr baseNodeClass = comment_.lock();
 		if (baseNodeClass.get() == nullptr) return;
-		dataValue.serverTimestamp(dateTime);
-		dataValue.sourceTimestamp(dateTime);
-		dataValue.statusCode(Success);
-		dataValue.variant()->setValue(comment);
+		OpcUaDataValue dataValue(comment);
 		baseNodeClass->setValueSync(dataValue);
 	}
 
@@ -381,14 +315,13 @@ namespace OpcUaServerApplicationDemo
 	Alarm::comment(void)
 	{
 		OpcUaLocalizedText comment("", "");
-		BaseNodeClass::SPtr baseNodeClass;
 		OpcUaDataValue dataValue;
 
-		baseNodeClass = comment_.lock();
+		BaseNodeClass::SPtr baseNodeClass = comment_.lock();
 		if (baseNodeClass.get() == nullptr) return comment;
 
 		baseNodeClass->getValueSync(dataValue);
-		dataValue.variant()->getValue(comment);
+		dataValue.getValue(comment);
 
 		return comment;
 	}
@@ -403,197 +336,95 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Alarm::getNamespaceInfo(void)
 	{
-		Log(Debug, "get namespace info");
+		GetNamespaceInfo getNamespaceInfo;
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "NamespaceInfoResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
+			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo.de/Alarm/") {
-				namespaceIndex_ = it->first;
-				return true;
-			}
- 		}
-
-		Log(Error, "namespace not found in opc ua information model")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Alarm/");
-
-		return false;
-	}
-
-	bool
-	Alarm::getNodeIds(void)
-	{
-		Log(Debug, "get node ids");
-
-		ServiceTransactionBrowsePathToNodeId::SPtr trx = constructSPtr<ServiceTransactionBrowsePathToNodeId>();
-		BrowsePathToNodeIdRequest::SPtr req = trx->request();
-		BrowsePathToNodeIdResponse::SPtr res = trx->response();
-
-		BrowseName::SPtr browseName;
-		OpcUaQualifiedName::SPtr pathElement;
-		rootNodeId_ = constructSPtr<OpcUaNodeId>();
-		rootNodeId_->set("AlarmObject", namespaceIndex_);
-
-		req->browseNameArray()->resize(15);
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ConfirmedState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ConfirmedState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("EnabledState"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("EnabledState"), OpcUaQualifiedName("Id"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Comment"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Comment"), OpcUaQualifiedName("SourceTimestamp"));
-
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Acknowledge"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Confirm"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("AddComment"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Enable"));
-		req->addBrowsePath(*rootNodeId_, OpcUaQualifiedName("Disable"));
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "BrowsePathToNodeIdResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo.de/Alarm/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http://ASNeG-Demo.de/Alarm/" << std::endl;
 			return false;
 		}
-		if (res->nodeIdResults().get() == nullptr) {
-			Log(Error, "BrowsePathToNodeIdResponse error");
-			return false;
-		}
-		if (res->nodeIdResults()->size() != req->browseNameArray()->size()) {
-			Log(Error, "BrowsePathToNodeIdResponse size error");
-			return false;
-		}
-
-		if (!getNodeIdFromResponse(res, 0, ackedStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 1, ackedStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 2, confirmedStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 3, confirmedStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 4, activeStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 5, activeStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 6, enabledStateNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 7, enabledStateIdNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 8, commentNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 9, commentSourceTimestampNodeId_)) return false;
-
-		if (!getNodeIdFromResponse(res, 10, acknowlegeNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 11, confirmNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 12, addCommentNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 13, enabledNodeId_)) return false;
-		if (!getNodeIdFromResponse(res, 14, disableNodeId_)) return false;
 
 		return true;
 	}
 
 	bool
-	Alarm::getNodeIdFromResponse(BrowsePathToNodeIdResponse::SPtr& res, uint32_t idx, OpcUaNodeId::SPtr& nodeId)
+	Alarm::getNodeIds(void)
 	{
-		NodeIdResult::SPtr nodeIdResult;
-		if (!res->nodeIdResults()->get(idx, nodeIdResult)) {
-			Log(Error, "node id result not exist in response")
-				.parameter("Idx", idx);
+		BrowsePathToNodeId browsePathToNodeId({
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("AckedState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("AckedState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ConfirmedState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ConfirmedState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ActiveState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("ActiveState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("EnabledState")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("EnabledState"), OpcUaQualifiedName("Id")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Comment")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Comment"), OpcUaQualifiedName("SourceTimestamp")),
+
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Acknowledge")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Confirm")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("AddComment")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Enable")),
+			BrowseName(OpcUaNodeId("AlarmObject", namespaceIndex_), OpcUaQualifiedName("Disable")),
+		});
+
+		if (!browsePathToNodeId.query(applicationServiceIf_, true)) {
+			std::cout << "browse path to node id error" << std::endl;
 			return false;
 		}
 
-		if (nodeIdResult->statusCode() != Success) {
-			Log(Error, "node id result error in response")
-				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeIdResult->statusCode()))
-				.parameter("Idx", idx);
-			return false;
-		}
+		ackedStateNodeId_ = browsePathToNodeId.nodes()[0];
+		ackedStateIdNodeId_ = browsePathToNodeId.nodes()[1];
+		confirmedStateNodeId_ = browsePathToNodeId.nodes()[2];
+		confirmedStateIdNodeId_ = browsePathToNodeId.nodes()[3];
+		activeStateNodeId_ = browsePathToNodeId.nodes()[4];
+		activeStateIdNodeId_ = browsePathToNodeId.nodes()[5];
+		enabledStateNodeId_ = browsePathToNodeId.nodes()[6];
+		enabledStateIdNodeId_ = browsePathToNodeId.nodes()[7];
+		commentNodeId_ = browsePathToNodeId.nodes()[8];
+		commentSourceTimestampNodeId_ = browsePathToNodeId.nodes()[9];
 
-		nodeId = constructSPtr<OpcUaNodeId>();
-		*nodeId = nodeIdResult->nodeId();
+		acknowlegeNodeId_ = browsePathToNodeId.nodes()[10];
+		confirmNodeId_ = browsePathToNodeId.nodes()[11];
+		addCommentNodeId_ = browsePathToNodeId.nodes()[12];
+		enabledNodeId_ = browsePathToNodeId.nodes()[13];
+		disableNodeId_ = browsePathToNodeId.nodes()[14];
+
 		return true;
 	}
 
 	bool
 	Alarm::createNodeReferences(void)
 	{
-		Log(Debug, "get references");
+		GetNodeReference getNodeReference({
+			ackedStateNodeId_, ackedStateIdNodeId_,
+			confirmedStateNodeId_, confirmedStateIdNodeId_,
+			activeStateNodeId_, activeStateIdNodeId_,
+			enabledStateNodeId_, enabledStateIdNodeId_,
+			commentNodeId_, commentSourceTimestampNodeId_
+		});
 
-		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
-		GetNodeReferenceRequest::SPtr req = trx->request();
-		GetNodeReferenceResponse::SPtr res = trx->response();
-
-	  	req->nodes()->resize(10);
-	  	req->nodes()->push_back(ackedStateNodeId_);
-	  	req->nodes()->push_back(ackedStateIdNodeId_);
-	  	req->nodes()->push_back(confirmedStateNodeId_);
-	  	req->nodes()->push_back(confirmedStateIdNodeId_);
-	  	req->nodes()->push_back(activeStateNodeId_);
-	  	req->nodes()->push_back(activeStateIdNodeId_);
-	  	req->nodes()->push_back(enabledStateNodeId_);
-	  	req->nodes()->push_back(enabledStateIdNodeId_);
-	  	req->nodes()->push_back(commentNodeId_);
-	  	req->nodes()->push_back(commentSourceTimestampNodeId_);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		Log(Error, "GetNodeReference error")
-	  		    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNodeReference.query(applicationServiceIf_, true)) {
+	  		std::cout << "response error" << std::endl;
 	  		return false;
-	  	}
-		if (res->nodeReferenceArray().get() == nullptr) {
-			Log(Error, "GetNodeReference error");
-			return false;
-		}
-		if (res->nodeReferenceArray()->size() != req->nodes()->size()) {
-			Log(Error, "GetNodeReference size error");
-			return false;
 		}
 
-		if (!getRefFromResponse(res, 0, ackedState_)) return false;
-		if (!getRefFromResponse(res, 1, ackedStateId_)) return false;
-		if (!getRefFromResponse(res, 2, confirmedState_)) return false;
-		if (!getRefFromResponse(res, 3, confirmedStateId_)) return false;
-		if (!getRefFromResponse(res, 4, activeState_)) return false;
-		if (!getRefFromResponse(res, 5, activeStateId_)) return false;
-		if (!getRefFromResponse(res, 6, enabledState_)) return false;
-		if (!getRefFromResponse(res, 7, enabledStateId_)) return false;
-		if (!getRefFromResponse(res, 8, comment_)) return false;
-		if (!getRefFromResponse(res, 9, commentSourceTimestamp_)) return false;
-
-		return true;
-	}
-
-	bool
-	Alarm::getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref)
-	{
-		NodeReference::SPtr nodeReference;
-		if (!res->nodeReferenceArray()->get(idx, nodeReference)) {
-			Log(Error, "reference result not exist in response")
-				.parameter("Idx", idx);
-			return false;
-		}
-
-		if (nodeReference->statusCode() != Success) {
-			Log(Error, "reference error in response")
-				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(nodeReference->statusCode()))
-				.parameter("Idx", idx);
-			return false;
-		}
-
-  		NodeReferenceApplication::SPtr nodeReferenceApplication;
-  		nodeReferenceApplication = boost::static_pointer_cast<NodeReferenceApplication>(nodeReference);
-  		ref = nodeReferenceApplication->baseNodeClass();
+		ackedState_ = getNodeReference.nodeReferences()[0];
+		ackedStateId_ = getNodeReference.nodeReferences()[1];
+		confirmedState_ = getNodeReference.nodeReferences()[2];
+		confirmedStateId_ = getNodeReference.nodeReferences()[3];
+		activeState_ = getNodeReference.nodeReferences()[4];
+		activeStateId_ = getNodeReference.nodeReferences()[5];
+		enabledState_ = getNodeReference.nodeReferences()[6];
+		enabledStateId_ = getNodeReference.nodeReferences()[7];
+		comment_ = getNodeReference.nodeReferences()[8];
+		commentSourceTimestamp_ = getNodeReference.nodeReferences()[9];
 
 		return true;
 	}
@@ -606,39 +437,26 @@ namespace OpcUaServerApplicationDemo
 		OpcUaNodeId contionRefresh(3875);
 		OpcUaNodeId offNormalAlarmType(2782);
 
-		if (!registerCallback(*rootNodeId_, *acknowlegeNodeId_, &acknowledgeCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, acknowlegeNodeId, &acknowledgeCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, *confirmNodeId_, &confirmCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, confirmNodeId, &confirmCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, *enabledNodeId_, &enabledCallback_)) return false;
-		if (!registerCallback(*rootNodeId_, *disableNodeId_, &disableCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId_, &acknowledgeCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId, &acknowledgeCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId_, &confirmCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId, &confirmCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), enabledNodeId_, &enabledCallback_)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), disableNodeId_, &disableCallback_)) return false;
 		if (!registerCallback(offNormalAlarmType, contionRefresh, &conditionRefreshCallback_)) return false;
 		return true;
 	}
 
 	bool
-	Alarm::registerCallback(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback)
+	Alarm::registerCallback(const OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback)
 	{
-	  	ServiceTransactionRegisterForwardMethod::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardMethod>();
-	  	RegisterForwardMethodRequest::SPtr req = trx->request();
-	  	RegisterForwardMethodResponse::SPtr res = trx->response();
-
-	  	req->forwardMethodSync()->methodService().setCallback(*callback);
-	  	req->objectNodeId(objectNodeId);
-	  	req->methodNodeId(methodNodeId);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  		return false;
-	  	}
-
-	  	if (res->statusCode() != Success) {
-  			std::cout << "register value error" << std::endl;
-  			return false;
-	  	}
-
-		return true;
+		RegisterForwardMethod registerForwardMethod(objectNodeId, methodNodeId);
+		registerForwardMethod.setMethodCallback(*callback);
+		if (!registerForwardMethod.query(applicationServiceIf_)) {
+			std::cout << "registerForwardNode response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	void
@@ -727,48 +545,36 @@ namespace OpcUaServerApplicationDemo
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
 
-		ServiceTransactionFireEvent::SPtr trx = constructSPtr<ServiceTransactionFireEvent>();
-		FireEventRequest::SPtr req = trx->request();
-		FireEventResponse::SPtr res = trx->response();
-
 		// set condition identifier
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(*rootNodeId_);
+		variant = constructSPtr<OpcUaVariant>(OpcUaNodeId("AlarmObject", namespaceIndex_));
 		event->setAlarmConditionType(variant);
 
 		// set event id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaByteString("0123456789012345")); // FIXME:
+		variant = constructSPtr<OpcUaVariant>(OpcUaByteString("0123456789012345"));
 		event->eventId(variant);
 
 		// set condition name
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaString("OffNormalAlarm")); // FIXME:
+		variant = constructSPtr<OpcUaVariant>(OpcUaString("OffNormalAlarm"));
 		event->conditionName(variant);
 
 		// set branch id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaNodeId()); // FIXME:
+		variant = constructSPtr<OpcUaVariant>(OpcUaNodeId()); // FIXME:
 		event->branchId(variant);
 
 		// set active state
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(activeState());
+		variant = constructSPtr<OpcUaVariant>(activeState());
 		event->activeState(variant);
 
 		// set active state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(activeState_Id());
+		variant = constructSPtr<OpcUaVariant>(activeState_Id());
 		event->activeState_Id(variant);
 
 		// set acked state
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(ackedState());
+		variant = constructSPtr<OpcUaVariant>(ackedState());
 		event->ackedState(variant);
 
 		// set acked state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(ackedState_Id());
+		variant = constructSPtr<OpcUaVariant>(ackedState_Id());
 		event->ackedState_Id(variant);
 
 		// set confirm state
@@ -777,18 +583,15 @@ namespace OpcUaServerApplicationDemo
 		event->confirmedState(variant);
 
 		// set confirm state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(confirmedState_Id());
+		variant = constructSPtr<OpcUaVariant>(confirmedState_Id());
 		event->confirmedState_Id(variant);
 
 		// set enabled state
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(enabledState());
+		variant = constructSPtr<OpcUaVariant>(enabledState());
 		event->enabledState(variant);
 
 		// set enabled state id
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(enabledState_Id());
+		variant = constructSPtr<OpcUaVariant>(enabledState_Id());
 		event->enabledState_Id(variant);
 
 		// set retain
@@ -797,24 +600,17 @@ namespace OpcUaServerApplicationDemo
 		event->retain(variant);
 
 		// set message value
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue(OpcUaLocalizedText("en", eventMessage.c_str()));
+		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("en", eventMessage.c_str()));
 		event->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>();
-		variant->setValue((OpcUaUInt16)500);
+		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)500);
 		event->severity(variant);
 
 		// send event on alarm node
-		req->nodeId(*rootNodeId_);
-		eventBase = event;
-		req->eventBase(eventBase);
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Debug, "event response error")
-				.parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		FireEvent fireEvent(OpcUaNodeId("AlarmObject", namespaceIndex_), event);
+		if (!fireEvent.fireEvent(applicationServiceIf_)) {
+			std::cout << "event response error" << std::endl;
 		}
 	}
 

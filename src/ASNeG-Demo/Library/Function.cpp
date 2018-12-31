@@ -23,6 +23,8 @@
 #include "OpcUaStackCore/Utility/Environment.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardMethod.h"
 #include "ASNeG-Demo/Library/Function.h"
 
 namespace OpcUaServerApplicationDemo
@@ -61,17 +63,10 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		// register function callbacks
-		OpcUaNodeId object("Function", namespaceIndex_);
-		OpcUaNodeId method;
-
-		method.set("func1", namespaceIndex_);
-		if (!registerCallbacks(object, method)) return false;
-		method.set("func2", namespaceIndex_);
-		if (!registerCallbacks(object, method)) return false;
-		method.set("func3", namespaceIndex_);
-		if (!registerCallbacks(object, method)) return false;
-		method.set("funcMult", namespaceIndex_);
-		if (!registerCallbacks(object, method)) return false;
+		if (!registerCallbacks(OpcUaNodeId("Function", namespaceIndex_), OpcUaNodeId("func1", namespaceIndex_))) return false;
+		if (!registerCallbacks(OpcUaNodeId("Function", namespaceIndex_), OpcUaNodeId("func2", namespaceIndex_))) return false;
+		if (!registerCallbacks(OpcUaNodeId("Function", namespaceIndex_), OpcUaNodeId("func3", namespaceIndex_))) return false;
+		if (!registerCallbacks(OpcUaNodeId("Function", namespaceIndex_), OpcUaNodeId("funcMult", namespaceIndex_))) return false;
 
 		return true;
 	}
@@ -87,68 +82,32 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Function::getNamespaceInfo(void)
 	{
-		Log(Debug, "get namespace info");
+		GetNamespaceInfo getNamespaceInfo;
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
-
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
-			Log(Error, "NamespaceInfoResponse error")
-			    .parameter("StatusCode", OpcUaStatusCodeMap::shortString(trx->statusCode()));
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
+			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo.de/Function/") {
-				namespaceIndex_ = it->first;
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo.de/Function/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http:http://ASNeG-Demo.de/Function/" << std::endl;
+			return false;
+		}
 
-				func1_.set(std::string("func1"), namespaceIndex_);
-				func2_.set(std::string("func2"), namespaceIndex_);
-				func3_.set(std::string("func3"), namespaceIndex_);
-				funcMult_.set(std::string("funcMult"), namespaceIndex_);
-				return true;
-			}
- 		}
-
-		Log(Error, "namespace not found in configuration")
-	        .parameter("NamespaceUri", "http://ASNeG-Demo.de/Function/");
-
-		return false;
+		return true;
 	}
 
 	bool
-	Function::registerCallbacks(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId)
+	Function::registerCallbacks(const OpcUaNodeId& objectNodeId, const OpcUaNodeId& methodNodeId)
 	{
-		Log(Debug, "register method callbacks");
-
-	  	ServiceTransactionRegisterForwardMethod::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardMethod>();
-	  	RegisterForwardMethodRequest::SPtr req = trx->request();
-	  	RegisterForwardMethodResponse::SPtr res = trx->response();
-
-	  	req->forwardMethodSync()->methodService().setCallback(methodCallback_);
-	  	req->objectNodeId(objectNodeId);
-	  	req->methodNodeId(methodNodeId);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  		return false;
-	  	}
-
-	  	if (res->statusCode() != Success) {
-  			std::cout << "register value error" << std::endl;
-  			return false;
-	  	}
-
-		return true;
+		RegisterForwardMethod registerForwardMethod(objectNodeId, methodNodeId);
+		registerForwardMethod.setMethodCallback(methodCallback_);
+		if (!registerForwardMethod.query(applicationServiceIf_)) {
+			std::cout << "registerForwardMethod response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	void
@@ -159,12 +118,12 @@ namespace OpcUaServerApplicationDemo
 			.parameter("MethodNodeId", applicationMethodContext->methodNodeId_);
 
 		// method func1
-		if (applicationMethodContext->methodNodeId_ == func1_) {
+		if (applicationMethodContext->methodNodeId_ == OpcUaNodeId("func1", namespaceIndex_)) {
 			applicationMethodContext->statusCode_ = Success;
 		}
 
 		// method func2
-		else if (applicationMethodContext->methodNodeId_ == func2_) {
+		else if (applicationMethodContext->methodNodeId_ == OpcUaNodeId("func2", namespaceIndex_)) {
 			if (applicationMethodContext->inputArguments_->size() != 0) {
 				Log(Debug, "input arguments")
 				    .parameter("Arguments", applicationMethodContext->inputArguments_);
@@ -173,7 +132,7 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		// method func3
-		else if (applicationMethodContext->methodNodeId_ == func3_) {
+		else if (applicationMethodContext->methodNodeId_ == OpcUaNodeId("func3", namespaceIndex_)) {
 			if (applicationMethodContext->inputArguments_->size() != 0) {
 				Log(Debug, "input arguments")
 				    .parameter("Arguments", applicationMethodContext->inputArguments_);
@@ -192,7 +151,7 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		// method funcMult
-		else if (applicationMethodContext->methodNodeId_ == funcMult_) {
+		else if (applicationMethodContext->methodNodeId_ == OpcUaNodeId("funcMult", namespaceIndex_)) {
 			if (applicationMethodContext->inputArguments_->size() != 0) {
 				Log(Debug, "input arguments")
 				    .parameter("Arguments", applicationMethodContext->inputArguments_);

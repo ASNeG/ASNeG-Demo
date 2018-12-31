@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -21,6 +21,8 @@
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
+#include "OpcUaStackServer/ServiceSetApplication/GetNamespaceInfo.h"
+#include "OpcUaStackServer/ServiceSetApplication/RegisterForwardNode.h"
 #include <iostream>
 
 namespace OpcUaServerApplicationDemo
@@ -28,20 +30,15 @@ namespace OpcUaServerApplicationDemo
 
 	TestFolderLib::TestFolderLib(void)
 	: namespaceIndex_(0)
-	, loopTime_()
-	, readCallback_(boost::bind(&TestFolderLib::readValue, this, _1))
-	, readLoopTimeCallback_(boost::bind(&TestFolderLib::readLoopTimeValue, this, _1))
-	, writeCallback_(boost::bind(&TestFolderLib::writeValue, this, _1))
-	, writeLoopTimeCallback_(boost::bind(&TestFolderLib::writeLoopTimeValue, this, _1))
+	, loopTime_(0)
 	, valueMap_()
 	, valueVec_()
 	, ioThread_()
 	, slotTimerElement_()
+	, applicationServiceIf_(nullptr)
+	, applicationInfo_(nullptr)
 	{
 		Log(Debug, "TestFolderLib::TestFolderLib");
-
-		loopTime_ = createDataValue();
-		loopTime_->variant()->variant((uint32_t)0);
 	}
 
 	TestFolderLib::~TestFolderLib(void)
@@ -98,40 +95,20 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::getNamespaceInfo(void)
 	{
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
-		NamespaceInfoRequest::SPtr req = trx->request();
-		NamespaceInfoResponse::SPtr res = trx->response();
+		GetNamespaceInfo getNamespaceInfo;
 
-		applicationServiceIf_->sendSync(trx);
-		if (trx->statusCode() != Success) {
+		if (!getNamespaceInfo.query(applicationServiceIf_)) {
 			std::cout << "NamespaceInfoResponse error" << std::endl;
 			return false;
 		}
 
-		NamespaceInfoResponse::Index2NamespaceMap::iterator it;
-		for (
-		    it = res->index2NamespaceMap().begin();
-			it != res->index2NamespaceMap().end();
-			it++
-		)
-		{
-			if (it->second == "http://ASNeG-Demo.de/Test-Server-Lib/") {
-				namespaceIndex_ = it->first;
-			}
- 		}
+		namespaceIndex_ = getNamespaceInfo.getNamespaceIndex("http://ASNeG-Demo.de/Test-Server-Lib/");
+		if (namespaceIndex_ == -1) {
+			std::cout << "namespace index not found: http://ASNeG-Demo.de/Test-Server-Lib/" << std::endl;
+			return false;
+		}
 
 		return true;
-	}
-
-	OpcUaDataValue::SPtr
-	TestFolderLib::createDataValue(void)
-	{
-		OpcUaDataValue::SPtr dataValue;
-		dataValue = constructSPtr<OpcUaDataValue>();
-		dataValue->statusCode(Success);
-		dataValue->sourceTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
-		dataValue->serverTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
-		return dataValue;
 	}
 
 	bool
@@ -411,70 +388,27 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestFolderLib::registerCallbacks(void)
 	{
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
-	  	RegisterForwardNodeRequest::SPtr req = trx->request();
-	  	RegisterForwardNodeResponse::SPtr res = trx->response();
-
-	  	req->forwardNodeSync()->readService().setCallback(readCallback_);
-	  	req->forwardNodeSync()->writeService().setCallback(writeCallback_);
-	  	req->nodesToRegister()->resize(valueMap_.size());
-
-	  	uint32_t pos = 0;
-	  	for (auto it = valueMap_.begin(); it != valueMap_.end(); it++) {
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
-	  		*nodeId = it->first;
-
-	  		req->nodesToRegister()->set(pos, nodeId);
-	  		pos++;
-	  	}
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  		return false;
-	  	}
-
-	  	for (pos = 0; pos < res->statusCodeArray()->size(); pos++) {
-	  		OpcUaStatusCode statusCode;
-	  		res->statusCodeArray()->get(pos, statusCode);
-	  		if (statusCode != Success) {
-	  			std::cout << "register value error" << std::endl;
-	  			return false;
-	  		}
-	  	}
-
+		RegisterForwardNode registerForwardNode(valueVec_);
+		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readValue, this, _1));
+		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeValue, this, _1));
+		if (!registerForwardNode.query(applicationServiceIf_, true)) {
+			std::cout << "registerForwardNode response error" << std::endl;
+			return false;
+		}
 	    return true;
 	}
 
 	bool
 	TestFolderLib::registerLoopTimeCallbacks(void)
 	{
-	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
-	  	nodeId->set(3, namespaceIndex_);
-
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
-	  	RegisterForwardNodeRequest::SPtr req = trx->request();
-	  	RegisterForwardNodeResponse::SPtr res = trx->response();
-
-	  	req->forwardNodeSync()->readService().setCallback(readLoopTimeCallback_);
-	  	req->forwardNodeSync()->writeService().setCallback(writeLoopTimeCallback_);
-	  	req->nodesToRegister()->resize(1);
-	  	req->nodesToRegister()->set(0, nodeId);
-
-	  	applicationServiceIf_->sendSync(trx);
-	  	if (trx->statusCode() != Success) {
-	  		std::cout << "response error" << std::endl;
-	  	  	return false;
-	  	}
-
-	  	OpcUaStatusCode statusCode;
-	  	res->statusCodeArray()->get(0, statusCode);
-	  	if (statusCode != Success) {
-	  	  	std::cout << "register value error" << std::endl;
-	  	  	return false;
-	  	}
-
-	  	return true;
+		RegisterForwardNode registerForwardNode(OpcUaNodeId(3, namespaceIndex_));
+		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readLoopTimeValue, this, _1));
+		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeLoopTimeValue, this, _1));
+		if (!registerForwardNode.query(applicationServiceIf_, true)) {
+			std::cout << "registerForwardNode response error" << std::endl;
+			return false;
+		}
+	    return true;
 	}
 
 	bool
@@ -503,6 +437,8 @@ namespace OpcUaServerApplicationDemo
 	void
 	TestFolderLib::readValue(ApplicationReadContext* applicationReadContext)
 	{
+		//std::cout << "read value ..." << applicationReadContext->nodeId_ << std::endl;
+
 	    ValueMap::iterator it;
 	    it = valueMap_.find(applicationReadContext->nodeId_);
 	    if (it == valueMap_.end()) {
@@ -516,10 +452,8 @@ namespace OpcUaServerApplicationDemo
 	void
 	TestFolderLib::readLoopTimeValue(ApplicationReadContext* applicationReadContext)
 	{
-		//std::cout << "read loop time value ..." << applicationReadContext->nodeId_ << std::endl;
-
 		applicationReadContext->statusCode_ = Success;
-		loopTime_->copyTo(applicationReadContext->dataValue_);
+		applicationReadContext->dataValue_ = OpcUaDataValue(loopTime_);
 	}
 
 	void
@@ -550,7 +484,7 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		applicationWriteContext->statusCode_ = Success;
-		applicationWriteContext->dataValue_.copyTo(*loopTime_);
+		applicationWriteContext->dataValue_.getValue(loopTime_);
 
 		if (slotTimerElement_.get() != nullptr) {
 			ioThread_->slotTimer()->stop(slotTimerElement_);
@@ -568,8 +502,7 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::startTimerLoop(void)
 	{
 		// TimerInterval
-		OpcUaUInt32 loopTime(1111);
-		loopTime_->variant()->variant(loopTime);
+		loopTime_ = 1111;
 
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
 		slotTimerElement_->callback().reset(boost::bind(&TestFolderLib::timerLoop, this));

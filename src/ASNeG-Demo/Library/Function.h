@@ -41,7 +41,7 @@ namespace OpcUaServerApplicationDemo
 
 	  private:
 		bool getNamespaceInfo(void);
-		bool registerCallbacks(OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId);
+		bool registerCallbacks(const OpcUaNodeId& objectNodeId, const OpcUaNodeId& methodNodeId);
 		void method(ApplicationMethodContext* applicationMethodContext);
 
 		IOThread* ioThread_;
@@ -55,11 +55,6 @@ namespace OpcUaServerApplicationDemo
 		BaseNodeClassWMap baseNodeClassWMap_;
 
 		Callback methodCallback_;
-
-		OpcUaNodeId func1_;
-		OpcUaNodeId func2_;
-		OpcUaNodeId func3_;
-		OpcUaNodeId funcMult_;
 	};
 
 }
