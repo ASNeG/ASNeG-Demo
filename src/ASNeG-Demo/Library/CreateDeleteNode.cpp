@@ -18,6 +18,8 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "ASNeG-Demo/Library/CreateDeleteNode.h"
+#include "OpcUaStackServer/ServiceSetApplication/CreateNodeInstance.h"
+#include "OpcUaStackServer/ServiceSetApplication/DeleteNodeInstance.h"
 
 namespace OpcUaServerApplicationDemo
 {
@@ -72,12 +74,35 @@ namespace OpcUaServerApplicationDemo
 	void
 	CreateDeleteNode::timerLoop(void)
 	{
-		std::cout << "timer loop..." << std::endl;
-
 		if (nodesExist_) {
+
+			DeleteNodeInstance deleteNodeInstance(OpcUaNodeId("Dynamic", 1));
+
+			if (!deleteNodeInstance.query(applicationServiceIf_)) {
+				std::cout << "deleteNodeInstance response error" << std::endl;
+				return;
+			}
+
 			nodesExist_ = false;
 		}
 		else {
+
+			CreateNodeInstance createNodeInstance(
+				"DynamicVariable",								// name
+				NodeClassType_Variable,							// node class
+				OpcUaNodeId(85),								// parent node id (Objects)
+				OpcUaNodeId("Dynamic", 1),						// node id
+				OpcUaLocalizedText("en", "DynamicVariable"),	// dispplay name
+				OpcUaQualifiedName("DynamicVariable", 1),		// browse name
+				OpcUaNodeId(47),								// reference type id
+				OpcUaNodeId(62)									// type node id
+			);
+
+			if (!createNodeInstance.query(applicationServiceIf_)) {
+				std::cout << "createNodeInstance response error" << std::endl;
+				return;
+			}
+
 			nodesExist_ = true;
 		}
 	}
