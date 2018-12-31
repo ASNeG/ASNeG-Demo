@@ -26,6 +26,8 @@ namespace OpcUaServerApplicationDemo
 	: ioThread_(nullptr)
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
+	, slotTimerElement_()
+	, nodesExist_(false)
 	{
 	}
 
@@ -46,6 +48,11 @@ namespace OpcUaServerApplicationDemo
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
+		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_->callback().reset(boost::bind(&CreateDeleteNode::timerLoop, this));
+		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 30000);
+		ioThread_->slotTimer()->start(slotTimerElement_);
+
 		return true;
 	}
 
@@ -54,7 +61,25 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "CreateDeleteNode::shutdown");
 
+		if (slotTimerElement_.get() != nullptr) {
+			ioThread_->slotTimer()->stop(slotTimerElement_);
+			slotTimerElement_.reset();
+		}
+
 		return true;
+	}
+
+	void
+	CreateDeleteNode::timerLoop(void)
+	{
+		std::cout << "timer loop..." << std::endl;
+
+		if (nodesExist_) {
+			nodesExist_ = false;
+		}
+		else {
+			nodesExist_ = true;
+		}
 	}
 
 }

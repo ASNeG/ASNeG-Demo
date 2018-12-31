@@ -36,11 +36,14 @@ namespace OpcUaServerApplicationDemo
 
 		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
 		bool shutdown(void);
+		void timerLoop(void);
 
 	  private:
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
+		SlotTimerElement::SPtr slotTimerElement_;
+		bool nodesExist_;
 	};
 
 }
