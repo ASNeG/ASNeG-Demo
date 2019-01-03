@@ -5,3 +5,6 @@ services:
 
 before_install:
   - docker pull asneg/asneg-demo
+
+script:
+  - docker run ls 
