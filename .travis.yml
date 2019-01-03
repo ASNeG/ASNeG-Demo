@@ -8,3 +8,4 @@ before_install:
 
 script:
   - docker run ls 
+  - docker -w /ftest ./test.sh
