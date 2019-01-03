@@ -73,8 +73,8 @@ namespace OpcUaServerApplicationDemo
 	{
 		Object::SPtr obj = analogItemType_;
 		CreateVariableInstance createVariableInstance(
-			OpcUaNodeId(),
-			OpcUaNodeId(),
+			OpcUaNodeId(85),
+			OpcUaNodeId(35),
 			obj
 		);
 
@@ -86,10 +86,5 @@ namespace OpcUaServerApplicationDemo
 		return true;
 	}
 
-#if 0
-	const OpcUaNodeId& parentNodeId,
-	const OpcUaNodeId& referenceTypeNodeId,
-	Object::SPtr& variableInstance
-#endif
 
 }
