@@ -7,6 +7,6 @@ before_install:
   - docker pull asneg/asneg-demo
 
 script:
-  - docker run -t -i asneg/asneg-demo
+  - docker run -d -t asneg/asneg-demo
   - docker ps
   - docker exec /tmp/ftest/test.sh
