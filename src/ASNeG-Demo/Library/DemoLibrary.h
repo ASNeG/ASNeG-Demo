@@ -35,6 +35,7 @@
 #include "ASNeG-Demo/Library/HistoricalAccess.h"
 #include "ASNeG-Demo/Library/Discovery.h"
 #include "ASNeG-Demo/Library/CreateDeleteNode.h"
+#include "ASNeG-Demo/Library/VariableType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -67,6 +68,7 @@ namespace OpcUaServerApplicationDemo
 		HistoricalAccess historicalAccess_;
 		Discovery discovery_;
 		CreateDeleteNode createDeleteNode_;
+		VariableType variableType_;
 
 		IOThread ioThread_;
 	};
