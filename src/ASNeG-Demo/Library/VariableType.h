@@ -23,6 +23,7 @@
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
+#include "OpcUaStackServer/StandardVariableType/AnalogItemType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -40,9 +41,13 @@ namespace OpcUaServerApplicationDemo
 		bool shutdown(void);
 
 	  private:
+		bool createVariable(void);
+
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
+
+		AnalogItemType::SPtr analogItemType_;
 	};
 
 }

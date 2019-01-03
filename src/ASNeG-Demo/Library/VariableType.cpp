@@ -20,6 +20,7 @@
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
 #include "ASNeG-Demo/Library/VariableType.h"
+#include "OpcUaStackServer/ServiceSetApplication/CreateVariableInstance.h"
 
 namespace OpcUaServerApplicationDemo
 {
@@ -28,6 +29,8 @@ namespace OpcUaServerApplicationDemo
 	: ioThread_(nullptr)
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
+
+	, analogItemType_(constructSPtr<AnalogItemType>())
 	{
 	}
 
@@ -48,6 +51,12 @@ namespace OpcUaServerApplicationDemo
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
+		// crerate variable
+		if (!createVariable()) {
+			Log(Error, "create variable error");
+			return false;
+		}
+
 		return true;
 	}
 
@@ -58,5 +67,29 @@ namespace OpcUaServerApplicationDemo
 
 		return true;
 	}
+
+	bool
+	VariableType::createVariable(void)
+	{
+		Object::SPtr obj = analogItemType_;
+		CreateVariableInstance createVariableInstance(
+			OpcUaNodeId(),
+			OpcUaNodeId(),
+			obj
+		);
+
+		if (!createVariableInstance.query(applicationServiceIf_)) {
+			Log(Error, "create variable response error");
+			return false;
+		}
+
+		return true;
+	}
+
+#if 0
+	const OpcUaNodeId& parentNodeId,
+	const OpcUaNodeId& referenceTypeNodeId,
+	Object::SPtr& variableInstance
+#endif
 
 }
