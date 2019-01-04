@@ -10,4 +10,4 @@ script:
   - val="$(docker run -d -t asneg/asneg-demo)"
   - echo $val
   - docker ps
-  - docker exec $(docker images asneg/asneg-demo -q) /tmp/ftest/test.sh
+  - docker exec $val /tmp/ftest/test.sh
