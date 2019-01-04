@@ -8,6 +8,6 @@ before_install:
 
 script:
   - docker run -d -t asneg/asneg-demo
-  - echpo $?
+  - echo $?
   - docker ps
   - docker exec $(docker images asneg/asneg-demo -q) /tmp/ftest/test.sh
