@@ -10,5 +10,4 @@ script:
   - val="$(docker run -d -t asneg/asneg-demo)"
   - echo $val
   - docker ps
-  - cd /tmp/ftest
   - docker exec -d -t $val /tmp/ftest/test.sh
