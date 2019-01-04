@@ -7,7 +7,7 @@ before_install:
   - docker pull asneg/asneg-demo
 
 script:
-  - docker run -d -t asneg/asneg-demo
-  - echo $?
+  - val="$(docker run -d -t asneg/asneg-demo)"
+  - echo $val
   - docker ps
   - docker exec $(docker images asneg/asneg-demo -q) /tmp/ftest/test.sh
