@@ -9,4 +9,4 @@ before_install:
 script:
   - docker run -d -t asneg/asneg-demo
   - docker ps
-  - docker exec /tmp/ftest/test.sh
+  - docker exec $(docker images asneg/asneg-demo -q) /tmp/ftest/test.sh
