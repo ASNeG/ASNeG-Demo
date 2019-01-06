@@ -80,18 +80,7 @@ namespace OpcUaServerApplicationDemo
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
 
-		Callback authenticationCallback_;
-		Callback autorizationCallback_;
-		Callback closeSessionCallback_;
-
 		uint32_t namespaceIndex_;
-
-		BaseNodeClass::WPtr value01_;
-		BaseNodeClass::WPtr value02_;
-		BaseNodeClass::WPtr value03_;
-		BaseNodeClass::WPtr value04_;
-		BaseNodeClass::WPtr value05_;
-
 		UserProfile::Map userProfileMap_;
 
 		bool getNamespaceInfo(void);
@@ -102,7 +91,6 @@ namespace OpcUaServerApplicationDemo
 		void autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext);
 
 		bool setValuesToDefault(void);
-		bool getRefFromResponse(GetNodeReferenceResponse::SPtr& res, uint32_t idx, BaseNodeClass::WPtr& ref);
 	};
 
 }

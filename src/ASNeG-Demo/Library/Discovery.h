@@ -15,15 +15,16 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
-#ifndef __OpcUaServerApplicationDemo_Generator_h__
-#define __OpcUaServerApplicationDemo_Generator_h__
+#ifndef __OpcUaServerApplicationDemo_Discovery_h__
+#define __OpcUaServerApplicationDemo_Discovery_h__
 
 #include "OpcUaStackCore/Utility/IOThread.h"
 #include "OpcUaStackCore/Application/ApplicationMethodContext.h"
+#include "OpcUaStackCore/Application/ApplicationRegisterServerContext.h"
+#include "OpcUaStackCore/Application/ApplicationFindServerContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
-#include "ASNeG-Demo/Generator/MyStateVariableType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -31,28 +32,19 @@ using namespace OpcUaStackServer;
 namespace OpcUaServerApplicationDemo
 {
 
-	class Generator
+	class Discovery
 	{
 	  public:
-		Generator(void);
-		~Generator(void);
+		Discovery(void);
+		~Discovery(void);
 
 		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
 		bool shutdown(void);
 
+		void findServer(ApplicationFindServerContext* applicationFindServerContext);
+
 	  private:
-		bool getNamespaceInfo(void);
-		bool connectToVariableType(void);
-		bool createAndConnectToVariableType(void);
-
-		IOThread* ioThread_;
-		ApplicationServiceIf* applicationServiceIf_;
-		ApplicationInfo* applicationInfo_;
-		uint32_t namespaceIndex_;
-
-		MyStateVariableType stateVariable1_;
-		MyStateVariableType stateVariable2_;
-		MyStateVariableType stateVariable3_;
+		Callback findServerCallback_;
 	};
 
 }

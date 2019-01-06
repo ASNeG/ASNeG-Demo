@@ -1,5 +1,5 @@
 /*
-   Copyright 2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2018 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -15,29 +15,35 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
-#ifndef __OpcUaServerApplicationDemo_MyStateVariableType_h__
-#define __OpcUaServerApplicationDemo_MyStateVariableType_h__
+#ifndef __OpcUaServerApplicationDemo_CreateDeleteNode_h__
+#define __OpcUaServerApplicationDemo_CreateDeleteNode_h__
 
-#include "OpcUaStackServer/StandardVariableType/StateVariableType.h"
+#include "OpcUaStackCore/Utility/IOThread.h"
+#include "OpcUaStackServer/Application/ApplicationIf.h"
+#include "OpcUaStackServer/Application/ApplicationInfo.h"
 
+using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
 
 namespace OpcUaServerApplicationDemo
 {
 
-	class MyStateVariableType
-	: public StateVariableType
+	class CreateDeleteNode
 	{
 	  public:
-		MyStateVariableType(void);
-		virtual ~MyStateVariableType(void);
+		CreateDeleteNode(void);
+		~CreateDeleteNode(void);
 
-		void updateValue(uint32_t attributeId, OpcUaDataValue* dataValue);
-		void updateNumber(uint32_t attributeId, OpcUaDataValue* dataValue);
+		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
+		bool shutdown(void);
+		void timerLoop(void);
 
 	  private:
-		Callback::SPtr callbackUpdateValue_;
-		Callback::SPtr callbackUpdateNumber_;
+		IOThread* ioThread_;
+		ApplicationServiceIf* applicationServiceIf_;
+		ApplicationInfo* applicationInfo_;
+		SlotTimerElement::SPtr slotTimerElement_;
+		bool nodesExist_;
 	};
 
 }
