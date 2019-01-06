@@ -55,7 +55,7 @@ namespace OpcUaServerApplicationDemo
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
-		// crerate variable
+		// create variable
 		if (!createVariable()) {
 			Log(Error, "create variable error");
 			return false;
