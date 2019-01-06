@@ -73,6 +73,8 @@ namespace OpcUaServerApplicationDemo
 	{
 		Object::SPtr obj = analogItemType_;
 		CreateVariableInstance createVariableInstance(
+			"http://ASNeG-Demo/VariableType/",
+			OpcUaLocalizedText("", "VariableType"),
 			OpcUaNodeId(85),
 			OpcUaNodeId(35),
 			obj
