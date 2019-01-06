@@ -76,14 +76,14 @@ namespace OpcUaServerApplicationDemo
 	VariableType::createVariable(void)
 	{
 		//
-		// create variable instance
+		// create a new variable instance in the opc ua information model
 		//
 		Object::SPtr obj = analogItemType_;
 		CreateVariableInstance createVariableInstance(
-			"http://ASNeG-Demo/VariableType/",
-			OpcUaLocalizedText("", "VariableType"),
-			OpcUaNodeId(85),
-			OpcUaNodeId(35),
+			"http://ASNeG-Demo/VariableType/",				// namespace name of the variable instance
+			OpcUaLocalizedText("", "VariableType"),			// display name of the variable instance
+			OpcUaNodeId(85),								// parent node of the variable instance
+			OpcUaNodeId(35),								// reference type between parent and variable instance
 			obj
 		);
 
@@ -94,7 +94,7 @@ namespace OpcUaServerApplicationDemo
 
 
 		//
-		// set variable values
+		// set variable values of the variable instance
 		//
 		analogItemType_->set_Variable(OpcUaDataValue((OpcUaDouble)12.34));
 
