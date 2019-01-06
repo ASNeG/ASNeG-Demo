@@ -19,6 +19,10 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
+#include "OpcUaStackCore/BuildInTypes/OpcUaIdentifier.h"
+#include "OpcUaStackCore/BuildInTypes/OpcUaExtensionObject.h"
+#include "OpcUaStackCore/StandardDataTypes/Range.h"
+#include "OpcUaStackCore/StandardDataTypes/EUInformation.h"
 #include "ASNeG-Demo/Library/VariableType.h"
 #include "OpcUaStackServer/ServiceSetApplication/CreateVariableInstance.h"
 
@@ -71,6 +75,9 @@ namespace OpcUaServerApplicationDemo
 	bool
 	VariableType::createVariable(void)
 	{
+		//
+		// create variable instance
+		//
 		Object::SPtr obj = analogItemType_;
 		CreateVariableInstance createVariableInstance(
 			"http://ASNeG-Demo/VariableType/",
@@ -84,6 +91,58 @@ namespace OpcUaServerApplicationDemo
 			Log(Error, "create variable response error");
 			return false;
 		}
+
+		//
+		// set variable values
+		//
+		analogItemType_->set_Definition_Variable(OpcUaDataValue(OpcUaString("Definiton Variable")));
+
+		OpcUaExtensionObject range(OpcUaNodeId(OpcUaId_Range_Encoding_DefaultBinary));
+		range.parameter<Range>()->low() = 0;
+		range.parameter<Range>()->high() = 1000;
+		analogItemType_->set_EURange_Variable(OpcUaDataValue(range));
+
+		//OpcUaExtensionObject range(OpcUaNodeId(OpcUaId_Range));
+
+#if 0
+	       //
+	        // EUInformation
+	        //
+
+	        //OpcUaString& namespaceUri(void);
+	        //OpcUaInt32& unitId(void);
+	        //OpcUaLocalizedText& displayName(void);
+	        //OpcUaLocalizedText& description(void);
+
+	        void engineeringUnits_Variable(ServerVariable::SPtr& serverVariable);
+	        ServerVariable::SPtr& engineeringUnits_Variable(void);
+	        bool get_EngineeringUnits_Variable(OpcUaDataValue& dataValue);
+	        bool set_EngineeringUnits_Variable(const OpcUaDataValue& dataValue);
+
+		        //
+		        // Range
+		        //
+		        void instrumentRange_Variable(ServerVariable::SPtr& serverVariable);
+		        ServerVariable::SPtr& instrumentRange_Variable(void);
+		        bool get_InstrumentRange_Variable(OpcUaDataValue& dataValue);
+		        bool set_InstrumentRange_Variable(const OpcUaDataValue& dataValue);
+
+		        //
+		        // Double
+		        //
+		        void valuePrecision_Variable(ServerVariable::SPtr& serverVariable);
+		        ServerVariable::SPtr& valuePrecision_Variable(void);
+		        bool get_ValuePrecision_Variable(OpcUaDataValue& dataValue);
+		        bool set_ValuePrecision_Variable(const OpcUaDataValue& dataValue);
+
+		        //
+		        // Number
+		        //
+		        void variable(ServerVariable::SPtr& serverVariable);
+		        ServerVariable::SPtr& variable(void);
+		        bool get_Variable(OpcUaDataValue& dataValue);
+		        bool set_Variable(const OpcUaDataValue& dataValue);
+#endif
 
 		return true;
 	}
