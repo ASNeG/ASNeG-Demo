@@ -92,9 +92,12 @@ namespace OpcUaServerApplicationDemo
 			return false;
 		}
 
+
 		//
 		// set variable values
 		//
+		analogItemType_->set_Variable(OpcUaDataValue((OpcUaDouble)12.34));
+
 		analogItemType_->set_Definition_Variable(OpcUaDataValue(OpcUaString("Definiton Variable")));
 
 		OpcUaExtensionObject range(OpcUaNodeId(OpcUaId_Range_Encoding_DefaultBinary));
@@ -102,47 +105,19 @@ namespace OpcUaServerApplicationDemo
 		range.parameter<Range>()->high() = 1000;
 		analogItemType_->set_EURange_Variable(OpcUaDataValue(range));
 
-		//OpcUaExtensionObject range(OpcUaNodeId(OpcUaId_Range));
+		OpcUaExtensionObject engineeringUnits(OpcUaNodeId(OpcUaId_EUInformation_Encoding_DefaultBinary));
+		engineeringUnits.parameter<EUInformation>()->namespaceUri() = OpcUaString("http://ASNeG-Demo/VariableType/");
+		engineeringUnits.parameter<EUInformation>()->unitId() = 4711;
+		engineeringUnits.parameter<EUInformation>()->displayName() = OpcUaLocalizedText("de", "DisplayName");
+		engineeringUnits.parameter<EUInformation>()->description() = OpcUaLocalizedText("de", "Description");
+		analogItemType_->set_EngineeringUnits_Variable(OpcUaDataValue(engineeringUnits));
 
-#if 0
-	       //
-	        // EUInformation
-	        //
+		OpcUaExtensionObject instrumentRange(OpcUaNodeId(OpcUaId_Range_Encoding_DefaultBinary));
+		instrumentRange.parameter<Range>()->low() = -1000;
+		instrumentRange.parameter<Range>()->high() = 2000;
+		analogItemType_->set_InstrumentRange_Variable(OpcUaDataValue(instrumentRange));
 
-	        //OpcUaString& namespaceUri(void);
-	        //OpcUaInt32& unitId(void);
-	        //OpcUaLocalizedText& displayName(void);
-	        //OpcUaLocalizedText& description(void);
-
-	        void engineeringUnits_Variable(ServerVariable::SPtr& serverVariable);
-	        ServerVariable::SPtr& engineeringUnits_Variable(void);
-	        bool get_EngineeringUnits_Variable(OpcUaDataValue& dataValue);
-	        bool set_EngineeringUnits_Variable(const OpcUaDataValue& dataValue);
-
-		        //
-		        // Range
-		        //
-		        void instrumentRange_Variable(ServerVariable::SPtr& serverVariable);
-		        ServerVariable::SPtr& instrumentRange_Variable(void);
-		        bool get_InstrumentRange_Variable(OpcUaDataValue& dataValue);
-		        bool set_InstrumentRange_Variable(const OpcUaDataValue& dataValue);
-
-		        //
-		        // Double
-		        //
-		        void valuePrecision_Variable(ServerVariable::SPtr& serverVariable);
-		        ServerVariable::SPtr& valuePrecision_Variable(void);
-		        bool get_ValuePrecision_Variable(OpcUaDataValue& dataValue);
-		        bool set_ValuePrecision_Variable(const OpcUaDataValue& dataValue);
-
-		        //
-		        // Number
-		        //
-		        void variable(ServerVariable::SPtr& serverVariable);
-		        ServerVariable::SPtr& variable(void);
-		        bool get_Variable(OpcUaDataValue& dataValue);
-		        bool set_Variable(const OpcUaDataValue& dataValue);
-#endif
+		analogItemType_->set_ValuePrecision_Variable(OpcUaDataValue((OpcUaDouble)56.78));
 
 		return true;
 	}
