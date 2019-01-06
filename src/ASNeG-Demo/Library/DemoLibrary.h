@@ -36,6 +36,7 @@
 #include "ASNeG-Demo/Library/Discovery.h"
 #include "ASNeG-Demo/Library/CreateDeleteNode.h"
 #include "ASNeG-Demo/Library/VariableType.h"
+#include "ASNeG-Demo/Library/ObjectType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -69,6 +70,7 @@ namespace OpcUaServerApplicationDemo
 		Discovery discovery_;
 		CreateDeleteNode createDeleteNode_;
 		VariableType variableType_;
+		ObjectType objectType_;
 
 		IOThread ioThread_;
 	};
