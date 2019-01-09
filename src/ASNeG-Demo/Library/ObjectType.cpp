@@ -29,6 +29,54 @@
 namespace OpcUaServerApplicationDemo
 {
 
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	//
+	// MyFileType
+	//
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	MyFileType::MyFileType(void)
+	: FileType()
+	{
+	}
+
+	MyFileType::~MyFileType(void)
+	{
+	}
+
+    void
+	MyFileType::call_Close_Method(ApplicationMethodContext* applicationMethodContext)
+    {
+    }
+
+    void
+	MyFileType::call_GetPosition_Method(ApplicationMethodContext* applicationMethodContext)
+    {
+    }
+
+    void
+	MyFileType::call_Open_Method(ApplicationMethodContext* applicationMethodContext)
+    {
+    }
+
+    void
+	MyFileType::call_SetPosition_Method(ApplicationMethodContext* applicationMethodContext)
+    {
+    }
+
+    void
+	MyFileType::call_Write_Method(ApplicationMethodContext* applicationMethodContext)
+    {
+    }
+
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	//
+	// ObjectType
+	//
+	// ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	ObjectType::ObjectType(void)
 	: ioThread_(nullptr)
 	, applicationServiceIf_(nullptr)
@@ -76,10 +124,10 @@ namespace OpcUaServerApplicationDemo
 		//
 		// create a new object instance in the opc ua information model
 		//
-		Object::SPtr obj; // FIXME: todo
+		Object::SPtr obj = constructSPtr<MyFileType>();
 		CreateObjectInstance createObjectInstance(
 			"http://ASNeG-Demo/ObjectType/",				// namespace name of the object instance
-			OpcUaLocalizedText("", "ObjectType"),			// display name of the object instance
+			OpcUaLocalizedText("", "MyFileType"),			// display name of the object instance
 			OpcUaNodeId(85),								// parent node of the object instance
 			OpcUaNodeId(35),								// reference type between object and variable instance
 			obj

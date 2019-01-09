@@ -23,12 +23,28 @@
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
+#include "OpcUaStackServer/StandardObjectType/FileType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
 
 namespace OpcUaServerApplicationDemo
 {
+
+	class MyFileType
+	: public FileType
+	{
+	  public:
+		MyFileType(void);
+		virtual ~MyFileType(void);
+
+	    virtual void call_Close_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_GetPosition_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_Open_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_Read_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_SetPosition_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_Write_Method(ApplicationMethodContext* applicationMethodContext);
+	};
 
 	class ObjectType
 	{
