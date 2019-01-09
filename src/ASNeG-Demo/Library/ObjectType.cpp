@@ -45,29 +45,44 @@ namespace OpcUaServerApplicationDemo
 	{
 	}
 
+	void
+	MyFileType::create(void)
+	{
+	}
+
+	void
+	MyFileType::cleanup(void)
+	{
+	}
+
     void
 	MyFileType::call_Close_Method(ApplicationMethodContext* applicationMethodContext)
     {
+    	std::cout << "MyFileType::call_Close_Method" << std::endl;
     }
 
     void
 	MyFileType::call_GetPosition_Method(ApplicationMethodContext* applicationMethodContext)
     {
+    	std::cout << "MyFileType::call_GetPosition_Method" << std::endl;
     }
 
     void
 	MyFileType::call_Open_Method(ApplicationMethodContext* applicationMethodContext)
     {
+    	std::cout << "MyFileType::call_Open_Method" << std::endl;
     }
 
     void
 	MyFileType::call_SetPosition_Method(ApplicationMethodContext* applicationMethodContext)
     {
+    	std::cout << "MyFileType::call_SetPosition_Method" << std::endl;
     }
 
     void
 	MyFileType::call_Write_Method(ApplicationMethodContext* applicationMethodContext)
     {
+    	std::cout << "MyFileType::call_Write_Method" << std::endl;
     }
 
 	// ------------------------------------------------------------------------

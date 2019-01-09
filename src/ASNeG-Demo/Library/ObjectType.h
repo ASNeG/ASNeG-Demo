@@ -38,6 +38,9 @@ namespace OpcUaServerApplicationDemo
 		MyFileType(void);
 		virtual ~MyFileType(void);
 
+		void create(void);
+		void cleanup(void);
+
 	    virtual void call_Close_Method(ApplicationMethodContext* applicationMethodContext);
 	    virtual void call_GetPosition_Method(ApplicationMethodContext* applicationMethodContext);
 	    virtual void call_Open_Method(ApplicationMethodContext* applicationMethodContext);
