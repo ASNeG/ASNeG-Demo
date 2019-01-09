@@ -74,6 +74,12 @@ namespace OpcUaServerApplicationDemo
     }
 
     void
+	MyFileType::call_Read_Method(ApplicationMethodContext* applicationMethodContext)
+    {
+    	std::cout << "MyFileType::call_Read_Method" << std::endl;
+    }
+
+    void
 	MyFileType::call_SetPosition_Method(ApplicationMethodContext* applicationMethodContext)
     {
     	std::cout << "MyFileType::call_SetPosition_Method" << std::endl;
