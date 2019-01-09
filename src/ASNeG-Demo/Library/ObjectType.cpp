@@ -124,7 +124,7 @@ namespace OpcUaServerApplicationDemo
 
 		// create object instance
 		if (!createObject()) {
-			Log(Error, "create variable error");
+			Log(Error, "create object error");
 			return false;
 		}
 
