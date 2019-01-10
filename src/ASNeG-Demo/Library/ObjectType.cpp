@@ -102,6 +102,8 @@ namespace OpcUaServerApplicationDemo
 	: ioThread_(nullptr)
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
+
+	, fileType_()
 	{
 	}
 
@@ -145,7 +147,8 @@ namespace OpcUaServerApplicationDemo
 		//
 		// create a new object instance in the opc ua information model
 		//
-		Object::SPtr obj = constructSPtr<MyFileType>();
+		fileType_ = constructSPtr<MyFileType>();
+		Object::SPtr obj = fileType_;
 		CreateObjectInstance createObjectInstance(
 			"http://ASNeG-Demo/ObjectType/",				// namespace name of the object instance
 			OpcUaLocalizedText("", "MyFileType"),			// display name of the object instance

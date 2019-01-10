@@ -64,6 +64,8 @@ namespace OpcUaServerApplicationDemo
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
+
+		MyFileType::SPtr fileType_;
 	};
 
 }
