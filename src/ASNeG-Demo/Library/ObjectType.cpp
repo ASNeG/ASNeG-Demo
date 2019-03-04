@@ -144,6 +144,8 @@ namespace OpcUaServerApplicationDemo
 	bool
 	ObjectType::createObject(void)
 	{
+		Log(Debug, "Create object type");
+
 		//
 		// create a new object instance in the opc ua information model
 		//
@@ -164,6 +166,7 @@ namespace OpcUaServerApplicationDemo
 
 		// FIXME: todo
 
+		Log(Debug, "Create object type done");
 		return true;
 	}
 

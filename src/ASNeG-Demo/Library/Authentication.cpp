@@ -285,9 +285,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	Authentication::authenticationCallback(ApplicationAuthenticationContext* applicationAuthenitcationContext)
 	{
-		Log(Debug, "Event::authenticationCallback")
-			.parameter("SessionId", applicationAuthenitcationContext->sessionId_);
-
+		Log(Debug, "Authentication::authenticationCallback");
 
 		if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_AnonymousIdentityToken_Encoding_DefaultBinary) {
 			applicationAuthenitcationContext->statusCode_ = Success;
@@ -336,14 +334,13 @@ namespace OpcUaServerApplicationDemo
 	void
 	Authentication::closeSessionCallback(ApplicationCloseSessionContext* applicationCloseSessionContext)
 	{
-		// FIXME: todo
-		std::cout << "close session..." << std::endl;
+		Log(Debug, "Authentication::closeSessionCallback");
 	}
 
 	void
 	Authentication::autorizationCallback(ApplicationAutorizationContext* applicationAutorizationContext)
 	{
-		Log(Debug, "Event::autorizationCallback");
+		Log(Debug, "Authentication::autorizationCallback");
 
 		if (applicationAutorizationContext->userContext_.get() == nullptr) {
 			applicationAutorizationContext->statusCode_ = Success;

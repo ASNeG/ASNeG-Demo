@@ -75,6 +75,8 @@ namespace OpcUaServerApplicationDemo
 	bool
 	VariableType::createVariable(void)
 	{
+		Log(Debug, "Create variable type");
+
 		//
 		// create a new variable instance in the opc ua information model
 		//
@@ -119,6 +121,7 @@ namespace OpcUaServerApplicationDemo
 
 		analogItemType_->set_ValuePrecision_Variable(OpcUaDataValue((OpcUaDouble)56.78));
 
+		Log(Debug, "Create variable type done");
 		return true;
 	}
 
