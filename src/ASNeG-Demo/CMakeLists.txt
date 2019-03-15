@@ -72,6 +72,12 @@ install(TARGETS ASNeG-Demo DESTINATION /usr/lib)
 
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/OpcUaServer.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+<<<<<<< HEAD
+=======
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet2.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet2.Part14.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.ASNeGServer.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+>>>>>>> 0c05187... added namespace 1
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSetTest.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSetTestLib.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSetTestLibClientServer.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
