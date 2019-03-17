@@ -12,7 +12,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 # ----------------------------------------------------------------------------
 set(VERSION_MAJOR "3" CACHE STRING "major version")
 set(VERSION_MINOR "3" CACHE STRING "minor version")
-set(VERSION_PATCH "1" CACHE STRING "patch version")
+set(VERSION_PATCH "2" CACHE STRING "patch version")
 
 set(OPCUASTACK_VERSION_MAJOR "3" CACHE STRING "major version")
 set(OPCUASTACK_VERSION_MINOR "6" CACHE STRING "minor version")
