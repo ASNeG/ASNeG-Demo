@@ -15,6 +15,7 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
+#include <boost/lexical_cast.hpp>
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/ServiceSet/EventField.h"
@@ -188,11 +189,49 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "readHValue");
 
+		// create start index
+		uint32_t startIdx = 0;
+		if (!applicationHReadContext->continousPoint_.empty()) {
+			try {
+				startIdx = boost::lexical_cast<uint32_t>(applicationHReadContext->continousPoint_);
+			} catch (boost::bad_lexical_cast& e) {
+				startIdx = 0;
+			}
+		}
+
+		// create end index
+		uint32_t endIdx = numberEntries_;
+		if (applicationHReadContext->numValuesPerNode_ != 0) {
+			if ((startIdx + applicationHReadContext->numValuesPerNode_) < endIdx) {
+				endIdx = startIdx + applicationHReadContext->numValuesPerNode_;
+			}
+		}
+
+		Log(Debug, "read historical data")
+			.parameter("NodeId", applicationHReadContext->nodeId_)
+			.parameter("NumValuesPerNode", applicationHReadContext->numValuesPerNode_)
+			.parameter("ContinousPoint", applicationHReadContext->continousPoint_)
+			.parameter("ReleaseContinousPoint", applicationHReadContext->releaseContinuationPoints_);
+
+		// check if user wants to remove order
+		if (applicationHReadContext->continousPoint_.empty() && applicationHReadContext->releaseContinuationPoints_) {
+			applicationHReadContext->statusCode_ = Success;
+			return;
+		}
+
+		// set continuation point
+		applicationHReadContext->continousPoint_ = "";
+		if (endIdx != numberEntries_ && !applicationHReadContext->releaseContinuationPoints_) {
+			std::stringstream ss;
+			ss << endIdx;
+			applicationHReadContext->continousPoint_ = ss.str();
+		}
+
 		// set example data
 		applicationHReadContext->dataValueArray_ = constructSPtr<OpcUaDataValueArray>();
-		applicationHReadContext->dataValueArray_->resize(10);
+		applicationHReadContext->dataValueArray_->resize(endIdx - startIdx);
 		boost::posix_time::ptime time = boost::posix_time::microsec_clock::local_time();
-		for (uint32_t idx=0; idx<10; idx++) {
+		for (uint32_t idx=startIdx; idx<endIdx; idx++) {
 			OpcUaDateTime dateTime(time - boost::posix_time::seconds(10+idx));
 
 			OpcUaDataValue::SPtr dataValue = constructSPtr<OpcUaDataValue>();
