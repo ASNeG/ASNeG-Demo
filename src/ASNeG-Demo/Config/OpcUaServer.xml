@@ -40,7 +40,7 @@
   <Endpoints>
     <EndpointDescription>
 	  <EndpointUrl>opc.tcp://0.0.0.0:8889</EndpointUrl>
-	  <ApplicationUri>urn:127.0.0.1:ASNeG:ASNeG-Demo</ApplicationUri>
+	  <ApplicationUri>urn:@HOSTNAME@:ASNeG:ASNeG-Demo</ApplicationUri>
 	  <ProductUri>urn:ASNeG:ASNeG-Demo</ProductUri>
 	  <ApplicationName>ASNeG-Demo</ApplicationName>
 	  <DiscoveryUrl>opc.tcp://0.0.0.0:8889</DiscoveryUrl>	
@@ -140,6 +140,7 @@
   
   <InformationModel>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet2.xml</NodeSetFile>
+    <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.ASNeGServer.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSetTest.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSetTestLib.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSetTestLibClientServer.xml</NodeSetFile>
@@ -149,12 +150,13 @@
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.StructureExample.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Service.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Alarm.xml</NodeSetFile>
-    <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Generator.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Auth.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.HistoricalAccess.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/TestStatusCode.OpcUaNodeSet.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Event.OpcUaNodeSet.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet2.Part14.xml</NodeSetFile>
+    <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Generator.xml</NodeSetFile>
+
   </InformationModel>
 
 </OpcUaServer>

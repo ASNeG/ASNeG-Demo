@@ -1,5 +1,5 @@
 /*
-   Copyright 2018 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2019 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -15,15 +15,15 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
-#ifndef __OpcUaServerApplicationDemo_HistoricalAccess_h__
-#define __OpcUaServerApplicationDemo_HistoricalAccess_h__
+#ifndef __OpcUaServerApplicationDemo_ObjectType_h__
+#define __OpcUaServerApplicationDemo_ObjectType_h__
 
 #include "OpcUaStackCore/Utility/IOThread.h"
-#include "OpcUaStackCore/Application/ApplicationHReadContext.h"
-#include "OpcUaStackCore/Application/ApplicationHReadEventContext.h"
+#include "OpcUaStackCore/Application/ApplicationMethodContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
-#include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
+#include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
+#include "OpcUaStackServer/StandardObjectType/FileType.h"
 
 using namespace OpcUaStackCore;
 using namespace OpcUaStackServer;
@@ -31,30 +31,41 @@ using namespace OpcUaStackServer;
 namespace OpcUaServerApplicationDemo
 {
 
-
-	class HistoricalAccess
+	class MyFileType
+	: public FileType
 	{
 	  public:
-		HistoricalAccess(void);
-		~HistoricalAccess(void);
+		MyFileType(void);
+		virtual ~MyFileType(void);
+
+		void create(void);
+		void cleanup(void);
+
+	    virtual void call_Close_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_GetPosition_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_Open_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_Read_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_SetPosition_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_Write_Method(ApplicationMethodContext* applicationMethodContext);
+	};
+
+	class ObjectType
+	{
+	  public:
+		ObjectType(void);
+		~ObjectType(void);
 
 		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
 		bool shutdown(void);
 
 	  private:
-		bool getNamespaceInfo(void);
-		bool registerHADataCallback(void);
-		bool registerHAEventCallback(void);
-
-		void readHValue(ApplicationHReadContext* applicationHReadContext);
-		void readHEvent(ApplicationHReadEventContext* applicationHReadEventContext);
+		bool createObject(void);
 
 		IOThread* ioThread_;
 		ApplicationServiceIf* applicationServiceIf_;
 		ApplicationInfo* applicationInfo_;
 
-		uint32_t namespaceIndex_;
-		uint32_t numberEntries_ = 10;
+		MyFileType::SPtr fileType_;
 	};
 
 }

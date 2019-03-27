@@ -39,6 +39,7 @@ namespace OpcUaServerApplicationDemo
 	, discovery_()
 	, createDeleteNode_()
 	, variableType_()
+	, objectType_()
 	{
 	}
 
@@ -64,6 +65,7 @@ namespace OpcUaServerApplicationDemo
 		discovery_.startup(ioThread_, service(), applicationInfo());
 		createDeleteNode_.startup(ioThread_, service(), applicationInfo());
 		variableType_.startup(ioThread_, service(), applicationInfo());
+		objectType_.startup(ioThread_, service(), applicationInfo());
 		return true;
 	}
 
@@ -72,6 +74,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "DemoLibrary::shutdown");
 
+		objectType_.shutdown();
 		variableType_.shutdown();
 		createDeleteNode_.shutdown();
 		discovery_.shutdown();

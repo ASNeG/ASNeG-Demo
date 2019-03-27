@@ -76,6 +76,9 @@ namespace OpcUaServerApplicationDemo
 	{
 		if (nodesExist_) {
 
+			Log(Debug, "Delete node instance")
+				.parameter("NodeId", OpcUaNodeId("Dynamic", 1));
+
 			DeleteNodeInstance deleteNodeInstance(OpcUaNodeId("Dynamic", 1));
 
 			if (!deleteNodeInstance.query(applicationServiceIf_)) {
@@ -84,8 +87,15 @@ namespace OpcUaServerApplicationDemo
 			}
 
 			nodesExist_ = false;
+
+			Log(Debug, "Delete node instance done")
+				.parameter("NodeId", OpcUaNodeId("Dynamic", 1));
 		}
 		else {
+
+			Log(Debug, "Create node instance")
+				.parameter("NodeId", OpcUaNodeId("Dynamic", 1));
+
 
 			CreateNodeInstance createNodeInstance(
 				"DynamicVariable",								// name
@@ -104,6 +114,9 @@ namespace OpcUaServerApplicationDemo
 			}
 
 			nodesExist_ = true;
+
+			Log(Debug, "Create node instance done")
+				.parameter("NodeId", OpcUaNodeId("Dynamic", 1));
 		}
 	}
 

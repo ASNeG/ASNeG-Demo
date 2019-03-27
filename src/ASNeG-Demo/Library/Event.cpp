@@ -148,10 +148,13 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::timerLoop(void)
 	{
-		Log(Debug, "send Event");
+		Log(Debug, "send Event 11");
 		sendEvent11();
+		Log(Debug, "send Event 12");
 		sendEvent12();
+		Log(Debug, "send Event 21");
 		sendEvent21();
+		Log(Debug, "send Event done");
 	}
 
 	void
