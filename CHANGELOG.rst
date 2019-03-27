@@ -1,3 +1,14 @@
+Release 3.3.3
+------------------------------------------------------------
+
+**Features**:
+
+**Bugs**:
+
+* Added advanced history access example #20, by @huebl
+ 
+**Documentation**:
+
 Release 3.3.2
 ------------------------------------------------------------
 
