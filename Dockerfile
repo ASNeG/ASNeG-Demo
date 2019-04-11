@@ -1,4 +1,4 @@
-FROM asneg/opcuastack:latest
+FROM asneg/opcuastack:release-4
 
 MAINTAINER Aleksey Timin <atimin@gmail.com>
 
