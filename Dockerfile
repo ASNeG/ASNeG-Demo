@@ -14,4 +14,4 @@ RUN make install
 
 # Start DEMO
 EXPOSE 8889 4840
-CMD ["OpcUaServer3", "/etc/OpcUaStack/ASNeG-Demo/OpcUaServer.xml"]
+CMD ["OpcUaServer4", "/etc/OpcUaStack/ASNeG-Demo/OpcUaServer.xml"]
