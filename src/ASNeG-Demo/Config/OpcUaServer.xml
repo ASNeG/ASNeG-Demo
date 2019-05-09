@@ -45,7 +45,6 @@
 	  <ApplicationName>ASNeG-Demo</ApplicationName>
 	  <DiscoveryUrl>opc.tcp://@HOSTNAME@:8889</DiscoveryUrl>	
 	  <GatewayServerUri></GatewayServerUri>
-	  <!-- <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri> -->
 	  
 	  <SecuritySetting>
 	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>

@@ -1,5 +1,5 @@
 /*
-   Copyright 2016-2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2019 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -15,6 +15,7 @@
    Autor: Kai Huebl (kai@huebl-sgh.de)
  */
 
+#include <boost/make_shared.hpp>
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "OpcUaStackCore/Base/ConfigXml.h"
@@ -45,7 +46,7 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "Discovery::startup");
 
     	// register discovery callbacks
-	  	ServiceTransactionRegisterForwardGlobal::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardGlobal>();
+	  	ServiceTransactionRegisterForwardGlobal::SPtr trx = boost::make_shared<ServiceTransactionRegisterForwardGlobal>();
 	  	RegisterForwardGlobalRequest::SPtr req = trx->request();
 	  	RegisterForwardGlobalResponse::SPtr res = trx->response();
 
@@ -77,11 +78,11 @@ namespace OpcUaServerApplicationDemo
     			.parameter("LocaleIds", *applicationFindServerContext->localeIdArraySPtr_)
     			.parameter("ServerUris", *applicationFindServerContext->serverUriArraySPtr_);
 
-       	ApplicationDescription::SPtr ad = constructSPtr<ApplicationDescription>();
+       	auto ad = boost::make_shared<ApplicationDescription>();
        	ad->applicationUri().value("opc.tcp://127.0.0.1:8889");
        	ad->productUri().value("urn:ASNeG:ASNeG-Demo");
 
-       	applicationFindServerContext->servers_ = constructSPtr<ApplicationDescriptionArray>();
+       	applicationFindServerContext->servers_ = boost::make_shared<ApplicationDescriptionArray>();
        	applicationFindServerContext->servers_->resize(1);
        	applicationFindServerContext->servers_->push_back(ad);
 
@@ -106,7 +107,7 @@ namespace OpcUaServerApplicationDemo
         		}
 
         		// create application description
-        		ApplicationDescription::SPtr ad = constructSPtr<ApplicationDescription>();
+        		ApplicationDescription::SPtr ad = boost::make_shared<ApplicationDescription>();
         		ad->applicationUri(serverEntry->registeredServer().serverUri().value());
         		ad->productUri(serverEntry->registeredServer().productUri().value());
 
@@ -128,7 +129,7 @@ namespace OpcUaServerApplicationDemo
         		adVec.push_back(ad);
         	}
 
-        	applicationFindServerContext->servers_ = constructSPtr<ApplicationDescriptionArray>();
+        	applicationFindServerContext->servers_ = boost::make_shared<ApplicationDescriptionArray>();
         	if (adVec.size() > 0) {
         	    applicationFindServerContext->servers_->resize(adVec.size());
 

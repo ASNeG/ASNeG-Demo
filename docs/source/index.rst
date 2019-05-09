@@ -1,9 +1,9 @@
 .. _contents:
 
-ASNeG OPC UA Web Server Documentation
+ASNeG OPC UA Demo Server Documentation
 ============================================
 
-ASNeG OPC UA Web Server is an open source opc ua web server.
+ASNeG OPC UA Demo Server is an open source opc ua  server.
 
 Contents
 --------
@@ -11,7 +11,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-
+   1_getting_started/_index
 
 
 Indices and tables
