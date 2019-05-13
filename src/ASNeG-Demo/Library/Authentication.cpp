@@ -326,6 +326,9 @@ namespace OpcUaServerApplicationDemo
 		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_X509IdentityToken_Encoding_DefaultBinary) {
 			applicationAuthenitcationContext->statusCode_ = Success;
 		}
+		else if (applicationAuthenitcationContext->authenticationType_ == OpcUaId_IssuedIdentityToken_Encoding_DefaultBinary) {
+			applicationAuthenitcationContext->statusCode_ = Success;
+		}
 		else {
 			applicationAuthenitcationContext->statusCode_ = BadIdentityTokenInvalid;
 		}
