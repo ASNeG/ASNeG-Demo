@@ -30,6 +30,8 @@ Now the ASNeG Demo Server can be started.
 
 ::
   
+  $ export PATH=$PATH:~/.ASNeG/usr/bin
+  $ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/.ASNeG/usr/lib/
   $ OpcUaServer4 ~/.ASNeG/etc/OpcUaStack/ASNeG-Demo/OpcUaServer.xml
 
 **Windows**
