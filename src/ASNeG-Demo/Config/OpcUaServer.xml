@@ -73,6 +73,11 @@
 	    <TokenType>Username</TokenType>
 	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#Basic256</SecurityPolicyUri>
 	  </UserTokenPolicy>
+	  <UserTokenPolicy>
+	    <PolicyId>OpcUaStack2-1</PolicyId>
+	    <TokenType>Username</TokenType>
+	    <SecurityPolicyUri>http://opcfoundation.org/UA/SecurityPolicy#None</SecurityPolicyUri>
+	  </UserTokenPolicy>
 	  	  <UserTokenPolicy>
 	    <PolicyId>OpcUaStack3</PolicyId>
 	    <TokenType>Username</TokenType>
