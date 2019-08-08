@@ -580,7 +580,7 @@ namespace OpcUaServerApplicationDemo
 		if (timerInterval_ == 0) return;
 
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
-		slotTimerElement_->callback().reset(boost::bind(&TestStatusCode::timerLoop, this));
+		slotTimerElement_->timeoutCallback(boost::bind(&TestStatusCode::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), timerInterval_);
 		ioThread_->slotTimer()->start(slotTimerElement_);
 	}
@@ -593,7 +593,7 @@ namespace OpcUaServerApplicationDemo
 		loopTime_->variant()->variant(loopTime);
 
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
-		slotTimerElement_->callback().reset(boost::bind(&TestStatusCode::timerLoop, this));
+		slotTimerElement_->timeoutCallback(boost::bind(&TestStatusCode::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 1111);
 		ioThread_->slotTimer()->start(slotTimerElement_);
 	}
