@@ -140,7 +140,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "start Event loop");
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
-		slotTimerElement_->callback().reset(boost::bind(&Event::timerLoop, this));
+		slotTimerElement_->timeoutCallback(boost::bind(&Event::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 5000);
 		ioThread_->slotTimer()->start(slotTimerElement_);
 	}

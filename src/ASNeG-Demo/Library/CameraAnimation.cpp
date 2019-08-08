@@ -309,7 +309,7 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "start sample");
 
 		slotTimerElement_ = constructSPtr<SlotTimerElement>();
-		slotTimerElement_->callback().reset(boost::bind(&CameraAnimation::sample, this));
+		slotTimerElement_->timeoutCallback(boost::bind(&CameraAnimation::sample, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), sampleTimeout_);
 		ioThread_->slotTimer()->start(slotTimerElement_);
 	}
