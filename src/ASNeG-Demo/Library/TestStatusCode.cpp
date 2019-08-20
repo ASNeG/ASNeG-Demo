@@ -98,7 +98,7 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestStatusCode::getNamespaceInfo(void)
 	{
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
+		ServiceTransactionNamespaceInfo::SPtr trx = boost::make_shared<ServiceTransactionNamespaceInfo>();
 		NamespaceInfoRequest::SPtr req = trx->request();
 		NamespaceInfoResponse::SPtr res = trx->response();
 
@@ -127,7 +127,7 @@ namespace OpcUaServerApplicationDemo
 	TestStatusCode::createDataValue(void)
 	{
 		OpcUaDataValue::SPtr dataValue;
-		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue = boost::make_shared<OpcUaDataValue>();
 		dataValue->statusCode(Success);
 		dataValue->sourceTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
 		dataValue->serverTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
@@ -285,7 +285,7 @@ namespace OpcUaServerApplicationDemo
 
 		// String
 		nodeId.set(222, namespaceIndex_);
-		OpcUaString::SPtr str = constructSPtr<OpcUaString>();
+		OpcUaString::SPtr str = boost::make_shared<OpcUaString>();
 		dataValue->variant()->variant(str);
 		valueMap_.insert(std::make_pair(nodeId, dataValue));
 
@@ -293,7 +293,7 @@ namespace OpcUaServerApplicationDemo
 		nodeId.set(223, namespaceIndex_);
 		dataValue = createDataValue();
 		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaString::SPtr str = constructSPtr<OpcUaString>();
+			OpcUaString::SPtr str = boost::make_shared<OpcUaString>();
 			str->value("string");
 			dataValue->variant()->pushBack(str);
 		}
@@ -301,7 +301,7 @@ namespace OpcUaServerApplicationDemo
 
 		// ByteString
 		nodeId.set(224, namespaceIndex_);
-		OpcUaByteString::SPtr bstr = constructSPtr<OpcUaByteString>();
+		OpcUaByteString::SPtr bstr = boost::make_shared<OpcUaByteString>();
 		bstr->value("string");
 		dataValue = createDataValue();
 		dataValue->variant()->variant(bstr);
@@ -311,7 +311,7 @@ namespace OpcUaServerApplicationDemo
 		nodeId.set(225, namespaceIndex_);
 		dataValue = createDataValue();
 		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaByteString::SPtr bstr = constructSPtr<OpcUaByteString>();
+			OpcUaByteString::SPtr bstr = boost::make_shared<OpcUaByteString>();
 			bstr->value("string");
 			dataValue->variant()->pushBack(bstr);
 		}
@@ -319,7 +319,7 @@ namespace OpcUaServerApplicationDemo
 
 		// LocalizedText
 		nodeId.set(226, namespaceIndex_);
-		OpcUaLocalizedText::SPtr ltext = constructSPtr<OpcUaLocalizedText>();
+		OpcUaLocalizedText::SPtr ltext = boost::make_shared<OpcUaLocalizedText>();
 		ltext->set("de", "text");
 		dataValue = createDataValue();
 		dataValue->variant()->variant(ltext);
@@ -329,7 +329,7 @@ namespace OpcUaServerApplicationDemo
 		nodeId.set(227, namespaceIndex_);
 		dataValue = createDataValue();
 		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaLocalizedText::SPtr bstr = constructSPtr<OpcUaLocalizedText>();
+			OpcUaLocalizedText::SPtr bstr = boost::make_shared<OpcUaLocalizedText>();
 			ltext->set("de", "text");
 			dataValue->variant()->pushBack(ltext);
 		}
@@ -353,7 +353,7 @@ namespace OpcUaServerApplicationDemo
 
 		// GUID
 		nodeId.set(230, namespaceIndex_);
-		OpcUaGuid::SPtr guid = constructSPtr<OpcUaGuid>();
+		OpcUaGuid::SPtr guid = boost::make_shared<OpcUaGuid>();
 		*guid = "12345678-9ABC-DEF0-1234-56789ABCDEF0";
 		dataValue = createDataValue();
 		dataValue->variant()->variant(guid);
@@ -363,7 +363,7 @@ namespace OpcUaServerApplicationDemo
 		nodeId.set(231, namespaceIndex_);
 		dataValue = createDataValue();
 		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaGuid::SPtr guid = constructSPtr<OpcUaGuid>();
+			OpcUaGuid::SPtr guid = boost::make_shared<OpcUaGuid>();
 			*guid = "12345678-9ABC-DEF0-1234-56789ABCDEF0";
 			dataValue->variant()->pushBack(guid);
 		}
@@ -371,7 +371,7 @@ namespace OpcUaServerApplicationDemo
 
 		// NodeId
 		nodeId.set(232, namespaceIndex_);
-		OpcUaNodeId::SPtr nodeIdValue = constructSPtr<OpcUaNodeId>();
+		OpcUaNodeId::SPtr nodeIdValue = boost::make_shared<OpcUaNodeId>();
 		nodeIdValue->set(1,1);
 		dataValue = createDataValue();
 		dataValue->variant()->variant(nodeIdValue);
@@ -381,7 +381,7 @@ namespace OpcUaServerApplicationDemo
 		nodeId.set(233, namespaceIndex_);
 		dataValue = createDataValue();
 		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaNodeId::SPtr nodeIdValue = constructSPtr<OpcUaNodeId>();
+			OpcUaNodeId::SPtr nodeIdValue = boost::make_shared<OpcUaNodeId>();
 			nodeIdValue->set(pos, 1);
 			dataValue->variant()->pushBack(nodeIdValue);
 		}
@@ -389,7 +389,7 @@ namespace OpcUaServerApplicationDemo
 
 		// QualifiedName
 		nodeId.set(234, namespaceIndex_);
-		OpcUaQualifiedName::SPtr qualifiedName = constructSPtr<OpcUaQualifiedName>();
+		OpcUaQualifiedName::SPtr qualifiedName = boost::make_shared<OpcUaQualifiedName>();
 		qualifiedName->set("Name", 1);
 		dataValue = createDataValue();
 		dataValue->variant()->variant(qualifiedName);
@@ -399,7 +399,7 @@ namespace OpcUaServerApplicationDemo
 		nodeId.set(235, namespaceIndex_);
 		dataValue = createDataValue();
 		for (uint32_t pos=0; pos<3;pos++) {
-			OpcUaQualifiedName::SPtr qualifiedName = constructSPtr<OpcUaQualifiedName>();
+			OpcUaQualifiedName::SPtr qualifiedName = boost::make_shared<OpcUaQualifiedName>();
 			qualifiedName->set("Name", pos);
 			dataValue->variant()->pushBack(qualifiedName);
 		}
@@ -411,7 +411,7 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestStatusCode::registerCallbacks(void)
 	{
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = boost::make_shared<ServiceTransactionRegisterForwardNode>();
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
@@ -422,7 +422,7 @@ namespace OpcUaServerApplicationDemo
 	  	uint32_t pos = 0;
 	  	ValueMap::iterator it;
 	  	for (it = valueMap_.begin(); it != valueMap_.end(); it++) {
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
+	  		OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>();
 	  		*nodeId = it->first;
 
 	  		req->nodesToRegister()->set(pos, nodeId);
@@ -450,10 +450,10 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestStatusCode::registerLoopTimeCallbacks(void)
 	{
-	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
+	  	OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>();
 	  	nodeId->set(3, namespaceIndex_);
 
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = boost::make_shared<ServiceTransactionRegisterForwardNode>();
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
@@ -481,7 +481,7 @@ namespace OpcUaServerApplicationDemo
 	bool
 	TestStatusCode::createNodeReferences(void)
 	{
-		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
+		ServiceTransactionGetNodeReference::SPtr trx = boost::make_shared<ServiceTransactionGetNodeReference>();
 		GetNodeReferenceRequest::SPtr req = trx->request();
 		GetNodeReferenceResponse::SPtr res = trx->response();
 
@@ -489,7 +489,7 @@ namespace OpcUaServerApplicationDemo
 	  	ValueMap::iterator it;
 	  	req->nodes()->resize(valueMap_.size());
 	  	for (it = valueMap_.begin(); it != valueMap_.end(); it++) {
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
+	  		OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>();
 	  		*nodeId = it->first;
 
 	  		req->nodes()->set(pos, nodeId);
@@ -579,7 +579,7 @@ namespace OpcUaServerApplicationDemo
 		}
 		if (timerInterval_ == 0) return;
 
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&TestStatusCode::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), timerInterval_);
 		ioThread_->slotTimer()->start(slotTimerElement_);
@@ -592,7 +592,7 @@ namespace OpcUaServerApplicationDemo
 		OpcUaUInt32 loopTime(1111);
 		loopTime_->variant()->variant(loopTime);
 
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&TestStatusCode::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 1111);
 		ioThread_->slotTimer()->start(slotTimerElement_);
@@ -615,7 +615,7 @@ namespace OpcUaServerApplicationDemo
 	  	ValueMap::iterator it1;
 	  	for (it1 = valueMap_.begin(); it1 != valueMap_.end(); it1++) {
 
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
+	  		OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>();
 	  		OpcUaDataValue::SPtr dataValue = it1->second;
 	  		*nodeId = it1->first;
 

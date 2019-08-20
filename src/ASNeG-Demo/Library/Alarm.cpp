@@ -515,7 +515,7 @@ namespace OpcUaServerApplicationDemo
 	Alarm::startTimerLoop(void)
 	{
 		Log(Debug, "start Event loop");
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&Alarm::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 60000);
 		ioThread_->slotTimer()->start(slotTimerElement_);
@@ -543,70 +543,70 @@ namespace OpcUaServerApplicationDemo
 	void
 	Alarm::sendAlarmEvent(const std::string& eventMessage)
 	{
-		OffNormalAlarmType::SPtr event = constructSPtr<OffNormalAlarmType>();
+		OffNormalAlarmType::SPtr event = boost::make_shared<OffNormalAlarmType>();
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
 
 		// set condition identifier
-		variant = constructSPtr<OpcUaVariant>(OpcUaNodeId("AlarmObject", namespaceIndex_));
+		variant = boost::make_shared<OpcUaVariant>(OpcUaNodeId("AlarmObject", namespaceIndex_));
 		event->setAlarmConditionType(variant);
 
 		// set event id
-		variant = constructSPtr<OpcUaVariant>(OpcUaByteString("0123456789012345"));
+		variant = boost::make_shared<OpcUaVariant>(OpcUaByteString("0123456789012345"));
 		event->eventId(variant);
 
 		// set condition name
-		variant = constructSPtr<OpcUaVariant>(OpcUaString("OffNormalAlarm"));
+		variant = boost::make_shared<OpcUaVariant>(OpcUaString("OffNormalAlarm"));
 		event->conditionName(variant);
 
 		// set branch id
-		variant = constructSPtr<OpcUaVariant>(OpcUaNodeId()); // FIXME:
+		variant = boost::make_shared<OpcUaVariant>(OpcUaNodeId()); // FIXME:
 		event->branchId(variant);
 
 		// set active state
-		variant = constructSPtr<OpcUaVariant>(activeState());
+		variant = boost::make_shared<OpcUaVariant>(activeState());
 		event->activeState(variant);
 
 		// set active state id
-		variant = constructSPtr<OpcUaVariant>(activeState_Id());
+		variant = boost::make_shared<OpcUaVariant>(activeState_Id());
 		event->activeState_Id(variant);
 
 		// set acked state
-		variant = constructSPtr<OpcUaVariant>(ackedState());
+		variant = boost::make_shared<OpcUaVariant>(ackedState());
 		event->ackedState(variant);
 
 		// set acked state id
-		variant = constructSPtr<OpcUaVariant>(ackedState_Id());
+		variant = boost::make_shared<OpcUaVariant>(ackedState_Id());
 		event->ackedState_Id(variant);
 
 		// set confirm state
-		variant = constructSPtr<OpcUaVariant>();
+		variant = boost::make_shared<OpcUaVariant>();
 		variant->setValue(confirmedState());
 		event->confirmedState(variant);
 
 		// set confirm state id
-		variant = constructSPtr<OpcUaVariant>(confirmedState_Id());
+		variant = boost::make_shared<OpcUaVariant>(confirmedState_Id());
 		event->confirmedState_Id(variant);
 
 		// set enabled state
-		variant = constructSPtr<OpcUaVariant>(enabledState());
+		variant = boost::make_shared<OpcUaVariant>(enabledState());
 		event->enabledState(variant);
 
 		// set enabled state id
-		variant = constructSPtr<OpcUaVariant>(enabledState_Id());
+		variant = boost::make_shared<OpcUaVariant>(enabledState_Id());
 		event->enabledState_Id(variant);
 
 		// set retain
-		variant = constructSPtr<OpcUaVariant>();
+		variant = boost::make_shared<OpcUaVariant>();
 		variant->setValue((OpcUaBoolean)true); // FIXME: todo
 		event->retain(variant);
 
 		// set message value
-		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("en", eventMessage.c_str()));
+		variant = boost::make_shared<OpcUaVariant>(OpcUaLocalizedText("en", eventMessage.c_str()));
 		event->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)500);
+		variant = boost::make_shared<OpcUaVariant>((OpcUaUInt16)500);
 		event->severity(variant);
 
 		// send event on alarm node

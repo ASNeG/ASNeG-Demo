@@ -140,10 +140,10 @@ namespace OpcUaServerApplicationDemo
 
 			OpcUaVariant::SPtr variant;
 			applicationMethodContext->outputArguments_->resize(2);
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->variant((OpcUaUInt32)1);
 			applicationMethodContext->outputArguments_->push_back(variant);
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->variant((OpcUaUInt32)2);
 			applicationMethodContext->outputArguments_->push_back(variant);
 
@@ -186,7 +186,7 @@ namespace OpcUaServerApplicationDemo
 
 			// set result value
 			applicationMethodContext->outputArguments_->resize(1);
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->variant(value3);
 			applicationMethodContext->outputArguments_->push_back(variant);
 			applicationMethodContext->statusCode_ = Success;

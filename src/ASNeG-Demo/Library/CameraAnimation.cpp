@@ -105,7 +105,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "get namespace info");
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
+		ServiceTransactionNamespaceInfo::SPtr trx = boost::make_shared<ServiceTransactionNamespaceInfo>();
 		NamespaceInfoRequest::SPtr req = trx->request();
 		NamespaceInfoResponse::SPtr res = trx->response();
 
@@ -145,7 +145,7 @@ namespace OpcUaServerApplicationDemo
 
 		// SByte ns=1;s=Camera.1
 		nodeId.set("Camera.1", namespaceIndex_);
-		OpcUaByteString::SPtr byteString = constructSPtr<OpcUaByteString>();
+		OpcUaByteString::SPtr byteString = boost::make_shared<OpcUaByteString>();
 		byteString->value("0123456789");
 		dataValue = createDataValue();
 		dataValue->variant()->variant(byteString);
@@ -157,7 +157,7 @@ namespace OpcUaServerApplicationDemo
 	CameraAnimation::createDataValue(void)
 	{
 		OpcUaDataValue::SPtr dataValue;
-		dataValue = constructSPtr<OpcUaDataValue>();
+		dataValue = boost::make_shared<OpcUaDataValue>();
 		dataValue->statusCode(Success);
 		dataValue->sourceTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
 		dataValue->serverTimestamp(OpcUaDateTime(boost::posix_time::microsec_clock::universal_time()));
@@ -169,7 +169,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "create node reference");
 
-		ServiceTransactionGetNodeReference::SPtr trx = constructSPtr<ServiceTransactionGetNodeReference>();
+		ServiceTransactionGetNodeReference::SPtr trx = boost::make_shared<ServiceTransactionGetNodeReference>();
 		GetNodeReferenceRequest::SPtr req = trx->request();
 		GetNodeReferenceResponse::SPtr res = trx->response();
 
@@ -177,7 +177,7 @@ namespace OpcUaServerApplicationDemo
 	  	ValueMap::iterator it;
 	  	req->nodes()->resize(valueMap_.size());
 	  	for (it = valueMap_.begin(); it != valueMap_.end(); it++) {
-	  		OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>();
+	  		OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>();
 	  		*nodeId = it->first;
 
 	  		req->nodes()->set(pos, nodeId);
@@ -287,7 +287,7 @@ namespace OpcUaServerApplicationDemo
 				return false;
 			}
 
-			OpcUaByteString::SPtr value = constructSPtr<OpcUaByteString>();
+			OpcUaByteString::SPtr value = boost::make_shared<OpcUaByteString>();
 			value->value(buffer, bufferLen);
 			byteStringVec_.push_back(value);
 
@@ -308,7 +308,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "start sample");
 
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&CameraAnimation::sample, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), sampleTimeout_);
 		ioThread_->slotTimer()->start(slotTimerElement_);

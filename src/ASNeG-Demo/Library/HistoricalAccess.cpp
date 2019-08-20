@@ -89,7 +89,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "get namespace info");
 
-		ServiceTransactionNamespaceInfo::SPtr trx = constructSPtr<ServiceTransactionNamespaceInfo>();
+		ServiceTransactionNamespaceInfo::SPtr trx = boost::make_shared<ServiceTransactionNamespaceInfo>();
 		NamespaceInfoRequest::SPtr req = trx->request();
 		NamespaceInfoResponse::SPtr res = trx->response();
 
@@ -124,11 +124,11 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "registerHADataCallback");
 
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = boost::make_shared<ServiceTransactionRegisterForwardNode>();
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>("DoubleValue", namespaceIndex_);
+	  	OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>("DoubleValue", namespaceIndex_);
 	  	req->forwardNodeSync()->readHService().setCallback(boost::bind(&HistoricalAccess::readHValue, this, _1));
 	  	req->nodesToRegister()->resize(1);
 	  	req->nodesToRegister()->set(nodeId);
@@ -156,11 +156,11 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "registerHAEventCallback");
 
-	  	ServiceTransactionRegisterForwardNode::SPtr trx = constructSPtr<ServiceTransactionRegisterForwardNode>();
+	  	ServiceTransactionRegisterForwardNode::SPtr trx = boost::make_shared<ServiceTransactionRegisterForwardNode>();
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	OpcUaNodeId::SPtr nodeId = constructSPtr<OpcUaNodeId>("EventObject", namespaceIndex_);
+	  	OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>("EventObject", namespaceIndex_);
 	  	req->forwardNodeSync()->readHEService().setCallback(boost::bind(&HistoricalAccess::readHEvent, this, _1));
 	  	req->nodesToRegister()->resize(1);
 	  	req->nodesToRegister()->set(nodeId);
@@ -227,13 +227,13 @@ namespace OpcUaServerApplicationDemo
 		}
 
 		// set example data
-		applicationHReadContext->dataValueArray_ = constructSPtr<OpcUaDataValueArray>();
+		applicationHReadContext->dataValueArray_ = boost::make_shared<OpcUaDataValueArray>();
 		applicationHReadContext->dataValueArray_->resize(endIdx - startIdx);
 		boost::posix_time::ptime time = boost::posix_time::microsec_clock::local_time();
 		for (uint32_t idx=startIdx; idx<endIdx; idx++) {
 			OpcUaDateTime dateTime(time - boost::posix_time::seconds(10+idx));
 
-			OpcUaDataValue::SPtr dataValue = constructSPtr<OpcUaDataValue>((double)idx, Success, dateTime);
+			OpcUaDataValue::SPtr dataValue = boost::make_shared<OpcUaDataValue>((double)idx, Success, dateTime);
 			applicationHReadContext->dataValueArray_->push_back(dataValue);
 		}
 
@@ -248,7 +248,7 @@ namespace OpcUaServerApplicationDemo
 		uint32_t numberEvents = 5;
 
 		// set example data
-		applicationHReadEventContext->eventFieldArray_ = constructSPtr<HistoryEventFieldListArray>();
+		applicationHReadEventContext->eventFieldArray_ = boost::make_shared<HistoryEventFieldListArray>();
 		applicationHReadEventContext->eventFieldArray_->resize(numberEvents);
 		for (uint32_t idx=0; idx<numberEvents; idx++) {
 
@@ -256,19 +256,19 @@ namespace OpcUaServerApplicationDemo
 			// create event
 			//
 			OpcUaVariant::SPtr variant;
-			BaseEventType::SPtr baseEventType = constructSPtr<BaseEventType>();
+			BaseEventType::SPtr baseEventType = boost::make_shared<BaseEventType>();
 			EventBase::SPtr eventBase = baseEventType;
 
 			// set message value
 			std::stringstream ss;
 
 			ss << "BaseEventType: Event message " << idx;
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue(OpcUaLocalizedText("de", ss.str()));
 			baseEventType->message(variant);
 
 			// set severity message
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue((OpcUaUInt16)100);
 			baseEventType->severity(variant);
 
@@ -278,39 +278,39 @@ namespace OpcUaServerApplicationDemo
 			OpcUaByteString byteString;
 			byteString.value((char*)&time, sizeof(boost::posix_time::ptime));
 
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue(byteString);
 
 			baseEventType->eventId(variant);
 
 
 			// set source node id if necessary
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue(OpcUaNodeId("EventObject", namespaceIndex_));
 			baseEventType->sourceNode(variant);
 
 			// set source name if necessary
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue("EventObject");
 			baseEventType->sourceName(variant);
 
 			// set time if necessary
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue(OpcUaDateTime(boost::posix_time::microsec_clock::local_time()));
 			baseEventType->time(variant);
 
 			// set receive time if necessary
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue(OpcUaDateTime(boost::posix_time::microsec_clock::local_time()));
 			baseEventType->receiveTime(variant);
 
 			// set message if necessary
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue(OpcUaLocalizedText("", "EventObject"));
 			baseEventType->message(variant);
 
 			// set severity if necessary
-			variant = constructSPtr<OpcUaVariant>();
+			variant = boost::make_shared<OpcUaVariant>();
 			variant->setValue((OpcUaUInt16)100);
 			baseEventType->severity(variant);
 
@@ -318,7 +318,7 @@ namespace OpcUaServerApplicationDemo
 			// filter event
 			//
 			EventFilter& eventFilter = applicationHReadEventContext->filter_;
-			HistoryEventFieldList::SPtr eventFieldList = constructSPtr<HistoryEventFieldList>();
+			HistoryEventFieldList::SPtr eventFieldList = boost::make_shared<HistoryEventFieldList>();
 			eventFieldList->eventFields().resize(eventFilter.selectClauses().size());
 			applicationHReadEventContext->eventFieldArray_->push_back(eventFieldList);
 
@@ -345,7 +345,7 @@ namespace OpcUaServerApplicationDemo
 
 				// insert variant into event field list
 				if (resultCode != EventResult::Success) {
-					value = constructSPtr<OpcUaVariant>();
+					value = boost::make_shared<OpcUaVariant>();
 
 				}
 				else {

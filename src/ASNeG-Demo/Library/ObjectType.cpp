@@ -149,7 +149,7 @@ namespace OpcUaServerApplicationDemo
 		//
 		// create a new object instance in the opc ua information model
 		//
-		fileType_ = constructSPtr<MyFileType>();
+		fileType_ = boost::make_shared<MyFileType>();
 		Object::SPtr obj = fileType_;
 		CreateObjectInstance createObjectInstance(
 			"http://ASNeG-Demo/ObjectType/",				// namespace name of the object instance

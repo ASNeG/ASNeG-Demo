@@ -50,7 +50,7 @@ namespace OpcUaServerApplicationDemo
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&CreateDeleteNode::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 30000);
 		ioThread_->slotTimer()->start(slotTimerElement_);

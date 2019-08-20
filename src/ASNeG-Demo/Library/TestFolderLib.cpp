@@ -127,259 +127,259 @@ namespace OpcUaServerApplicationDemo
 		// SByte
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(200, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaSByte)11, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaSByte)11, Success, now)
 		));
 
 		// SByteByteArray
 		std::vector<OpcUaSByte> sByteVec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(201, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(sByteVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(sByteVec, Success, now)
 		));
 
 		// Byte
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(202, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaByte)32, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaByte)32, Success, now)
 		));
 
 		// ByteByteArray
 		std::vector<OpcUaByte> byteVec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(203, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(byteVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(byteVec, Success, now)
 		));
 
 		// Int16
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(204, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaInt16)25, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaInt16)25, Success, now)
 		));
 
 		// Int16Array
 		std::vector<OpcUaInt16> int16Vec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(205, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(int16Vec, Success, now)
+			boost::make_shared<OpcUaDataValue>(int16Vec, Success, now)
 		));
 
 		// UInt16
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(206, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaUInt16)50, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaUInt16)50, Success, now)
 		));
 
 		// UInt16Array
 		std::vector<OpcUaUInt16> uint16Vec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(207, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(uint16Vec, Success, now)
+			boost::make_shared<OpcUaDataValue>(uint16Vec, Success, now)
 		));
 
 		// Int32
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(208, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaInt32)180, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaInt32)180, Success, now)
 		));
 
 		// Int32Array
 		std::vector<OpcUaInt32> int32Vec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(209, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(int32Vec, Success, now)
+			boost::make_shared<OpcUaDataValue>(int32Vec, Success, now)
 		));
 
 		// UInt32
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(210, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaUInt32)180, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaUInt32)180, Success, now)
 		));
 
 		// UInt32Array
 		std::vector<OpcUaUInt32> uint32Vec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(211, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(uint32Vec, Success, now)
+			boost::make_shared<OpcUaDataValue>(uint32Vec, Success, now)
 		));
 
 		// Int64
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(212, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaInt64)0, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaInt64)0, Success, now)
 		));
 
 		// Int64Array
 		std::vector<OpcUaInt64> int64Vec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(213, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(int64Vec, Success, now)
+			boost::make_shared<OpcUaDataValue>(int64Vec, Success, now)
 		));
 
 		// UInt64
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(214, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaUInt64)1500, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaUInt64)1500, Success, now)
 		));
 
 		// UInt64Array
 		std::vector<OpcUaUInt64> uint64Vec = {0, 1, 2};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(215, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(uint64Vec, Success, now)
+			boost::make_shared<OpcUaDataValue>(uint64Vec, Success, now)
 		));
 
 		// Float
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(216, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaFloat)500, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaFloat)500, Success, now)
 		));
 
 		// FloatArray
 		std::vector<OpcUaFloat> floatVec = {0.0, 6.7, 10.1};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(217, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(floatVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(floatVec, Success, now)
 		));
 
 		// Double
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(218, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaDouble)500, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaDouble)500, Success, now)
 		));
 
 		// DoubleArray
 		std::vector<OpcUaDouble> doubleVec = {0.0, 6.7, 10.1};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(219, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(doubleVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(doubleVec, Success, now)
 		));
 
 		// Boolean
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(220, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>((OpcUaBoolean)true, Success, now)
+			boost::make_shared<OpcUaDataValue>((OpcUaBoolean)true, Success, now)
 		));
 
 		// DoubleArray
 		std::vector<OpcUaBoolean> booleanVec = {false, false, false};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(221, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(booleanVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(booleanVec, Success, now)
 		));
 
 		// String
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(222, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(OpcUaString("TestString"), Success, now)
+			boost::make_shared<OpcUaDataValue>(OpcUaString("TestString"), Success, now)
 		));
 
 		// StringArray
 		std::vector<OpcUaString::SPtr> stringVec = {
-			constructSPtr<OpcUaString>("TestString1"),
-			constructSPtr<OpcUaString>("TestString2"),
-			constructSPtr<OpcUaString>("TestString3")
+			boost::make_shared<OpcUaString>("TestString1"),
+			boost::make_shared<OpcUaString>("TestString2"),
+			boost::make_shared<OpcUaString>("TestString3")
 		};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(223, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(stringVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(stringVec, Success, now)
 		));
 
 		// ByteString
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(224, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(OpcUaByteString("TestByteString"), Success, now)
+			boost::make_shared<OpcUaDataValue>(OpcUaByteString("TestByteString"), Success, now)
 		));
 
 		// ByteStringArray
 		std::vector<OpcUaByteString::SPtr> byteStringVec = {
-			constructSPtr<OpcUaByteString>("TestByteString1"),
-			constructSPtr<OpcUaByteString>("TestByteString2"),
-			constructSPtr<OpcUaByteString>("TestByteString3")
+			boost::make_shared<OpcUaByteString>("TestByteString1"),
+			boost::make_shared<OpcUaByteString>("TestByteString2"),
+			boost::make_shared<OpcUaByteString>("TestByteString3")
 		};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(225, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(byteStringVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(byteStringVec, Success, now)
 		));
 
 		// LocalizedText
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(226, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(OpcUaLocalizedText("de", "Text"), Success, now)
+			boost::make_shared<OpcUaDataValue>(OpcUaLocalizedText("de", "Text"), Success, now)
 		));
 
 		// LocalizedTextArray
 		std::vector<OpcUaLocalizedText::SPtr> localizedTextVec = {
-			constructSPtr<OpcUaLocalizedText>("de", "Test1"),
-			constructSPtr<OpcUaLocalizedText>("de", "Test2"),
-			constructSPtr<OpcUaLocalizedText>("de", "Test3")
+			boost::make_shared<OpcUaLocalizedText>("de", "Test1"),
+			boost::make_shared<OpcUaLocalizedText>("de", "Test2"),
+			boost::make_shared<OpcUaLocalizedText>("de", "Test3")
 		};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(227, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(localizedTextVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(localizedTextVec, Success, now)
 		));
 
 		// DateTime
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(228, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(now, Success, now)
+			boost::make_shared<OpcUaDataValue>(now, Success, now)
 		));
 
 		// DateTimeArray
 		std::vector<OpcUaDateTime> dateTimeVec = { now, now, now };
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(229, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(dateTimeVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(dateTimeVec, Success, now)
 		));
 
 		// GUID
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(230, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(OpcUaGuid("12345678-9ABC-DEF0-1234-56789ABCDEF0"), Success, now)
+			boost::make_shared<OpcUaDataValue>(OpcUaGuid("12345678-9ABC-DEF0-1234-56789ABCDEF0"), Success, now)
 		));
 
 		// GuidArray
 		std::vector<OpcUaGuid::SPtr> guidVec = {
-			constructSPtr<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0"),
-			constructSPtr<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0"),
-			constructSPtr<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0")
+			boost::make_shared<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0"),
+			boost::make_shared<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0"),
+			boost::make_shared<OpcUaGuid>("12345678-9ABC-DEF0-1234-56789ABCDEF0")
 		};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(231, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(guidVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(guidVec, Success, now)
 		));
 
 		// NodeId
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(232, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(OpcUaNodeId(1,1), Success, now)
+			boost::make_shared<OpcUaDataValue>(OpcUaNodeId(1,1), Success, now)
 		));
 
 		// nodeIdArray
 		std::vector<OpcUaNodeId::SPtr> nodeIdVec = {
-			constructSPtr<OpcUaNodeId>(1,1),
-			constructSPtr<OpcUaNodeId>(2,1),
-			constructSPtr<OpcUaNodeId>(3,1)
+			boost::make_shared<OpcUaNodeId>(1,1),
+			boost::make_shared<OpcUaNodeId>(2,1),
+			boost::make_shared<OpcUaNodeId>(3,1)
 		};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(233, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(nodeIdVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(nodeIdVec, Success, now)
 		));
 
 		// QualifiedName
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(234, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(OpcUaQualifiedName("Name", 1), Success, now)
+			boost::make_shared<OpcUaDataValue>(OpcUaQualifiedName("Name", 1), Success, now)
 		));
 
 		// QualifiedNameArray
 		std::vector<OpcUaQualifiedName::SPtr> qualifiedNameVec = {
-			constructSPtr<OpcUaQualifiedName>("Name1", 1),
-			constructSPtr<OpcUaQualifiedName>("Name2", 1),
-			constructSPtr<OpcUaQualifiedName>("Name3", 1)
+			boost::make_shared<OpcUaQualifiedName>("Name1", 1),
+			boost::make_shared<OpcUaQualifiedName>("Name2", 1),
+			boost::make_shared<OpcUaQualifiedName>("Name3", 1)
 		};
 		valueMap_.insert(std::make_pair(
 			OpcUaNodeId(235, namespaceIndex_),
-			constructSPtr<OpcUaDataValue>(qualifiedNameVec, Success, now)
+			boost::make_shared<OpcUaDataValue>(qualifiedNameVec, Success, now)
 		));
 
 		// create vector of node identifier
@@ -497,7 +497,7 @@ namespace OpcUaServerApplicationDemo
 		}
 		if (timerInterval_ == 0) return;
 
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&TestFolderLib::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), timerInterval_);
 		ioThread_->slotTimer()->start(slotTimerElement_);
@@ -509,7 +509,7 @@ namespace OpcUaServerApplicationDemo
 		// TimerInterval
 		loopTime_ = 1111;
 
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&TestFolderLib::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 1111);
 		ioThread_->slotTimer()->start(slotTimerElement_);

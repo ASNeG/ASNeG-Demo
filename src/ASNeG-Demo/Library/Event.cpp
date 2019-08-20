@@ -139,7 +139,7 @@ namespace OpcUaServerApplicationDemo
 	Event::startTimerLoop(void)
 	{
 		Log(Debug, "start Event loop");
-		slotTimerElement_ = constructSPtr<SlotTimerElement>();
+		slotTimerElement_ = boost::make_shared<SlotTimerElement>();
 		slotTimerElement_->timeoutCallback(boost::bind(&Event::timerLoop, this));
 		slotTimerElement_->expireTime(boost::posix_time::microsec_clock::local_time(), 5000);
 		ioThread_->slotTimer()->start(slotTimerElement_);
@@ -160,7 +160,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::sendEvent11(void)
 	{
-		BaseEventType::SPtr baseEventType = constructSPtr<BaseEventType>();
+		BaseEventType::SPtr baseEventType = boost::make_shared<BaseEventType>();
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
 
@@ -168,11 +168,11 @@ namespace OpcUaServerApplicationDemo
 		std::stringstream ss;
 		counter_++;
 		ss << "BaseEventType: Event message " << counter_;
-		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
+		variant = boost::make_shared<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
 		baseEventType->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)100);
+		variant = boost::make_shared<OpcUaVariant>((OpcUaUInt16)100);
 		baseEventType->severity(variant);
 
 		// send event on node Event11
@@ -185,7 +185,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::sendEvent12(void)
 	{
-		CustomerEventType::SPtr customerEventType = constructSPtr<CustomerEventType>();
+		CustomerEventType::SPtr customerEventType = boost::make_shared<CustomerEventType>();
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
 
@@ -193,19 +193,19 @@ namespace OpcUaServerApplicationDemo
 		std::stringstream ss;
 		counter_++;
 		ss << "CustomerEventType: Event message " << counter_;
-		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
+		variant = boost::make_shared<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
 		customerEventType->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)100);
+		variant = boost::make_shared<OpcUaVariant>((OpcUaUInt16)100);
 		customerEventType->severity(variant);
 
 		// set variable1
-		variant = constructSPtr<OpcUaVariant>((OpcUaDouble)1234);
+		variant = boost::make_shared<OpcUaVariant>((OpcUaDouble)1234);
 		customerEventType->variable1(variant);
 
 		// set variable2
-		variant = constructSPtr<OpcUaVariant>((OpcUaDouble)5678);
+		variant = boost::make_shared<OpcUaVariant>((OpcUaDouble)5678);
 		customerEventType->variable2(variant);
 
 		// send event on node Event12
@@ -218,7 +218,7 @@ namespace OpcUaServerApplicationDemo
 	void
 	Event::sendEvent21(void)
 	{
-		BaseEventType::SPtr eventType = constructSPtr<AlarmConditionType>();
+		BaseEventType::SPtr eventType = boost::make_shared<AlarmConditionType>();
 		EventBase::SPtr eventBase;
 		OpcUaVariant::SPtr variant;
 
@@ -226,11 +226,11 @@ namespace OpcUaServerApplicationDemo
 		std::stringstream ss;
 		counter_++;
 		ss << "BaseEventType: Event message " << counter_;
-		variant = constructSPtr<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
+		variant = boost::make_shared<OpcUaVariant>(OpcUaLocalizedText("de", ss.str()));
 		eventType->message(variant);
 
 		// set severity message
-		variant = constructSPtr<OpcUaVariant>((OpcUaUInt16)100);
+		variant = boost::make_shared<OpcUaVariant>((OpcUaUInt16)100);
 		eventType->severity(variant);
 
 		// send event on node Event21

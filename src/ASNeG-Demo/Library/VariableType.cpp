@@ -34,7 +34,7 @@ namespace OpcUaServerApplicationDemo
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 
-	, analogItemType_(constructSPtr<AnalogItemType>())
+	, analogItemType_(boost::make_shared<AnalogItemType>())
 	{
 	}
 
