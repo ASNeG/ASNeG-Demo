@@ -1,5 +1,5 @@
 /*
-   Copyright 2017-2018 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2019 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -38,11 +38,6 @@ namespace OpcUaServerApplicationDemo
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
-	, acknowledgeCallback_(boost::bind(&Alarm::acknowledge, this, _1))
-	, confirmCallback_(boost::bind(&Alarm::confirm, this, _1))
-	, enabledCallback_(boost::bind(&Alarm::enabled, this, _1))
-	, disableCallback_(boost::bind(&Alarm::disable, this, _1))
-	, conditionRefreshCallback_(boost::bind(&Alarm::conditionRefresh, this, _1))
 	{
 	}
 
@@ -434,26 +429,47 @@ namespace OpcUaServerApplicationDemo
 	bool
 	Alarm::registerCallbacks(void)
 	{
+		bool rc;
 		OpcUaNodeId acknowlegeNodeId(9111);
 		OpcUaNodeId confirmNodeId(9113);
 		OpcUaNodeId contionRefresh(3875);
 		OpcUaNodeId offNormalAlarmType(2782);
 
-		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId_, &acknowledgeCallback_)) return false;
-		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId, &acknowledgeCallback_)) return false;
-		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId_, &confirmCallback_)) return false;
-		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId, &confirmCallback_)) return false;
-		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), enabledNodeId_, &enabledCallback_)) return false;
-		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), disableNodeId_, &disableCallback_)) return false;
-		if (!registerCallback(offNormalAlarmType, contionRefresh, &conditionRefreshCallback_)) return false;
+		auto acknowledgeCallback = [this](ApplicationMethodContext* applicationMethodContext) {
+			acknowledge(applicationMethodContext);
+		};
+		auto confirmCallback = [this](ApplicationMethodContext* applicationMethodContext) {
+			confirm(applicationMethodContext);
+		};
+		auto enabledCallback = [this](ApplicationMethodContext* applicationMethodContext) {
+			enabled(applicationMethodContext);
+		};
+		auto disableCallback = [this](ApplicationMethodContext* applicationMethodContext) {
+			disable(applicationMethodContext);
+		};
+		auto conditionRefreshCallback = [this](ApplicationMethodContext* applicationMethodContext) {
+			conditionRefresh(applicationMethodContext);
+		};
+
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId_, acknowledgeCallback)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), acknowlegeNodeId, acknowledgeCallback)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId_, confirmCallback)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), confirmNodeId, confirmCallback)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), enabledNodeId_, enabledCallback)) return false;
+		if (!registerCallback(OpcUaNodeId("AlarmObject", namespaceIndex_), disableNodeId_, disableCallback)) return false;
+		if (!registerCallback(offNormalAlarmType, contionRefresh, conditionRefreshCallback)) return false;
 		return true;
 	}
 
 	bool
-	Alarm::registerCallback(const OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback)
+	Alarm::registerCallback(
+		const OpcUaNodeId& objectNodeId,
+		OpcUaNodeId& methodNodeId,
+		ApplicationCallback::Method callback
+	)
 	{
 		RegisterForwardMethod registerForwardMethod(objectNodeId, methodNodeId);
-		registerForwardMethod.setMethodCallback(*callback);
+		registerForwardMethod.setMethodCallback(callback);
 		if (!registerForwardMethod.query(applicationServiceIf_)) {
 			std::cout << "registerForwardNode response error" << std::endl;
 			return false;

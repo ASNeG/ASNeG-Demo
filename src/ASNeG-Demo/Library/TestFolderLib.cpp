@@ -444,8 +444,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		//std::cout << "read value ..." << applicationReadContext->nodeId_ << std::endl;
 
-	    ValueMap::iterator it;
-	    it = valueMap_.find(applicationReadContext->nodeId_);
+	    auto it = valueMap_.find(applicationReadContext->nodeId_);
 	    if (it == valueMap_.end()) {
 	    	applicationReadContext->statusCode_ = BadInternalError;
 	    	return;
@@ -466,8 +465,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		//std::cout << "write value ..." << applicationWriteContext->nodeId_  << std::endl;
 
-		ValueMap::iterator it;
-		it = valueMap_.find(applicationWriteContext->nodeId_);
+		auto it = valueMap_.find(applicationWriteContext->nodeId_);
 		if (it == valueMap_.end()) {
 			applicationWriteContext->statusCode_ = BadInternalError;
 			return;

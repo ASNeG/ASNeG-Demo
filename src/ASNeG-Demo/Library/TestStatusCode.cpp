@@ -1,5 +1,5 @@
 /*
-   Copyright 2017 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2019 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -28,10 +28,6 @@ namespace OpcUaServerApplicationDemo
 	TestStatusCode::TestStatusCode(void)
 	: namespaceIndex_(0)
 	, loopTime_()
-	, readCallback_(boost::bind(&TestStatusCode::readValue, this, _1))
-	, readLoopTimeCallback_(boost::bind(&TestStatusCode::readLoopTimeValue, this, _1))
-	, writeCallback_(boost::bind(&TestStatusCode::writeValue, this, _1))
-	, writeLoopTimeCallback_(boost::bind(&TestStatusCode::writeLoopTimeValue, this, _1))
 	, valueMap_()
 	, ioThread_()
 	, slotTimerElement_()
@@ -50,7 +46,11 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	bool
-	TestStatusCode::startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo)
+	TestStatusCode::startup(
+		IOThread& ioThread,
+		ApplicationServiceIf& applicationServiceIf,
+		ApplicationInfo* applicationInfo
+	)
 	{
 		Log(Debug, "TestStatusCode::startup");
 
@@ -415,8 +415,16 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardNodeSync()->readService().setCallback(readCallback_);
-	  	req->forwardNodeSync()->writeService().setCallback(writeCallback_);
+	  	req->forwardNodeSync()->readService().setCallback(
+	  		[this](ApplicationReadContext* applicationReadContext) {
+	  			readValue(applicationReadContext);
+	  		}
+	  	);
+	  	req->forwardNodeSync()->writeService().setCallback(
+		  	[this](ApplicationWriteContext* applicationWriteContext) {
+		  		writeValue(applicationWriteContext);
+		  	}
+	  	);
 	  	req->nodesToRegister()->resize(valueMap_.size());
 
 	  	uint32_t pos = 0;
@@ -457,8 +465,16 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardNodeRequest::SPtr req = trx->request();
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
-	  	req->forwardNodeSync()->readService().setCallback(readLoopTimeCallback_);
-	  	req->forwardNodeSync()->writeService().setCallback(writeLoopTimeCallback_);
+	  	req->forwardNodeSync()->readService().setCallback(
+	  		[this](ApplicationReadContext* applicationReadContext) {
+	  			readLoopTimeValue(applicationReadContext);
+	  		}
+		);
+	  	req->forwardNodeSync()->writeService().setCallback(
+		  	[this](ApplicationWriteContext* applicationWriteContext) {
+		  		writeLoopTimeValue(applicationWriteContext);
+		  	}
+		);
 	  	req->nodesToRegister()->resize(1);
 	  	req->nodesToRegister()->set(0, nodeId);
 
