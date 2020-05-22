@@ -1,5 +1,5 @@
 /*
-   Copyright 2017-2018 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2019 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -64,7 +64,11 @@ namespace OpcUaServerApplicationDemo
 		bool getNodeIds(void);
 		bool createNodeReferences(void);
 		bool registerCallbacks(void);
-		bool registerCallback(const OpcUaNodeId& objectNodeId, OpcUaNodeId& methodNodeId, Callback* callback);
+		bool registerCallback(
+			const OpcUaNodeId& objectNodeId,
+			OpcUaNodeId& methodNodeId,
+			ApplicationCallback::Method callback
+		);
 		void acknowledge(ApplicationMethodContext* applicationMethodContext);
 		void confirm(ApplicationMethodContext* applicationMethodContext);
 		void enabled(ApplicationMethodContext* applicationMethodContext);
@@ -116,14 +120,6 @@ namespace OpcUaServerApplicationDemo
 		BaseNodeClass::WPtr comment_;
 		BaseNodeClass::WPtr commentSourceTimestamp_;
 
-		//
-		// alarm callbacks
-		//
-		Callback acknowledgeCallback_;
-		Callback confirmCallback_;
-		Callback enabledCallback_;
-		Callback disableCallback_;
-		Callback conditionRefreshCallback_;
 	};
 
 }

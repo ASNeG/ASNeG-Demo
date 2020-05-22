@@ -28,7 +28,6 @@ namespace OpcUaServerApplicationDemo
 {
 
 	Discovery::Discovery(void)
-	: findServerCallback_(boost::bind(&Discovery::findServer, this, _1))
 	{
 	}
 
@@ -50,7 +49,11 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardGlobalRequest::SPtr req = trx->request();
 	  	RegisterForwardGlobalResponse::SPtr res = trx->response();
 
-	  	req->forwardGlobalSync()->findServersService().setCallback(findServerCallback_);
+	  	req->forwardGlobalSync()->findServersService().setCallback(
+	  		[this](ApplicationFindServerContext* applicationFindServerContext) {
+	  		    findServer(applicationFindServerContext);
+	  		}
+	  	);
 
 	  	applicationServiceIf.sendSync(trx);
 	  	if (trx->statusCode() != Success) {
