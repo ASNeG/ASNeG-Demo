@@ -112,6 +112,13 @@
       <ServerUri>urn:@HOSTNAME@:ASNeG:ASNeG-Demo</ServerUri>
       <ServerName>ASNeG-Demo@@HOSTNAME@</ServerName>
   </ServerInfo>
+  
+  <Server>
+      <ServerThreadPool>
+          <Name>ThrSrv</Name>
+          <NumberThreads>4</NumberThreads>
+      </ServerThreadPool>
+  </Server>
 
   <ApplicationCertificate>
   
