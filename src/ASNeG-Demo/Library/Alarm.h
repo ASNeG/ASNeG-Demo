@@ -1,5 +1,5 @@
 /*
-   Copyright 2017-2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -25,9 +25,6 @@
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 
-using namespace OpcUaStackCore;
-using namespace OpcUaStackServer;
-
 namespace OpcUaServerApplicationDemo
 {
 
@@ -37,27 +34,41 @@ namespace OpcUaServerApplicationDemo
 		Alarm(void);
 		~Alarm(void);
 
-		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
+		bool startup(
+			const OpcUaStackCore::IOThread::SPtr& ioThread,
+			OpcUaStackServer::ApplicationServiceIf& applicationServiceIf,
+			OpcUaStackServer::ApplicationInfo* applicationInfo
+		);
 		bool shutdown(void);
 
-		void ackedState(const OpcUaLocalizedText& ackedState);
-		OpcUaLocalizedText ackedState(void);
+		void ackedState(
+			const OpcUaStackCore::OpcUaLocalizedText& ackedState
+		);
+		OpcUaStackCore::OpcUaLocalizedText ackedState(void);
 		void ackedState_Id(bool ackedState);
 		bool ackedState_Id(void);
-		void confirmedState(const OpcUaLocalizedText& confirmedState);
-		OpcUaLocalizedText confirmedState(void);
+		void confirmedState(
+			const OpcUaStackCore::OpcUaLocalizedText& confirmedState
+		);
+		OpcUaStackCore::OpcUaLocalizedText confirmedState(void);
 		void confirmedState_Id(bool confirmedState);
 		bool confirmedState_Id(void);
-		void activeState(const OpcUaLocalizedText& activeState);
-		OpcUaLocalizedText activeState(void);
+		void activeState(
+			const OpcUaStackCore::OpcUaLocalizedText& activeState
+		);
+		OpcUaStackCore::OpcUaLocalizedText activeState(void);
 		void activeState_Id(bool activeState);
 		bool activeState_Id(void);
-		void enabledState(const OpcUaLocalizedText& activeState);
-		OpcUaLocalizedText enabledState(void);
+		void enabledState(
+			const OpcUaStackCore::OpcUaLocalizedText& activeState
+		);
+		OpcUaStackCore::OpcUaLocalizedText enabledState(void);
 		void enabledState_Id(bool activeState);
 		bool enabledState_Id(void);
-		void comment(const OpcUaLocalizedText& comment);
-		OpcUaLocalizedText comment(void);
+		void comment(
+			const OpcUaStackCore::OpcUaLocalizedText& comment
+		);
+		OpcUaStackCore::OpcUaLocalizedText comment(void);
 
 	  private:
 		bool getNamespaceInfo(void);
@@ -65,60 +76,70 @@ namespace OpcUaServerApplicationDemo
 		bool createNodeReferences(void);
 		bool registerCallbacks(void);
 		bool registerCallback(
-			const OpcUaNodeId& objectNodeId,
-			OpcUaNodeId& methodNodeId,
-			ApplicationCallback::Method callback
+			const OpcUaStackCore::OpcUaNodeId& objectNodeId,
+			OpcUaStackCore::OpcUaNodeId& methodNodeId,
+			OpcUaStackCore::ApplicationCallback::Method callback
 		);
-		void acknowledge(ApplicationMethodContext* applicationMethodContext);
-		void confirm(ApplicationMethodContext* applicationMethodContext);
-		void enabled(ApplicationMethodContext* applicationMethodContext);
-		void disable(ApplicationMethodContext* applicationMethodContext);
-		void conditionRefresh(ApplicationMethodContext* applicationMethodContext);
+		void acknowledge(
+			OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+		void confirm(
+			OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+		void enabled(
+			OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+		void disable(
+			OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+		void conditionRefresh(
+			OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
 		void startTimerLoop(void);
 		void timerLoop(void);
 		void sendAlarmEvent(const std::string& eventMessage);
 
-		IOThread* ioThread_;
-		SlotTimerElement::SPtr slotTimerElement_;
-		ApplicationServiceIf* applicationServiceIf_;
-		ApplicationInfo* applicationInfo_;
+		OpcUaStackCore::IOThread::SPtr ioThread_;
+		OpcUaStackCore::SlotTimerElement::SPtr slotTimerElement_;
+		OpcUaStackServer::ApplicationServiceIf* applicationServiceIf_;
+		OpcUaStackServer::ApplicationInfo* applicationInfo_;
 
 		uint32_t namespaceIndex_;
 
 		//
 		// node ids
 		//
-		OpcUaNodeId rootNodeId_;
-		OpcUaNodeId ackedStateNodeId_;
-		OpcUaNodeId ackedStateIdNodeId_;
-		OpcUaNodeId confirmedStateNodeId_;
-		OpcUaNodeId confirmedStateIdNodeId_;
-		OpcUaNodeId activeStateNodeId_;
-		OpcUaNodeId activeStateIdNodeId_;
-		OpcUaNodeId enabledStateNodeId_;
-		OpcUaNodeId enabledStateIdNodeId_;
-		OpcUaNodeId commentNodeId_;
-		OpcUaNodeId commentSourceTimestampNodeId_;
+		OpcUaStackCore::OpcUaNodeId rootNodeId_;
+		OpcUaStackCore::OpcUaNodeId ackedStateNodeId_;
+		OpcUaStackCore::OpcUaNodeId ackedStateIdNodeId_;
+		OpcUaStackCore::OpcUaNodeId confirmedStateNodeId_;
+		OpcUaStackCore::OpcUaNodeId confirmedStateIdNodeId_;
+		OpcUaStackCore::OpcUaNodeId activeStateNodeId_;
+		OpcUaStackCore::OpcUaNodeId activeStateIdNodeId_;
+		OpcUaStackCore::OpcUaNodeId enabledStateNodeId_;
+		OpcUaStackCore::OpcUaNodeId enabledStateIdNodeId_;
+		OpcUaStackCore::OpcUaNodeId commentNodeId_;
+		OpcUaStackCore::OpcUaNodeId commentSourceTimestampNodeId_;
 
-		OpcUaNodeId acknowlegeNodeId_;
-		OpcUaNodeId confirmNodeId_;
-		OpcUaNodeId addCommentNodeId_;
-		OpcUaNodeId enabledNodeId_;
-		OpcUaNodeId disableNodeId_;
+		OpcUaStackCore::OpcUaNodeId acknowlegeNodeId_;
+		OpcUaStackCore::OpcUaNodeId confirmNodeId_;
+		OpcUaStackCore::OpcUaNodeId addCommentNodeId_;
+		OpcUaStackCore::OpcUaNodeId enabledNodeId_;
+		OpcUaStackCore::OpcUaNodeId disableNodeId_;
 
 		//
 		// base node class references
 		//
-		BaseNodeClass::WPtr ackedState_;
-		BaseNodeClass::WPtr ackedStateId_;
-		BaseNodeClass::WPtr confirmedState_;
-		BaseNodeClass::WPtr confirmedStateId_;
-		BaseNodeClass::WPtr activeState_;
-		BaseNodeClass::WPtr activeStateId_;
-		BaseNodeClass::WPtr enabledState_;
-		BaseNodeClass::WPtr enabledStateId_;
-		BaseNodeClass::WPtr comment_;
-		BaseNodeClass::WPtr commentSourceTimestamp_;
+		OpcUaStackServer::BaseNodeClass::WPtr ackedState_;
+		OpcUaStackServer::BaseNodeClass::WPtr ackedStateId_;
+		OpcUaStackServer::BaseNodeClass::WPtr confirmedState_;
+		OpcUaStackServer::BaseNodeClass::WPtr confirmedStateId_;
+		OpcUaStackServer::BaseNodeClass::WPtr activeState_;
+		OpcUaStackServer::BaseNodeClass::WPtr activeStateId_;
+		OpcUaStackServer::BaseNodeClass::WPtr enabledState_;
+		OpcUaStackServer::BaseNodeClass::WPtr enabledStateId_;
+		OpcUaStackServer::BaseNodeClass::WPtr comment_;
+		OpcUaStackServer::BaseNodeClass::WPtr commentSourceTimestamp_;
 
 	};
 

@@ -1,5 +1,5 @@
 /*
-   Copyright 2017-2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -25,9 +25,6 @@
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 
-using namespace OpcUaStackCore;
-using namespace OpcUaStackServer;
-
 namespace OpcUaServerApplicationDemo
 {
 
@@ -37,21 +34,41 @@ namespace OpcUaServerApplicationDemo
 		TestStatusCode(void);
 		virtual ~TestStatusCode(void);
 
-		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
+		bool startup(
+			const OpcUaStackCore::IOThread::SPtr& ioThread,
+			OpcUaStackServer::ApplicationServiceIf& applicationServiceIf,
+			OpcUaStackServer::ApplicationInfo* applicationInfo
+		);
 		bool shutdown(void);
 
 	  private:
 		int32_t mySign(void);
 		double myPercent(void);
 		bool getNamespaceInfo(void);
-		void readValue(ApplicationReadContext* applicationReadContext);
-		void readLoopTimeValue(ApplicationReadContext* applicationReadContext);
-		void writeValue(ApplicationWriteContext* applicationWriteContext);
-		void writeLoopTimeValue(ApplicationWriteContext* applicationWriteContext);
-		void updateSingle(const OpcUaNodeId& nodeId, const OpcUaDataValue::SPtr dataValue, const BaseNodeClass::SPtr baseNodeClass);
-		void updateArray(const OpcUaNodeId& nodeId, const OpcUaDataValue::SPtr dataValue, const BaseNodeClass::SPtr baseNodeClass);
+		void readValue(
+			OpcUaStackCore::ApplicationReadContext* applicationReadContext
+		);
+		void readLoopTimeValue(
+			OpcUaStackCore::ApplicationReadContext* applicationReadContext
+		);
+		void writeValue(
+			OpcUaStackCore::ApplicationWriteContext* applicationWriteContext
+		);
+		void writeLoopTimeValue(
+			OpcUaStackCore::ApplicationWriteContext* applicationWriteContext
+		);
+		void updateSingle(
+			const OpcUaStackCore::OpcUaNodeId& nodeId,
+			const OpcUaStackCore::OpcUaDataValue::SPtr dataValue,
+			const OpcUaStackServer::BaseNodeClass::SPtr baseNodeClass
+		);
+		void updateArray(
+			const OpcUaStackCore::OpcUaNodeId& nodeId,
+			const OpcUaStackCore::OpcUaDataValue::SPtr dataValue,
+			const OpcUaStackServer::BaseNodeClass::SPtr baseNodeClass
+		);
 
-		OpcUaDataValue::SPtr createDataValue(void);
+		OpcUaStackCore::OpcUaDataValue::SPtr createDataValue(void);
 		bool createValueMap(void);
 		bool registerCallbacks(void);
 		bool registerLoopTimeCallbacks(void);
@@ -61,19 +78,19 @@ namespace OpcUaServerApplicationDemo
 		void timerLoop(void);
 
 		uint32_t namespaceIndex_;
-		OpcUaDataValue::SPtr loopTime_;
+		OpcUaStackCore::OpcUaDataValue::SPtr loopTime_;
 		boost::posix_time::ptime switchTime_;
-		OpcUaStatusCode statusCode_;
+		OpcUaStackCore::OpcUaStatusCode statusCode_;
 
-		typedef std::map<OpcUaNodeId,OpcUaDataValue::SPtr> ValueMap;
-		typedef std::map<OpcUaNodeId,BaseNodeClass::WPtr> BaseNodeClassWMap;
+		using ValueMap = std::map<OpcUaStackCore::OpcUaNodeId, OpcUaStackCore::OpcUaDataValue::SPtr>;
+		using BaseNodeClassWMap = std::map<OpcUaStackCore::OpcUaNodeId, OpcUaStackServer::BaseNodeClass::WPtr>;
 		ValueMap valueMap_;
 		BaseNodeClassWMap baseNodeClassWMap_;
 
-		IOThread* ioThread_;
-		SlotTimerElement::SPtr slotTimerElement_;
-		ApplicationServiceIf* applicationServiceIf_;
-		ApplicationInfo* applicationInfo_;
+		OpcUaStackCore::IOThread::SPtr ioThread_;
+		OpcUaStackCore::SlotTimerElement::SPtr slotTimerElement_;
+		OpcUaStackServer::ApplicationServiceIf* applicationServiceIf_;
+		OpcUaStackServer::ApplicationInfo* applicationInfo_;
 	};
 
 }

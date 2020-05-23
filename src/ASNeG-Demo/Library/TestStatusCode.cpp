@@ -1,5 +1,5 @@
 /*
-   Copyright 2017-2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -21,6 +21,9 @@
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include <iostream>
+
+using namespace OpcUaStackCore;
+using namespace OpcUaStackServer;
 
 namespace OpcUaServerApplicationDemo
 {
@@ -47,14 +50,14 @@ namespace OpcUaServerApplicationDemo
 
 	bool
 	TestStatusCode::startup(
-		IOThread& ioThread,
+		const IOThread::SPtr& ioThread,
 		ApplicationServiceIf& applicationServiceIf,
 		ApplicationInfo* applicationInfo
 	)
 	{
 		Log(Debug, "TestStatusCode::startup");
 
-		ioThread_ = &ioThread;
+		ioThread_ = ioThread;
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 

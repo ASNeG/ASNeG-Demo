@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -23,9 +23,6 @@
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 
-using namespace OpcUaStackCore;
-using namespace OpcUaStackServer;
-
 namespace OpcUaServerApplicationDemo
 {
 
@@ -35,34 +32,38 @@ namespace OpcUaServerApplicationDemo
 		CameraAnimation(void);
 		~CameraAnimation(void);
 
-		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
+		bool startup(
+			const OpcUaStackCore::IOThread::SPtr& ioThread,
+			OpcUaStackServer::ApplicationServiceIf& applicationServiceIf,
+			OpcUaStackServer::ApplicationInfo* applicationInfo
+		);
 		bool shutdown(void);
 
 	  private:
 		bool getNamespaceInfo(void);
 		bool createValueMap(void);
-		OpcUaDataValue::SPtr createDataValue(void);
+		OpcUaStackCore::OpcUaDataValue::SPtr createDataValue(void);
 		bool createNodeReferences();
 		bool loadPics(void);
 		void startSample(void);
 		void stopSample(void);
 		void sample(void);
 
-		IOThread* ioThread_;
-		SlotTimerElement::SPtr slotTimerElement_;
-		ApplicationServiceIf* applicationServiceIf_;
-		ApplicationInfo* applicationInfo_;
+		OpcUaStackCore::IOThread::SPtr ioThread_;
+		OpcUaStackCore::SlotTimerElement::SPtr slotTimerElement_;
+		OpcUaStackServer::ApplicationServiceIf* applicationServiceIf_;
+		OpcUaStackServer::ApplicationInfo* applicationInfo_;
 
 		uint32_t namespaceIndex_;
 
-		typedef std::map<OpcUaNodeId,OpcUaDataValue::SPtr> ValueMap;
-		typedef std::map<OpcUaNodeId,BaseNodeClass::WPtr> BaseNodeClassWMap;
+		using ValueMap = std::map<OpcUaStackCore::OpcUaNodeId, OpcUaStackCore::OpcUaDataValue::SPtr>;
+		using BaseNodeClassWMap = std::map<OpcUaStackCore::OpcUaNodeId, OpcUaStackServer::BaseNodeClass::WPtr>;
 		ValueMap valueMap_;
 		BaseNodeClassWMap baseNodeClassWMap_;
 
 		uint32_t countPics_;
 		uint32_t sampleTimeout_;
-		std::vector<OpcUaByteString::SPtr> byteStringVec_;
+		std::vector<OpcUaStackCore::OpcUaByteString::SPtr> byteStringVec_;
 		uint32_t byteStringVecIdx_;
 	};
 

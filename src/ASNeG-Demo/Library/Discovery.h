@@ -1,5 +1,5 @@
 /*
-   Copyright 2016-2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -26,9 +26,6 @@
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 
-using namespace OpcUaStackCore;
-using namespace OpcUaStackServer;
-
 namespace OpcUaServerApplicationDemo
 {
 
@@ -38,10 +35,16 @@ namespace OpcUaServerApplicationDemo
 		Discovery(void);
 		~Discovery(void);
 
-		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
+		bool startup(
+			const OpcUaStackCore::IOThread::SPtr& ioThread,
+			OpcUaStackServer::ApplicationServiceIf& applicationServiceIf,
+			OpcUaStackServer::ApplicationInfo* applicationInfo
+		);
 		bool shutdown(void);
 
-		void findServer(ApplicationFindServerContext* applicationFindServerContext);
+		void findServer(
+			OpcUaStackCore::ApplicationFindServerContext* applicationFindServerContext
+		);
 
 	  private:
 	};

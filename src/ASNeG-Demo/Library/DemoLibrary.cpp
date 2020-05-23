@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -52,20 +52,21 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "DemoLibrary::startup");
 
-		ioThread_.startup();
-		testFolderLib_.startup(ioThread_, service(), applicationInfo());
-		testStatusCode_.startup(ioThread_, service(), applicationInfo());
-		cameraAnimation_.startup(ioThread_, service(), applicationInfo());
-		function_.startup(ioThread_, service(), applicationInfo());
-		serviceFunction_.startup(ioThread_, service(), applicationInfo());
-		event_.startup(ioThread_, service(), applicationInfo());
-		alarm_.startup(ioThread_, service(), applicationInfo());
-		authentication_.startup(ioThread_, service(), applicationInfo());
-		historicalAccess_.startup(ioThread_, service(), applicationInfo());
-		discovery_.startup(ioThread_, service(), applicationInfo());
-		createDeleteNode_.startup(ioThread_, service(), applicationInfo());
-		variableType_.startup(ioThread_, service(), applicationInfo());
-		objectType_.startup(ioThread_, service(), applicationInfo());
+		IOThread::SPtr& ioThread = this->applicationThreadPool();
+
+		testFolderLib_.startup(ioThread, service(), applicationInfo());
+		testStatusCode_.startup(ioThread, service(), applicationInfo());
+		cameraAnimation_.startup(ioThread, service(), applicationInfo());
+		function_.startup(ioThread, service(), applicationInfo());
+		serviceFunction_.startup(ioThread, service(), applicationInfo());
+		event_.startup(ioThread, service(), applicationInfo());
+		alarm_.startup(ioThread, service(), applicationInfo());
+		authentication_.startup(ioThread, service(), applicationInfo());
+		historicalAccess_.startup(ioThread, service(), applicationInfo());
+		discovery_.startup(ioThread, service(), applicationInfo());
+		createDeleteNode_.startup(ioThread, service(), applicationInfo());
+		variableType_.startup(ioThread, service(), applicationInfo());
+		objectType_.startup(ioThread, service(), applicationInfo());
 		return true;
 	}
 
@@ -87,7 +88,6 @@ namespace OpcUaServerApplicationDemo
 		cameraAnimation_.shutdown();
 		testStatusCode_.shutdown();
 		testFolderLib_.shutdown();
-		ioThread_.shutdown();
 
 		return true;
 	}

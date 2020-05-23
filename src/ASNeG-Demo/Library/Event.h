@@ -1,5 +1,5 @@
 /*
-   Copyright 2017-2018 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -26,9 +26,6 @@
 #include "OpcUaStackServer/Application/ApplicationInfo.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 
-using namespace OpcUaStackCore;
-using namespace OpcUaStackServer;
-
 namespace OpcUaServerApplicationDemo
 {
 
@@ -38,12 +35,20 @@ namespace OpcUaServerApplicationDemo
 		Event(void);
 		~Event(void);
 
-		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
+		bool startup(
+			const OpcUaStackCore::IOThread::SPtr& ioThread,
+			OpcUaStackServer::ApplicationServiceIf& applicationServiceIf,
+			OpcUaStackServer::ApplicationInfo* applicationInfo
+		);
 		bool shutdown(void);
 
 	  private:
-		void eventItemStartCallback(ApplicationEventItemStartContext* applicationEventItemStartContext);
-		void eventItemStopCallback(ApplicationEventItemStopContext* applicationEventItemStopContext);
+		void eventItemStartCallback(
+			OpcUaStackCore::ApplicationEventItemStartContext* applicationEventItemStartContext
+		);
+		void eventItemStopCallback(
+			OpcUaStackCore::ApplicationEventItemStopContext* applicationEventItemStopContext
+		);
 
 		bool registerEventCallbacks(void);
 		bool getNamespaceInfo(void);
@@ -54,10 +59,10 @@ namespace OpcUaServerApplicationDemo
 		void sendEvent12(void);
 		void sendEvent21(void);
 
-		IOThread* ioThread_;
-		SlotTimerElement::SPtr slotTimerElement_;
-		ApplicationServiceIf* applicationServiceIf_;
-		ApplicationInfo* applicationInfo_;
+		OpcUaStackCore::IOThread::SPtr ioThread_;
+		OpcUaStackCore::SlotTimerElement::SPtr slotTimerElement_;
+		OpcUaStackServer::ApplicationServiceIf* applicationServiceIf_;
+		OpcUaStackServer::ApplicationInfo* applicationInfo_;
 
 		uint32_t namespaceIndex_;
 		uint32_t counter_;

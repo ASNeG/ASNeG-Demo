@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2019-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -26,12 +26,14 @@
 #include "ASNeG-Demo/Library/VariableType.h"
 #include "OpcUaStackServer/ServiceSetApplication/CreateVariableInstance.h"
 
+using namespace OpcUaStackCore;
+using namespace OpcUaStackServer;
+
 namespace OpcUaServerApplicationDemo
 {
 
 	VariableType::VariableType(void)
-	: ioThread_(nullptr)
-	, applicationServiceIf_(nullptr)
+	: applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 
 	, analogItemType_(boost::make_shared<AnalogItemType>())
@@ -44,14 +46,14 @@ namespace OpcUaServerApplicationDemo
 
 	bool
 	VariableType::startup(
-		IOThread& ioThread,
+		const IOThread::SPtr& ioThread,
 		ApplicationServiceIf& applicationServiceIf,
 		ApplicationInfo* applicationInfo
 	)
 	{
 		Log(Debug, "VariableType::startup");
 
-		ioThread_ = &ioThread;
+		ioThread_ = ioThread;
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 

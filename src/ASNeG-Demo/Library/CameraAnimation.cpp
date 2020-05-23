@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -25,12 +25,14 @@
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include "ASNeG-Demo/Library/CameraAnimation.h"
 
+using namespace OpcUaStackCore;
+using namespace OpcUaStackServer;
+
 namespace OpcUaServerApplicationDemo
 {
 
 	CameraAnimation::CameraAnimation(void)
-	: ioThread_(nullptr)
-	, slotTimerElement_()
+	: slotTimerElement_()
 	, applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
@@ -50,7 +52,7 @@ namespace OpcUaServerApplicationDemo
 
 	bool
 	CameraAnimation::startup(
-		IOThread& ioThread,
+		const IOThread::SPtr& ioThread,
 		ApplicationServiceIf& applicationServiceIf,
 		ApplicationInfo* applicationInfo
 	)
@@ -60,7 +62,7 @@ namespace OpcUaServerApplicationDemo
 		// FIXME: this modul do not work on winows systems
 		return true;
 
-		ioThread_ = &ioThread;
+		ioThread_ = ioThread;
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 

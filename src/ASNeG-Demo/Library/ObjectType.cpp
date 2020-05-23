@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2019-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -25,6 +25,9 @@
 #include "OpcUaStackCore/StandardDataTypes/EUInformation.h"
 #include "ASNeG-Demo/Library/ObjectType.h"
 #include "OpcUaStackServer/ServiceSetApplication/CreateObjectInstance.h"
+
+using namespace OpcUaStackCore;
+using namespace OpcUaStackServer;
 
 namespace OpcUaServerApplicationDemo
 {
@@ -99,8 +102,7 @@ namespace OpcUaServerApplicationDemo
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
 	ObjectType::ObjectType(void)
-	: ioThread_(nullptr)
-	, applicationServiceIf_(nullptr)
+	: applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 
 	, fileType_()
@@ -113,14 +115,14 @@ namespace OpcUaServerApplicationDemo
 
 	bool
 	ObjectType::startup(
-		IOThread& ioThread,
+		const IOThread::SPtr& ioThread,
 		ApplicationServiceIf& applicationServiceIf,
 		ApplicationInfo* applicationInfo
 	)
 	{
 		Log(Debug, "ObjectType::startup");
 
-		ioThread_ = &ioThread;
+		ioThread_ = ioThread;
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 
