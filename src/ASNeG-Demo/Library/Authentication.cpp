@@ -1,5 +1,5 @@
 /*
-   Copyright 2018 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2018-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -25,6 +25,9 @@
 #include "OpcUaStackServer/ServiceSetApplication/RegisterForwardGlobal.h"
 #include "OpcUaStackServer/ServiceSetApplication/GetNodeReference.h"
 #include "ASNeG-Demo/Library/Authentication.h"
+
+using namespace OpcUaStackCore;
+using namespace OpcUaStackServer;
 
 namespace OpcUaServerApplicationDemo
 {
@@ -121,8 +124,7 @@ namespace OpcUaServerApplicationDemo
 	// ------------------------------------------------------------------------
 	// ------------------------------------------------------------------------
 	Authentication::Authentication(void)
-	: ioThread_(nullptr)
-	, applicationServiceIf_(nullptr)
+	: applicationServiceIf_(nullptr)
 	, applicationInfo_(nullptr)
 	, namespaceIndex_(0)
 	{
@@ -134,14 +136,14 @@ namespace OpcUaServerApplicationDemo
 
 	bool
 	Authentication::startup(
-		IOThread& ioThread,
+		const IOThread::SPtr& ioThread,
 		ApplicationServiceIf& applicationServiceIf,
 		ApplicationInfo* applicationInfo
 	)
 	{
 		Log(Debug, "Authentication::startup");
 
-		ioThread_ = &ioThread;
+		ioThread_ = ioThread;
 		applicationServiceIf_ = &applicationServiceIf;
 		applicationInfo_ = applicationInfo;
 

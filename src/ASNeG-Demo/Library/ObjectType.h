@@ -1,5 +1,5 @@
 /*
-   Copyright 2019 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2019-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -25,14 +25,11 @@
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
 #include "OpcUaStackServer/StandardObjectType/FileType.h"
 
-using namespace OpcUaStackCore;
-using namespace OpcUaStackServer;
-
 namespace OpcUaServerApplicationDemo
 {
 
 	class MyFileType
-	: public FileType
+	: public OpcUaStackServer::FileType
 	{
 	  public:
 		MyFileType(void);
@@ -41,12 +38,24 @@ namespace OpcUaServerApplicationDemo
 		void create(void);
 		void cleanup(void);
 
-	    virtual void call_Close_Method(ApplicationMethodContext* applicationMethodContext);
-	    virtual void call_GetPosition_Method(ApplicationMethodContext* applicationMethodContext);
-	    virtual void call_Open_Method(ApplicationMethodContext* applicationMethodContext);
-	    virtual void call_Read_Method(ApplicationMethodContext* applicationMethodContext);
-	    virtual void call_SetPosition_Method(ApplicationMethodContext* applicationMethodContext);
-	    virtual void call_Write_Method(ApplicationMethodContext* applicationMethodContext);
+	    virtual void call_Close_Method(
+	    	OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+	    virtual void call_GetPosition_Method(
+	    	OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+	    virtual void call_Open_Method(
+	    	OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+	    virtual void call_Read_Method(
+	    	OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+	    virtual void call_SetPosition_Method(
+	    	OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
+	    virtual void call_Write_Method(
+	    	OpcUaStackCore::ApplicationMethodContext* applicationMethodContext
+		);
 	};
 
 	class ObjectType
@@ -55,15 +64,19 @@ namespace OpcUaServerApplicationDemo
 		ObjectType(void);
 		~ObjectType(void);
 
-		bool startup(IOThread& ioThread, ApplicationServiceIf& applicationServiceIf, ApplicationInfo* applicationInfo);
+		bool startup(
+			const OpcUaStackCore::IOThread::SPtr& ioThread,
+			OpcUaStackServer::ApplicationServiceIf& applicationServiceIf,
+			OpcUaStackServer::ApplicationInfo* applicationInfo
+		);
 		bool shutdown(void);
 
 	  private:
 		bool createObject(void);
 
-		IOThread* ioThread_;
-		ApplicationServiceIf* applicationServiceIf_;
-		ApplicationInfo* applicationInfo_;
+		OpcUaStackCore::IOThread::SPtr ioThread_;
+		OpcUaStackServer::ApplicationServiceIf* applicationServiceIf_;
+		OpcUaStackServer::ApplicationInfo* applicationInfo_;
 
 		MyFileType::SPtr fileType_;
 	};

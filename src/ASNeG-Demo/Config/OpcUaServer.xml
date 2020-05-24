@@ -160,6 +160,12 @@
       <Name>ASNeG-Demo</Name>  
       <Library>ASNeG-Demo</Library>
       <Config>@CONF_DIR@/ApplicationDemoModel.xml</Config>
+      
+      <ApplThreadPool>
+          <Name>ThrDemo</Name>
+          <NumberThreads>3</NumberThreads>
+      </ApplThreadPool>
+      
     </Application>
   </Applications>
   
