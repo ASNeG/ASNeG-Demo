@@ -101,6 +101,18 @@ namespace OpcUaServerApplicationDemo
 		return version.str();
 	}
 
+	std::string
+	DemoLibrary::gitCommit(void)
+	{
+		return LIBRARY_GIT_COMMIT;
+	}
+
+	std::string
+	DemoLibrary::gitBranch(void)
+	{
+		return LIBRARY_GIT_BRANCH;
+	}
+
 }
 
 extern "C" DLLEXPORT void  init(ApplicationIf** applicationIf) {
