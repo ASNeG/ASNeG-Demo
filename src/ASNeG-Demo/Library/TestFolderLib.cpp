@@ -739,6 +739,21 @@ namespace OpcUaServerApplicationDemo
 		dataValue->sourceTimestamp(dateTime);
 		dataValue->statusCode(Success);
 		baseNodeClass->setValueSync(*dataValue);
+
+		// set some other attributes
+		baseNodeClass->setAccessLevelExSync(0xFF);
+		baseNodeClass->setAccessRestrictions(0x00);
+
+		RolePermissionType::SPtr rolePermission;
+		RolePermissionTypeArray rolePermissions;
+		rolePermissions.resize(3);
+		for (uint32_t idx = 0; idx < 3; idx++) {
+			rolePermission = boost::make_shared<RolePermissionType>();
+			rolePermission->roleId().set(idx);
+			rolePermission->permissions() = idx;
+			rolePermissions.push_back(rolePermission);
+		}
+		baseNodeClass->setRolePermissions(rolePermissions);
 	}
 
 	void
@@ -923,6 +938,21 @@ namespace OpcUaServerApplicationDemo
 		dataValue->sourceTimestamp(dateTime);
 		dataValue->statusCode(Success);
 		baseNodeClass->setValueSync(*dataValue);
+
+		// set some other attributes
+		baseNodeClass->setAccessLevelExSync(0xFF);
+		baseNodeClass->setAccessRestrictions(0x00);
+
+		RolePermissionType::SPtr rolePermission;
+		RolePermissionTypeArray rolePermissions;
+		rolePermissions.resize(3);
+		for (uint32_t idx = 0; idx < 3; idx++) {
+			rolePermission = boost::make_shared<RolePermissionType>();
+			rolePermission->roleId().set(idx);
+			rolePermission->permissions() = idx;
+			rolePermissions.push_back(rolePermission);
+		}
+		baseNodeClass->setRolePermissions(rolePermissions);
 	}
 
 }
