@@ -18,6 +18,7 @@
 #include "OpcUaStackCore/Base/os.h"
 #include "OpcUaStackCore/Base/Log.h"
 #include "ASNeG-Demo/Library/DemoLibrary.h"
+#include "ASNeG-Demo/Library/ForwardContext.h"
 #include "OpcUaStackServer/ServiceSetApplication/ApplicationService.h"
 #include "OpcUaStackServer/ServiceSetApplication/NodeReferenceApplication.h"
 #include <iostream>
@@ -30,6 +31,7 @@ namespace OpcUaServerApplicationDemo
 	: ApplicationIf()
 	, cameraAnimation_()
 	, testFolderLib_()
+	, testForward_()
 	, function_()
 	, serviceFunction_()
 	, event_()
@@ -55,6 +57,7 @@ namespace OpcUaServerApplicationDemo
 		IOThread::SPtr& ioThread = this->applicationThreadPool();
 
 		testFolderLib_.startup(ioThread, service(), applicationInfo());
+		testForward_.startup(ioThread, service(), applicationInfo());
 		testStatusCode_.startup(ioThread, service(), applicationInfo());
 		cameraAnimation_.startup(ioThread, service(), applicationInfo());
 		function_.startup(ioThread, service(), applicationInfo());
@@ -88,6 +91,7 @@ namespace OpcUaServerApplicationDemo
 		cameraAnimation_.shutdown();
 		testStatusCode_.shutdown();
 		testFolderLib_.shutdown();
+		testForward_.shutdown();
 
 		return true;
 	}
@@ -111,6 +115,13 @@ namespace OpcUaServerApplicationDemo
 	DemoLibrary::gitBranch(void)
 	{
 		return LIBRARY_GIT_BRANCH;
+	}
+
+	void
+	DemoLibrary::receiveForwardTrx(OpcUaStackServer::ForwardTransaction::SPtr forwardTransaction)
+	{
+		auto forwardContext = boost::static_pointer_cast<ForwardContext>(forwardTransaction->applicationContext());
+		forwardContext->forwardCallback()(forwardTransaction);
 	}
 
 }

@@ -1,5 +1,5 @@
 <!--
-   Copyright 2015-2018 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2020 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -188,6 +188,7 @@
     <NodeSetFile>@CONF_DIR@/Event.OpcUaNodeSet.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet2.Part14.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Generator.xml</NodeSetFile>
+    <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSetTestForward.xml</NodeSetFile>
 
   </InformationModel>
 
