@@ -436,6 +436,9 @@ namespace OpcUaServerApplicationDemo
 		auto req = forwardReadTrx->request();
 		auto res = forwardReadTrx->response();
 
+		Log(Debug, "receive read request")
+		    .parameter("NodeId", *req->readValueId()->nodeId());
+
 		// set data value
 		res->dataValue(forwardContext->dataValue());
 
@@ -453,6 +456,10 @@ namespace OpcUaServerApplicationDemo
 		auto forwardWriteTrx = boost::static_pointer_cast<ForwardTransactionWrite>(forwardTransaction);
 		auto req = forwardWriteTrx->request();
 		auto res = forwardWriteTrx->response();
+
+		Log(Debug, "receive write request")
+		    .parameter("NodeId", *req->writeValue()->nodeId())
+			.parameter("Value", req->writeValue()->dataValue());
 
 		// set data value
 		req->writeValue()->dataValue().copyTo(*forwardContext->dataValue());
