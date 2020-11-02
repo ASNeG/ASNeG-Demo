@@ -24,6 +24,7 @@
 #include "OpcUaStackCore/Application/ApplicationWriteContext.h"
 #include "OpcUaStackServer/Application/ApplicationIf.h"
 #include "OpcUaStackServer/AddressSpaceModel/BaseNodeClass.h"
+#include "OpcUaStackServer/Forward/ForwardTransaction.h"
 #include "ASNeG-Demo/Library/CameraAnimation.h"
 #include "ASNeG-Demo/Library/Function.h"
 #include "ASNeG-Demo/Library/ServiceFunction.h"
@@ -37,6 +38,7 @@
 #include "ASNeG-Demo/Library/CreateDeleteNode.h"
 #include "ASNeG-Demo/Library/VariableType.h"
 #include "ASNeG-Demo/Library/ObjectType.h"
+#include "ASNeG-Demo/Library/TestForward.h"
 
 namespace OpcUaServerApplicationDemo
 {
@@ -54,11 +56,13 @@ namespace OpcUaServerApplicationDemo
 		std::string version(void) override;
 		std::string gitCommit(void) override;
 		std::string gitBranch(void) override;
+		void receiveForwardTrx(OpcUaStackServer::ForwardTransaction::SPtr forwardTransaction) override;
 		//- ApplicationIf -----------------------------------------------------
 
 	  private:
 		CameraAnimation cameraAnimation_;
 		TestFolderLib testFolderLib_;
+		TestForward testForward_;
 		TestStatusCode testStatusCode_;
 		Function function_;
 		ServiceFunction serviceFunction_;
