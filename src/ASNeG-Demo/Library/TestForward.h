@@ -68,7 +68,15 @@ namespace OpcUaServerApplicationDemo
 
 		bool createValueMap(void);
 		bool registerCallbacks(void);
-		void receiveForwardTrx(OpcUaStackServer::ForwardTransaction::SPtr forwardTransaction);
+		void receiveReadForwardTrx(
+			OpcUaStackServer::ForwardTransaction::SPtr& forwardTransaction
+		);
+		void receiveWriteForwardTrx(
+			OpcUaStackServer::ForwardTransaction::SPtr& forwardTransaction
+		);
+		void receiveForwardTrx(
+			OpcUaStackServer::ForwardTransaction::SPtr& forwardTransaction
+		);
 		bool registerLoopTimeCallbacks(void);
 		bool createNodeReferences(void);
 
