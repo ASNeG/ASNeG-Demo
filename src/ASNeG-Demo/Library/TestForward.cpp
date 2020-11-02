@@ -417,6 +417,7 @@ namespace OpcUaServerApplicationDemo
 		RegisterForwardNodeAsync registerForwardNodeAsync_(valueVec_);
 		registerForwardNodeAsync_.addApplicationContext(applicationContextVec_);
 		registerForwardNodeAsync_.forwardNodeAsync().readService().activate();
+		registerForwardNodeAsync_.forwardNodeAsync().writeService().activate();
 		if (!registerForwardNodeAsync_.query(applicationServiceIf_, true)) {
 			std::cout << "registerForwardNodeAsync response error" << std::endl;
 			return false;
@@ -425,15 +426,10 @@ namespace OpcUaServerApplicationDemo
 	}
 
 	void
-	TestForward::receiveForwardTrx(OpcUaStackServer::ForwardTransaction::SPtr forwardTransaction)
+	TestForward::receiveReadForwardTrx(
+		OpcUaStackServer::ForwardTransaction::SPtr& forwardTransaction
+	)
 	{
-		// check transaction type
-		if (forwardTransaction->nodeTypeRequest() != OpcUaNodeId(OpcUaId_ForwardTransactionReadRequest_Encoding_DefaultBinary)) {
-			forwardTransaction->statusCode(BadServiceUnsupported);
-			applicationServiceIf_->sendForwardTrx(forwardTransaction);
-			return;
-		}
-
 		// get request and response info
 		auto forwardContext = boost::static_pointer_cast<ForwardContext>(forwardTransaction->applicationContext());
 		auto forwardReadTrx = boost::static_pointer_cast<ForwardTransactionRead>(forwardTransaction);
@@ -444,6 +440,44 @@ namespace OpcUaServerApplicationDemo
 		res->dataValue(forwardContext->dataValue());
 
 		// send answer
+		applicationServiceIf_->sendForwardTrx(forwardTransaction);
+	}
+
+	void
+	TestForward::receiveWriteForwardTrx(
+		OpcUaStackServer::ForwardTransaction::SPtr& forwardTransaction
+	)
+	{
+		// get request and response info
+		auto forwardContext = boost::static_pointer_cast<ForwardContext>(forwardTransaction->applicationContext());
+		auto forwardWriteTrx = boost::static_pointer_cast<ForwardTransactionWrite>(forwardTransaction);
+		auto req = forwardWriteTrx->request();
+		auto res = forwardWriteTrx->response();
+
+		// set data value
+		req->writeValue()->dataValue().copyTo(*forwardContext->dataValue());
+		res->result(Success);
+
+		// send answer
+		applicationServiceIf_->sendForwardTrx(forwardTransaction);
+	}
+
+	void
+	TestForward::receiveForwardTrx(
+		OpcUaStackServer::ForwardTransaction::SPtr& forwardTransaction
+	)
+	{
+		// check transaction type
+		if (forwardTransaction->nodeTypeRequest() == OpcUaNodeId(OpcUaId_ForwardTransactionReadRequest_Encoding_DefaultBinary)) {
+			receiveReadForwardTrx(forwardTransaction);
+			return;
+		}
+		else if (forwardTransaction->nodeTypeRequest() == OpcUaNodeId(OpcUaId_ForwardTransactionWriteRequest_Encoding_DefaultBinary)) {
+			receiveWriteForwardTrx(forwardTransaction);
+			return;
+		}
+
+		forwardTransaction->statusCode(BadServiceUnsupported);
 		applicationServiceIf_->sendForwardTrx(forwardTransaction);
 	}
 
