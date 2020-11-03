@@ -39,6 +39,7 @@
 #include "ASNeG-Demo/Library/VariableType.h"
 #include "ASNeG-Demo/Library/ObjectType.h"
 #include "ASNeG-Demo/Library/TestForward.h"
+#include "ASNeG-Demo/Library/FunctionForward.h"
 
 namespace OpcUaServerApplicationDemo
 {
@@ -65,6 +66,7 @@ namespace OpcUaServerApplicationDemo
 		TestForward testForward_;
 		TestStatusCode testStatusCode_;
 		Function function_;
+		FunctionForward functionForward_;
 		ServiceFunction serviceFunction_;
 		Event event_;
 		Alarm alarm_;

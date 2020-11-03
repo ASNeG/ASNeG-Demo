@@ -5,7 +5,7 @@
     <Uri>http://ASNeG-Demo.de/FunctionForward/</Uri>
   </NamespaceUris>
 
-  <UAObject NodeId="ns=1;s=Function" BrowseName="1:Function">
+  <UAObject NodeId="ns=1;s=FunctionForward" BrowseName="1:FunctionForward">
     <DisplayName>FunctionForward</DisplayName>
     <Description>function folder</Description>
     <References>
@@ -17,14 +17,14 @@
     <UAMethod NodeId="ns=1;s=func1" BrowseName="1:func1">
         <DisplayName>func1</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Function</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=FunctionForward</Reference>
         </References>
     </UAMethod>
     
     <UAMethod NodeId="ns=1;s=func2" BrowseName="1:func2">
         <DisplayName>func2</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Function</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=FunctionForward</Reference>
             <Reference ReferenceType="HasProperty">ns=1;i=6001</Reference>
         </References>
     </UAMethod>
@@ -76,7 +76,7 @@
      <UAMethod NodeId="ns=1;s=func3" BrowseName="1:func3">
         <DisplayName>func3</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Function</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=FunctionForward</Reference>
         </References>
     </UAMethod>
     
@@ -171,7 +171,7 @@
      <UAMethod NodeId="ns=1;s=funcMult" BrowseName="1:funcMult">
         <DisplayName>funcMult</DisplayName>
         <References>
-            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=Function</Reference>
+            <Reference ReferenceType="HasComponent" IsForward="false">ns=1;s=FunctionForward</Reference>
         </References>
     </UAMethod>
     
