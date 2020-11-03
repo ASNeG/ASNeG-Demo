@@ -87,6 +87,7 @@ install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Generator.x
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.Auth.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.HistoricalAccess.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSetTestForward.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
+install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Opc.Ua.NodeSet.FunctionForward.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/TestStatusCode.OpcUaNodeSet.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/Event.OpcUaNodeSet.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)
 install(FILES ${PROJECT_SOURCE_DIR}/ASNeG-Demo/Config/ApplicationDemoModel.xml DESTINATION /etc/OpcUaStack/ASNeG-Demo)

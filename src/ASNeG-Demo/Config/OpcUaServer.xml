@@ -189,6 +189,7 @@
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet2.Part14.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.Generator.xml</NodeSetFile>
     <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSetTestForward.xml</NodeSetFile>
+    <NodeSetFile>@CONF_DIR@/Opc.Ua.NodeSet.FunctionForward.xml</NodeSetFile>
 
   </InformationModel>
 
