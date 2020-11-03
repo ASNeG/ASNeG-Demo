@@ -33,6 +33,7 @@ namespace OpcUaServerApplicationDemo
 	, testFolderLib_()
 	, testForward_()
 	, function_()
+	, functionForward_()
 	, serviceFunction_()
 	, event_()
 	, alarm_()
@@ -70,6 +71,7 @@ namespace OpcUaServerApplicationDemo
 		createDeleteNode_.startup(ioThread, service(), applicationInfo());
 		variableType_.startup(ioThread, service(), applicationInfo());
 		objectType_.startup(ioThread, service(), applicationInfo());
+		functionForward_.startup(ioThread, service(), applicationInfo());
 		return true;
 	}
 
@@ -78,6 +80,7 @@ namespace OpcUaServerApplicationDemo
 	{
 		Log(Debug, "DemoLibrary::shutdown");
 
+		functionForward_.shutdown();
 		objectType_.shutdown();
 		variableType_.shutdown();
 		createDeleteNode_.shutdown();
