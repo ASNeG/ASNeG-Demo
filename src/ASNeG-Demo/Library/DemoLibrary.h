@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2021 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -38,14 +38,11 @@
 #include "ASNeG-Demo/Library/VariableType.h"
 #include "ASNeG-Demo/Library/ObjectType.h"
 
-using namespace OpcUaStackCore;
-using namespace OpcUaStackServer;
-
 namespace OpcUaServerApplicationDemo
 {
 
 	class DemoLibrary
-	: public ApplicationIf
+	: public OpcUaStackServer::ApplicationIf
 	{
 	  public:
 		DemoLibrary(void);
