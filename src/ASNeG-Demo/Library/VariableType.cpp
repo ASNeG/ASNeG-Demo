@@ -1,5 +1,5 @@
 /*
-   Copyright 2019-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2019-2021 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -90,6 +90,8 @@ namespace OpcUaServerApplicationDemo
 			OpcUaNodeId(35),								// reference type between parent and variable instance
 			obj
 		);
+		createVariableInstance.addNodeId("Variable", OpcUaNodeId("MyVariableTypeVariable"));
+		createVariableInstance.addNodeId("Definition_Variable", OpcUaNodeId("MyVariableTypeDefinitionVariable"));
 
 		if (!createVariableInstance.query(applicationServiceIf_)) {
 			Log(Error, "create variable response error");

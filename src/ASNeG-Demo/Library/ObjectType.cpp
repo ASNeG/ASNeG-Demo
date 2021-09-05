@@ -1,5 +1,5 @@
 /*
-   Copyright 2019-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2019-2021 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -160,6 +160,9 @@ namespace OpcUaServerApplicationDemo
 			OpcUaNodeId(35),								// reference type between object and variable instance
 			obj
 		);
+		createObjectInstance.addNodeId("Object", OpcUaNodeId("MyFileTypeObject"));
+		createObjectInstance.addNodeId("Close_Method", OpcUaNodeId("MyFileTypeCloseMethod"));
+		createObjectInstance.addNodeId("MimeType_Variable", OpcUaNodeId("MyFileTypeMimeTypeVariable"));
 
 		if (!createObjectInstance.query(applicationServiceIf_)) {
 			Log(Error, "create object response error");
