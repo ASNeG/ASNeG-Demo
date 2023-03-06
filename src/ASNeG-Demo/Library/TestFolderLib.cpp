@@ -1,5 +1,5 @@
 /*
-   Copyright 2015-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2015-2022 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -399,8 +399,8 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::registerCallbacks(void)
 	{
 		RegisterForwardNode registerForwardNode(valueVec_);
-		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readValue, this, _1));
-		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeValue, this, _1));
+		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readValue, this, boost::placeholders::_1));
+		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeValue, this, boost::placeholders::_1));
 		if (!registerForwardNode.query(applicationServiceIf_, true)) {
 			std::cout << "registerForwardNode response error" << std::endl;
 			return false;
@@ -412,8 +412,8 @@ namespace OpcUaServerApplicationDemo
 	TestFolderLib::registerLoopTimeCallbacks(void)
 	{
 		RegisterForwardNode registerForwardNode(OpcUaNodeId(3, namespaceIndex_));
-		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readLoopTimeValue, this, _1));
-		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeLoopTimeValue, this, _1));
+		registerForwardNode.setReadCallback(boost::bind(&TestFolderLib::readLoopTimeValue, this, boost::placeholders::_1));
+		registerForwardNode.setWriteCallback(boost::bind(&TestFolderLib::writeLoopTimeValue, this, boost::placeholders::_1));
 		if (!registerForwardNode.query(applicationServiceIf_, true)) {
 			std::cout << "registerForwardNode response error" << std::endl;
 			return false;

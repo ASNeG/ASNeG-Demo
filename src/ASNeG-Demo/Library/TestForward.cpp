@@ -1,5 +1,5 @@
 /*
-   Copyright 2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2020-2022 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -492,8 +492,8 @@ namespace OpcUaServerApplicationDemo
 	TestForward::registerLoopTimeCallbacks(void)
 	{
 		RegisterForwardNode registerForwardNode(OpcUaNodeId(3, namespaceIndex_));
-		registerForwardNode.setReadCallback(boost::bind(&TestForward::readLoopTimeValue, this, _1));
-		registerForwardNode.setWriteCallback(boost::bind(&TestForward::writeLoopTimeValue, this, _1));
+		registerForwardNode.setReadCallback(boost::bind(&TestForward::readLoopTimeValue, this, boost::placeholders::_1));
+		registerForwardNode.setWriteCallback(boost::bind(&TestForward::writeLoopTimeValue, this, boost::placeholders::_1));
 		if (!registerForwardNode.query(applicationServiceIf_, true)) {
 			std::cout << "registerForwardNode response error" << std::endl;
 			return false;

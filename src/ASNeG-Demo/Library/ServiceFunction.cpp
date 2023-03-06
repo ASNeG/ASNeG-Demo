@@ -1,5 +1,5 @@
 /*
-   Copyright 2016-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2022 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -99,7 +99,7 @@ namespace OpcUaServerApplicationDemo
 		Log(Debug, "register method callbacks");
 
 		RegisterForwardMethod registerForwardMethod(objectNodeId, methodNodeId);
-		registerForwardMethod.setMethodCallback(boost::bind(&ServiceFunction::method, this, _1));
+		registerForwardMethod.setMethodCallback(boost::bind(&ServiceFunction::method, this, boost::placeholders::_1));
 		if (!registerForwardMethod.query(applicationServiceIf_)) {
 			std::cout << "registerForwardNode response error" << std::endl;
 			return false;

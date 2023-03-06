@@ -1,5 +1,5 @@
 /*
-   Copyright 2017-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2017-2022 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -109,8 +109,8 @@ namespace OpcUaServerApplicationDemo
 	Event::registerEventCallbacks(void)
 	{
 		RegisterForwardGlobal registerForwardGlobal;
-		registerForwardGlobal.setEventItemStartCallback(boost::bind(&Event::eventItemStartCallback, this, _1));
-		registerForwardGlobal.setEventItemStopCallback(boost::bind(&Event::eventItemStopCallback, this, _1));
+		registerForwardGlobal.setEventItemStartCallback(boost::bind(&Event::eventItemStartCallback, this, boost::placeholders::_1));
+		registerForwardGlobal.setEventItemStopCallback(boost::bind(&Event::eventItemStopCallback, this, boost::placeholders::_1));
 		if (!registerForwardGlobal.query(applicationServiceIf_)) {
 			std::cout << "registerForwardGlobal response error" << std::endl;
 			return false;

@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2023 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -62,22 +62,35 @@ class MyComplexType
 	//- ExtensionObjectBase -----------------------------------------------
 	ExtensionObjectBase::SPtr factory(void)
 	{
-		return constructSPtr<MyComplexType>();
+		return boost::make_shared<MyComplexType>();
 	}
 
-	void opcUaBinaryEncode(std::ostream& os) const
+	bool opcUaBinaryEncode(std::ostream& os) const
 	{
 		OpcUaNumber::opcUaBinaryEncode(os, variable1_);
 		OpcUaNumber::opcUaBinaryEncode(os, variable2_);
 		variable3_.opcUaBinaryEncode(os);
+		return true;
 	}
 
-	void opcUaBinaryDecode(std::istream& is)
+	bool opcUaBinaryDecode(std::istream& is)
 	{
 		OpcUaNumber::opcUaBinaryDecode(is, variable1_);
 		OpcUaNumber::opcUaBinaryDecode(is, variable2_);
 		variable3_.opcUaBinaryDecode(is);
+		return true;
 	}
+
+	bool jsonEncodeImpl(boost::property_tree::ptree& pt) const
+	{
+		return true;
+	}
+
+	bool jsonDecodeImpl(const boost::property_tree::ptree& pt)
+	{
+		return true;
+	}
+
 
 	void copyTo(ExtensionObjectBase& extensionObjectBase)
 	{

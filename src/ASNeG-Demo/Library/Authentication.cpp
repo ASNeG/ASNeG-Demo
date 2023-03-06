@@ -1,5 +1,5 @@
 /*
-   Copyright 2018-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2018-2022 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -200,9 +200,9 @@ namespace OpcUaServerApplicationDemo
 	Authentication::registerAuthenticationCallback(void)
 	{
 		RegisterForwardGlobal registerForwardGlobal;
-		registerForwardGlobal.setAuthenticationCallback(boost::bind(&Authentication::authenticationCallback, this, _1));
-		registerForwardGlobal.setAutorizationCallback(boost::bind(&Authentication::autorizationCallback, this, _1));
-		registerForwardGlobal.setCloseSessionCallback(boost::bind(&Authentication::closeSessionCallback, this, _1));
+		registerForwardGlobal.setAuthenticationCallback(boost::bind(&Authentication::authenticationCallback, this, boost::placeholders::_1));
+		registerForwardGlobal.setAutorizationCallback(boost::bind(&Authentication::autorizationCallback, this, boost::placeholders::_1));
+		registerForwardGlobal.setCloseSessionCallback(boost::bind(&Authentication::closeSessionCallback, this, boost::placeholders::_1));
 		if (!registerForwardGlobal.query(applicationServiceIf_)) {
 			std::cout << "registerForwardGlobal response error" << std::endl;
 			return false;

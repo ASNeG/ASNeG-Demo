@@ -1,5 +1,5 @@
 /*
-   Copyright 2018-2020 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2018-2022 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -131,7 +131,7 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
 	  	OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>("DoubleValue", namespaceIndex_);
-	  	req->forwardNodeSync()->readHService().setCallback(boost::bind(&HistoricalAccess::readHValue, this, _1));
+	  	req->forwardNodeSync()->readHService().setCallback(boost::bind(&HistoricalAccess::readHValue, this, boost::placeholders::_1));
 	  	req->nodesToRegister()->resize(1);
 	  	req->nodesToRegister()->set(nodeId);
 
@@ -163,7 +163,7 @@ namespace OpcUaServerApplicationDemo
 	  	RegisterForwardNodeResponse::SPtr res = trx->response();
 
 	  	OpcUaNodeId::SPtr nodeId = boost::make_shared<OpcUaNodeId>("EventObject", namespaceIndex_);
-	  	req->forwardNodeSync()->readHEService().setCallback(boost::bind(&HistoricalAccess::readHEvent, this, _1));
+	  	req->forwardNodeSync()->readHEService().setCallback(boost::bind(&HistoricalAccess::readHEvent, this, boost::placeholders::_1));
 	  	req->nodesToRegister()->resize(1);
 	  	req->nodesToRegister()->set(nodeId);
 

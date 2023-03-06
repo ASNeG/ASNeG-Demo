@@ -12,7 +12,7 @@ set(VERSION_MAJOR "1" CACHE STRING "major version")
 set(VERSION_MINOR "0" CACHE STRING "minor version")
 set(VERSION_PATCH "0" CACHE STRING "patch version")
 
-set(OPCUASTACK_VERSION_MAJOR "2" CACHE STRING "major version")
+set(OPCUASTACK_VERSION_MAJOR "4" CACHE STRING "major version")
 set(OPCUASTACK_VERSION_MINOR "0" CACHE STRING "minor version")
 set(OPCUASTACK_VERSION_PATCH "1" CACHE STRING "patch version")
 set(OPCUASTACK_INSTALL_PREFIX "/" CACHE PATH "opc ua stack intallation prefix")
@@ -81,6 +81,7 @@ include(${OPCUASTACK_INSTALL_PREFIX}/usr/share/cmake/OpcUaStack${OPCUASTACK_VERS
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 include_directories(
+    .
     ${OPCUASTACK_INSTALL_PREFIX}/usr/include/OpcUaStack${OPCUASTACK_VERSION_MAJOR}
 )
 
@@ -88,6 +89,7 @@ include_directories(
 add_executable(
     SyncConnectToServer
     SyncConnectToServer.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -100,6 +102,7 @@ target_link_libraries(
 add_executable(
     SyncMonitoring
     SyncMonitoring.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -113,6 +116,7 @@ target_link_libraries(
 add_executable(
     SyncReadFromServer
     SyncReadFromServer.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -126,6 +130,7 @@ target_link_libraries(
 add_executable(
     SyncWriteToServer
     SyncWriteToServer.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -138,6 +143,7 @@ target_link_libraries(
 add_executable(
     SyncReadFromServer_ComplexDataType_ByteString
     SyncReadFromServer_ComplexDataType_ByteString.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -150,6 +156,7 @@ target_link_libraries(
 add_executable(
     SyncWriteToServer_ComplexDataType_ByteString
     SyncWriteToServer_ComplexDataType_ByteString.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -162,6 +169,7 @@ target_link_libraries(
 add_executable(
     SyncReadFromServer_ComplexDataType_Decoder
     SyncReadFromServer_ComplexDataType_Decoder.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -174,6 +182,7 @@ target_link_libraries(
 add_executable(
     SyncWriteToServer_ComplexDataType_Encoder
     SyncWriteToServer_ComplexDataType_Encoder.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -186,6 +195,7 @@ target_link_libraries(
 add_executable(
     SyncReadFromServer_ComplexDataType_Class
     SyncReadFromServer_ComplexDataType_Class.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(
@@ -198,6 +208,7 @@ target_link_libraries(
 add_executable(
     SyncWriteToServer_ComplexDataType_Class
     SyncWriteToServer_ComplexDataType_Class.cpp
+    CryptoManagerTest.cpp
 )
 
 target_link_libraries(

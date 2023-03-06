@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2023 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -20,6 +20,7 @@
 
 #include "OpcUaStackClient/ValueBasedInterface/VBIClient.h"
 #include "MyComplexType.h"
+#include "CryptoManagerTest.h"
 
 using namespace OpcUaStackClient;
 
@@ -45,6 +46,8 @@ class ExampleClient
 		//
 		connectContext.endpointUrl_ = REAL_SERVER_URI;
 		connectContext.sessionName_ = REAL_SESSION_NAME;
+		connectContext.cryptoManager_ = CryptoManagerTest::getInstance();
+
 		statusCode = client.syncConnect(connectContext);
 		if (statusCode != Success) {
 			std::cout << std::endl << "**** connect to opc ua server error ****" << std::endl;
@@ -113,7 +116,7 @@ class ExampleClient
 		//
 		// write complex data type
 		//
-		OpcUaExtensionObject::SPtr extObject = constructSPtr<OpcUaExtensionObject>();
+		OpcUaExtensionObject::SPtr extObject = boost::make_shared<OpcUaExtensionObject>();
 		MyComplexType::SPtr complexValue = extObject->parameter<MyComplexType>(OpcUaNodeId(3002,1));
 		complexValue->variable1_ = 1.1;
 		complexValue->variable2_ = 2.2;

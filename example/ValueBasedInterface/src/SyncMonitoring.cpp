@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2023 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -19,8 +19,9 @@
 #define REAL_SESSION_NAME "urn:127.0.0.1:ASNeG.de:ASNeG-Client"
 
 #include "OpcUaStackClient/ValueBasedInterface/VBIClient.h"
-#include "OpcUaStackClient/ValueBasedInterface/VBIClientHandlerTest.h"
+#include "CryptoManagerTest.h"
 
+using namespace OpcUaStackCore;
 using namespace OpcUaStackClient;
 
 class ExampleClient
@@ -47,6 +48,8 @@ class ExampleClient
 		//
 		connectContext.endpointUrl_ = REAL_SERVER_URI;
 		connectContext.sessionName_ = REAL_SESSION_NAME;
+		connectContext.cryptoManager_ = CryptoManagerTest::getInstance();
+
 		statusCode = client.syncConnect(connectContext);
 		if (statusCode != Success) {
 			std::cout << std::endl << "**** connect to opc ua server error ****" << std::endl;
@@ -105,7 +108,7 @@ class ExampleClient
 		OpcUaStatusCode statusCode;
 
 		// set data change callback
-		client.setDataChangeCallback(
+		client.setDataChangeHandler(
 			boost::bind(&ExampleClient::dataChangeCallback, this, _1, _2)
 		);
 
@@ -117,7 +120,7 @@ class ExampleClient
 		}
 
 		// create monitored item
-		OpcUaNodeId nodeId(218,2);
+		OpcUaNodeId nodeId(216,3);
 		statusCode = client.syncCreateMonitoredItem(nodeId, subscriptionId, 4711, monitoredItemId);
 		if (statusCode != Success) {
 			std::cout << std::endl << "**** create monitored item error ****" << std::endl;
@@ -182,7 +185,7 @@ int main(int argc, char**argv)
 	// start monitoring
 	if (!client.startMonitoring()) return 0;
 
-	sleep(100);
+	sleep(1000000);
 
 	// stop monitoring
 	if (!client.stopMonitoring()) return 0;

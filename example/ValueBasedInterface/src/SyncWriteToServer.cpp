@@ -1,5 +1,5 @@
 /*
-   Copyright 2016 Kai Huebl (kai@huebl-sgh.de)
+   Copyright 2016-2023 Kai Huebl (kai@huebl-sgh.de)
 
    Lizenziert gemäß Apache Licence Version 2.0 (die „Lizenz“); Nutzung dieser
    Datei nur in Übereinstimmung mit der Lizenz erlaubt.
@@ -19,7 +19,9 @@
 #define REAL_SESSION_NAME "urn:127.0.0.1:ASNeG.de:ASNeG-Client"
 
 #include "OpcUaStackClient/ValueBasedInterface/VBIClient.h"
+#include "CryptoManagerTest.h"
 
+using namespace OpcUaStackCore;
 using namespace OpcUaStackClient;
 
 class ExampleClient
@@ -44,6 +46,7 @@ class ExampleClient
 		//
 		connectContext.endpointUrl_ = REAL_SERVER_URI;
 		connectContext.sessionName_ = REAL_SESSION_NAME;
+		connectContext.cryptoManager_ = CryptoManagerTest::getInstance();
 		statusCode = client.syncConnect(connectContext);
 		if (statusCode != Success) {
 			std::cout << std::endl << "**** connect to opc ua server error ****" << std::endl;
@@ -134,7 +137,7 @@ class ExampleClient
 		// write node 222 to namespace 1 (type String)
 		//
 		nodeId.set((OpcUaInt32)222, 1);
-		OpcUaString::SPtr strValue = constructSPtr<OpcUaString>();
+		OpcUaString::SPtr strValue = boost::make_shared<OpcUaString>();
 		strValue->value("Text1");
 		dataValue.variant()->variant(strValue);
 		dataValue.statusCode((OpcUaStatusCode)Success);
